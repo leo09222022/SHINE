@@ -1,0 +1,23 @@
+<web-app xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+             http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+	version="3.0">
+
+	<!-- 서블릿 등록 -->
+	<servlet>
+		<servlet-name>MapServlet</servlet-name> <!-- 서블릿의 이름 -->
+		<servlet-class>com.kosta.servlet.MapServlet</servlet-class> <!-- 서블릿 클래스의 경로 -->
+	</servlet>
+
+	<!-- 서블릿 매핑 -->
+	<servlet-mapping>
+		<servlet-name>MapServlet</servlet-name> <!-- 등록한 서블릿 이름과 매핑 -->
+		<url-pattern>/map</url-pattern> <!-- URL 경로 (브라우저에서 접근할 URL) -->
+	</servlet-mapping>
+
+	<listener>
+		<listener-class>com.kosta.listener.ConfigListener</listener-class>
+	</listener>
+
+</web-app>

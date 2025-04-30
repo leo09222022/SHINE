@@ -1,1 +1,20 @@
+# API 키 파일
+src/main/webapp/WEB-INF/shine.properties
+
+# 빌드 파일
 /build/
+/target/
+
+# Eclipse 관련
+.classpath
+.project
+.settings/
+
+# 임시 파일
+*.log
+*.tmp
+*.bak
+
+# OS별
+.DS_Store
+Thumbs.db
