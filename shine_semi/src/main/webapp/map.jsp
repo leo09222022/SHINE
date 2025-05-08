@@ -130,9 +130,6 @@
 
         	  infoWindow.open(map, marker);
         	});
-
-
-
       }
     });
   }
