@@ -9,7 +9,6 @@ public class UserToiletAddAction {
 
 	public String execute(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		System.out.println("");
 		return "toiletAdd.jsp";
 	}
 }
