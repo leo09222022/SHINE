@@ -32,6 +32,7 @@
 
 <script>
   let map;
+  let userLocation = null;
 
   function initMap() {
     const center = { lat: 37.5665, lng: 126.9780 };
@@ -41,10 +42,10 @@
       center: center,
     });
 
-    // 사용자 위치 마커
+    // 사용자 현재 위치 마커 및 저장
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((position) => {
-        const userLocation = {
+        userLocation = {
           lat: position.coords.latitude,
           lng: position.coords.longitude,
         };
@@ -98,32 +99,55 @@
           title: toilet.name
         });
 
-        const infoWindow = new google.maps.InfoWindow({
-          content: `
-            <h3>${toilet.name}</h3>
-            📍 도로명 주소: ${toilet.addressRoad}<br>
-            📍 지번 주소: ${toilet.addressLot}<br>
-            🚹 남자 대변기: ${toilet.maleToilet}개<br>
-            🚹 남자 소변기: ${toilet.maleUrinal}개<br>
-            ♿ 장애인 남자 대변기: ${toilet.maleDisabledToilet}개<br>
-            ♿ 장애인 남자 소변기: ${toilet.maleDisabledUrinal}개<br>
-            🚺 여자 대변기: ${toilet.femaleToilet}개<br>
-            ♿ 장애인 여자 대변기: ${toilet.femaleDisabledToilet}개<br>
-            📞 전화번호: ${toilet.phoneNumber}<br>
-            ⏰ 개방시간: ${toilet.openTimeDetail}<br>
-            🆘 비상벨 설치: ${toilet.hasEmergencyBell == 1 ? 'O' : 'X'}<br>
-            📍 비상벨 위치: ${toilet.emergencyBellLocation}<br>
-            📹 CCTV: ${toilet.hasCctv == 1 ? 'O' : 'X'}<br>
-            👶 기저귀 교환대: ${toilet.hasDiaperTable == 1 ? 'O' : 'X'}<br>
-            📍 기저귀 교환대 위치: ${toilet.diaperTableLocation}
-          `
-        });
-
         marker.addListener("click", () => {
-          infoWindow.open(map, marker);
-        });
+        	  const getInfoLine = (label, value) => {
+        	    return value && value !== "null" ? label + ": " + value + "<br>" : "";
+        	  };
+
+        	  const getYesNo = (val) => val == 1 ? 'O' : 'X';
+
+        	  const infoContent = '<div style="min-width:240px">' +
+        	    '<h3>' + toilet.name + '</h3>' +
+        	    getInfoLine("📍 도로명 주소", toilet.addressRoad) +
+        	    getInfoLine("🏠 지번 주소", toilet.addressLot) +
+        	    getInfoLine("🚹 남자 대변기", toilet.maleToilet) + getInfoLine("소변기", toilet.maleUrinal) +
+        	    getInfoLine("♿ 남자 장애인 대변기", toilet.maleDisabledToilet) + getInfoLine("소변기", toilet.maleDisabledUrinal) +
+        	    getInfoLine("🚺 여자 대변기", toilet.femaleToilet) +
+        	    getInfoLine("♿ 여자 장애인 대변기", toilet.femaleDisabledToilet) +
+        	    getInfoLine("📞 전화번호", toilet.phoneNumber) +
+        	    getInfoLine("⏰ 개방시간", toilet.openTimeDetail) +
+        	    '🆘 비상벨: ' + getYesNo(toilet.hasEmergencyBell) + '<br>' +
+        	    getInfoLine("🔔 비상벨 위치", toilet.emergencyBellLocation) +
+        	    '📹 CCTV: ' + getYesNo(toilet.hasCctv) + '<br>' +
+        	    '👶 기저귀 교환대: ' + getYesNo(toilet.hasDiaperTable) + '<br>' +
+        	    getInfoLine("🔸 기저귀 교환대 위치", toilet.diaperTableLocation) +
+        	    '<br><button onclick="navigateTo(' + toilet.lat + ', ' + toilet.lng + ')">🚗 길찾기</button>' +
+        	    '</div>';
+
+        	  const infoWindow = new google.maps.InfoWindow({
+        	    content: infoContent
+        	  });
+
+        	  infoWindow.open(map, marker);
+        	});
+
+
+
       }
     });
+  }
+
+  function navigateTo(destLat, destLng) {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        const userLat = position.coords.latitude;
+        const userLng = position.coords.longitude;
+        const url = `https://www.google.com/maps/dir/?api=1&origin=${userLat},${userLng}&destination=${destLat},${destLng}&travelmode=walking`;
+        window.open(url, '_blank');
+      });
+    } else {
+      alert("위치 정보를 사용할 수 없습니다.");
+    }
   }
 </script>
 
