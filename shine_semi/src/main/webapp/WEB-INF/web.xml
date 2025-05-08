@@ -7,7 +7,7 @@
 	<!-- 서블릿 등록 -->
 	<servlet>
 		<servlet-name>MapServlet</servlet-name> <!-- 서블릿의 이름 -->
-		<servlet-class>com.kosta.servlet.MapServlet</servlet-class> <!-- 서블릿 클래스의 경로 -->
+		<servlet-class>com.emerlet.controller.MapServlet</servlet-class> <!-- 서블릿 클래스의 경로 -->
 	</servlet>
 
 	<!-- 서블릿 매핑 -->
@@ -17,7 +17,7 @@
 	</servlet-mapping>
 
 	<listener>
-		<listener-class>com.kosta.listener.ConfigListener</listener-class>
+		<listener-class>com.emerlet.listener.ConfigListener</listener-class>
 	</listener>
 
 </web-app>

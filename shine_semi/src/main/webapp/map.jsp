@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>  
- 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -39,34 +40,55 @@
       zoom: 14,
       center: center,
     });
-    
-    // 화장실 데이터
+
+    // 사용자 위치 마커
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        const userLocation = {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude,
+        };
+        new google.maps.Marker({
+          position: userLocation,
+          map: map,
+          title: "내 위치",
+          icon: {
+            path: google.maps.SymbolPath.CIRCLE,
+            scale: 8,
+            fillColor: "#4285F4",
+            fillOpacity: 1,
+            strokeColor: "#ffffff",
+            strokeWeight: 2,
+          }
+        });
+        map.setCenter(userLocation);
+      });
+    }
+
     const toilets = [
       <c:forEach var="toilet" items="${toilets}" varStatus="status">
         {
-          name: "${toilet.name}",
+          name: "${fn:escapeXml(toilet.name)}",
           lat: ${toilet.lat},
           lng: ${toilet.lng},
-          address_road: "${toilet.address_road}",
-          address_lot: "${toilet.address_lot}",
-          male_toilet: ${toilet.male_toilet},
-          male_urinal: ${toilet.male_urinal},
-          male_disabled_toilet: ${toilet.male_disabled_toilet},
-          male_disabled_urinal: ${toilet.male_disabled_urinal},
-          female_toilet: ${toilet.female_toilet},
-          female_disabled_toilet: ${toilet.female_disabled_toilet},
-          phone_number: "${toilet.phone_number}",
-          open_time_detail: "${toilet.open_time_detail}",
-          has_emergency_bell: ${toilet.has_emergency_bell},
-          emergency_bell_location: "${toilet.emergency_bell_location}",
-          has_cctv: ${toilet.has_cctv},
-          has_diaper_table: ${toilet.has_diaper_table},
-          diaper_table_location: "${toilet.diaper_table_location}"
+          addressRoad: "${fn:escapeXml(toilet.addressRoad)}",
+          addressLot: "${fn:escapeXml(toilet.addressLot)}",
+          maleToilet: ${toilet.maleToilet},
+          maleUrinal: ${toilet.maleUrinal},
+          maleDisabledToilet: ${toilet.maleDisabledToilet},
+          maleDisabledUrinal: ${toilet.maleDisabledUrinal},
+          femaleToilet: ${toilet.femaleToilet},
+          femaleDisabledToilet: ${toilet.femaleDisabledToilet},
+          phoneNumber: "${fn:escapeXml(toilet.phoneNumber)}",
+          openTimeDetail: "${fn:escapeXml(toilet.openTimeDetail)}",
+          hasEmergencyBell: ${toilet.hasEmergencyBell},
+          emergencyBellLocation: "${fn:escapeXml(toilet.emergencyBellLocation)}",
+          hasCctv: ${toilet.hasCctv},
+          hasDiaperTable: ${toilet.hasDiaperTable},
+          diaperTableLocation: "${fn:escapeXml(toilet.diaperTableLocation)}"
         }<c:if test="${!status.last}">,</c:if>
       </c:forEach>
     ];
-
-    console.log("Toilets:", toilets);
 
     toilets.forEach(toilet => {
       if (toilet.lat !== 0 && toilet.lng !== 0) {
@@ -79,21 +101,21 @@
         const infoWindow = new google.maps.InfoWindow({
           content: `
             <h3>${toilet.name}</h3>
-            📍 도로명 주소: ${toilet.address_road}<br>
-            📍 지번 주소: ${toilet.address_lot}<br>
-            🚹 남자 대변기: ${toilet.male_toilet}개<br>
-            🚹 남자 소변기: ${toilet.male_urinal}개<br>
-            ♿ 장애인 남자 대변기: ${toilet.male_disabled_toilet}개<br>
-            ♿ 장애인 남자 소변기: ${toilet.male_disabled_urinal}개<br>
-            🚺 여자 대변기: ${toilet.female_toilet}개<br>
-            ♿ 장애인 여자 대변기: ${toilet.female_disabled_toilet}개<br>
-            📞 전화번호: ${toilet.phone_number}<br>
-            ⏰ 개방시간: ${toilet.open_time_detail}<br>
-            🆘 비상벨 설치: ${toilet.has_emergency_bell ? 'O' : 'X'}<br>
-            📍 비상벨 위치: ${toilet.emergency_bell_location}<br>
-            📹 CCTV: ${toilet.has_cctv ? 'O' : 'X'}<br>
-            👶 기저귀 교환대: ${toilet.has_diaper_table ? 'O' : 'X'}<br>
-            📍 기저귀 교환대 위치: ${toilet.diaper_table_location}
+            📍 도로명 주소: ${toilet.addressRoad}<br>
+            📍 지번 주소: ${toilet.addressLot}<br>
+            🚹 남자 대변기: ${toilet.maleToilet}개<br>
+            🚹 남자 소변기: ${toilet.maleUrinal}개<br>
+            ♿ 장애인 남자 대변기: ${toilet.maleDisabledToilet}개<br>
+            ♿ 장애인 남자 소변기: ${toilet.maleDisabledUrinal}개<br>
+            🚺 여자 대변기: ${toilet.femaleToilet}개<br>
+            ♿ 장애인 여자 대변기: ${toilet.femaleDisabledToilet}개<br>
+            📞 전화번호: ${toilet.phoneNumber}<br>
+            ⏰ 개방시간: ${toilet.openTimeDetail}<br>
+            🆘 비상벨 설치: ${toilet.hasEmergencyBell == 1 ? 'O' : 'X'}<br>
+            📍 비상벨 위치: ${toilet.emergencyBellLocation}<br>
+            📹 CCTV: ${toilet.hasCctv == 1 ? 'O' : 'X'}<br>
+            👶 기저귀 교환대: ${toilet.hasDiaperTable == 1 ? 'O' : 'X'}<br>
+            📍 기저귀 교환대 위치: ${toilet.diaperTableLocation}
           `
         });
 
@@ -109,7 +131,5 @@
   src="https://maps.googleapis.com/maps/api/js?key=${applicationScope.google_map_api}&callback=initMap">
 </script>
 
-
 </body>
 </html>
-
