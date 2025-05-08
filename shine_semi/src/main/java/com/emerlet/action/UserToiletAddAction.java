@@ -10,5 +10,6 @@ public class UserToiletAddAction {
 	public String execute(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		return "toiletAdd.jsp";
+		
 	}
 }
