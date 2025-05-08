@@ -1,4 +1,4 @@
-package com.kosta.vo;
+package com.emerlet.vo;
 
 import java.util.Date;
 

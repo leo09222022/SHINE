@@ -1,4 +1,4 @@
-package com.kosta.db;
+package com.emerlet.db;
 
 import java.io.BufferedReader;
 import java.io.FileReader;

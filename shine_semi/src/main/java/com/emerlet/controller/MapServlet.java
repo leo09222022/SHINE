@@ -1,4 +1,4 @@
-package com.kosta.servlet;
+package com.emerlet.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -10,8 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.kosta.dao.ToiletDAO;
-import com.kosta.vo.ToiletVO;
+import com.emerlet.dao.ToiletDAO;
+import com.emerlet.vo.ToiletVO;
 
 /**
  * Servlet implementation class MapServlet

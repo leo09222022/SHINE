@@ -1,5 +1,5 @@
 // 경로: src/com/kosta/listener/ConfigListener.java
-package com.kosta.listener;
+package com.emerlet.listener;
 
 import javax.servlet.*;
 import java.io.InputStream;

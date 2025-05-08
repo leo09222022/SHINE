@@ -1,10 +1,10 @@
-package com.kosta.dao;
+package com.emerlet.dao;
 
 import java.sql.*;
 import java.util.*;
 
-import com.kosta.db.ConnectionProvider;
-import com.kosta.vo.ToiletVO;
+import com.emerlet.db.ConnectionProvider;
+import com.emerlet.vo.ToiletVO;
 
 public class ToiletDAO {
 

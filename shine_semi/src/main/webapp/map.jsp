@@ -39,7 +39,7 @@
       zoom: 14,
       center: center,
     });
-
+    
     // 화장실 데이터
     const toilets = [
       <c:forEach var="toilet" items="${toilets}" varStatus="status">
