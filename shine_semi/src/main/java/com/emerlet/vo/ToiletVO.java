@@ -6,32 +6,27 @@ public class ToiletVO {
     private double lat;
     private double lng;
     private String name;
-    private String address_road;
-    private String address_lot;
-    private int male_toilet;
-    private int male_urinal;
-    private int male_disabled_toilet;
-    private int male_disabled_urinal;
-    private int male_child_toilet;
-    private int male_child_urinal;
-    private int female_toilet;
-    private int female_disabled_toilet;
-    private int female_child_toilet;
-    private String phone_number;
-    private String open_time_detail;
-    private int has_emergency_bell;
-    private String emergency_bell_location;
-    private int has_cctv;
-    private int has_diaper_table;
-    private String diaper_table_location;
-    private Date data_reference_date;
+    private String addressRoad;
+    private String addressLot;
+    private int maleToilet;
+    private int maleUrinal;
+    private int maleDisabledToilet;
+    private int maleDisabledUrinal;
+    private int maleChildToilet;
+    private int maleChildUrinal;
+    private int femaleToilet;
+    private int femaleDisabledToilet;
+    private int femaleChildToilet;
+    private String phoneNumber;
+    private String openTimeDetail;
+    private int hasEmergencyBell;
+    private String emergencyBellLocation;
+    private int hasCctv;
+    private int hasDiaperTable;
+    private String diaperTableLocation;
+    private Date dataReferenceDate;
 
-    // 기본 생성자
-    public ToiletVO() {
-        super();
-    }
-
-    // getter & setter
+    public ToiletVO() {}
 
     public double getLat() { return lat; }
     public void setLat(double lat) { this.lat = lat; }
@@ -42,60 +37,60 @@ public class ToiletVO {
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
 
-    public String getAddress_road() { return address_road; }
-    public void setAddress_road(String address_road) { this.address_road = address_road; }
+    public String getAddressRoad() { return addressRoad; }
+    public void setAddressRoad(String addressRoad) { this.addressRoad = addressRoad; }
 
-    public String getAddress_lot() { return address_lot; }
-    public void setAddress_lot(String address_lot) { this.address_lot = address_lot; }
+    public String getAddressLot() { return addressLot; }
+    public void setAddressLot(String addressLot) { this.addressLot = addressLot; }
 
-    public int getMale_toilet() { return male_toilet; }
-    public void setMale_toilet(int male_toilet) { this.male_toilet = male_toilet; }
+    public int getMaleToilet() { return maleToilet; }
+    public void setMaleToilet(int maleToilet) { this.maleToilet = maleToilet; }
 
-    public int getMale_urinal() { return male_urinal; }
-    public void setMale_urinal(int male_urinal) { this.male_urinal = male_urinal; }
+    public int getMaleUrinal() { return maleUrinal; }
+    public void setMaleUrinal(int maleUrinal) { this.maleUrinal = maleUrinal; }
 
-    public int getMale_disabled_toilet() { return male_disabled_toilet; }
-    public void setMale_disabled_toilet(int male_disabled_toilet) { this.male_disabled_toilet = male_disabled_toilet; }
+    public int getMaleDisabledToilet() { return maleDisabledToilet; }
+    public void setMaleDisabledToilet(int maleDisabledToilet) { this.maleDisabledToilet = maleDisabledToilet; }
 
-    public int getMale_disabled_urinal() { return male_disabled_urinal; }
-    public void setMale_disabled_urinal(int male_disabled_urinal) { this.male_disabled_urinal = male_disabled_urinal; }
+    public int getMaleDisabledUrinal() { return maleDisabledUrinal; }
+    public void setMaleDisabledUrinal(int maleDisabledUrinal) { this.maleDisabledUrinal = maleDisabledUrinal; }
 
-    public int getMale_child_toilet() { return male_child_toilet; }
-    public void setMale_child_toilet(int male_child_toilet) { this.male_child_toilet = male_child_toilet; }
+    public int getMaleChildToilet() { return maleChildToilet; }
+    public void setMaleChildToilet(int maleChildToilet) { this.maleChildToilet = maleChildToilet; }
 
-    public int getMale_child_urinal() { return male_child_urinal; }
-    public void setMale_child_urinal(int male_child_urinal) { this.male_child_urinal = male_child_urinal; }
+    public int getMaleChildUrinal() { return maleChildUrinal; }
+    public void setMaleChildUrinal(int maleChildUrinal) { this.maleChildUrinal = maleChildUrinal; }
 
-    public int getFemale_toilet() { return female_toilet; }
-    public void setFemale_toilet(int female_toilet) { this.female_toilet = female_toilet; }
+    public int getFemaleToilet() { return femaleToilet; }
+    public void setFemaleToilet(int femaleToilet) { this.femaleToilet = femaleToilet; }
 
-    public int getFemale_disabled_toilet() { return female_disabled_toilet; }
-    public void setFemale_disabled_toilet(int female_disabled_toilet) { this.female_disabled_toilet = female_disabled_toilet; }
+    public int getFemaleDisabledToilet() { return femaleDisabledToilet; }
+    public void setFemaleDisabledToilet(int femaleDisabledToilet) { this.femaleDisabledToilet = femaleDisabledToilet; }
 
-    public int getFemale_child_toilet() { return female_child_toilet; }
-    public void setFemale_child_toilet(int female_child_toilet) { this.female_child_toilet = female_child_toilet; }
+    public int getFemaleChildToilet() { return femaleChildToilet; }
+    public void setFemaleChildToilet(int femaleChildToilet) { this.femaleChildToilet = femaleChildToilet; }
 
-    public String getPhone_number() { return phone_number; }
-    public void setPhone_number(String phone_number) { this.phone_number = phone_number; }
+    public String getPhoneNumber() { return phoneNumber; }
+    public void setPhoneNumber(String phoneNumber) { this.phoneNumber = phoneNumber; }
 
-    public String getOpen_time_detail() { return open_time_detail; }
-    public void setOpen_time_detail(String open_time_detail) { this.open_time_detail = open_time_detail; }
+    public String getOpenTimeDetail() { return openTimeDetail; }
+    public void setOpenTimeDetail(String openTimeDetail) { this.openTimeDetail = openTimeDetail; }
 
-    public int getHas_emergency_bell() { return has_emergency_bell; }
-    public void setHas_emergency_bell(int has_emergency_bell) { this.has_emergency_bell = has_emergency_bell; }
+    public int getHasEmergencyBell() { return hasEmergencyBell; }
+    public void setHasEmergencyBell(int hasEmergencyBell) { this.hasEmergencyBell = hasEmergencyBell; }
 
-    public String getEmergency_bell_location() { return emergency_bell_location; }
-    public void setEmergency_bell_location(String emergency_bell_location) { this.emergency_bell_location = emergency_bell_location; }
+    public String getEmergencyBellLocation() { return emergencyBellLocation; }
+    public void setEmergencyBellLocation(String emergencyBellLocation) { this.emergencyBellLocation = emergencyBellLocation; }
 
-    public int getHas_cctv() { return has_cctv; }
-    public void setHas_cctv(int has_cctv) { this.has_cctv = has_cctv; }
+    public int getHasCctv() { return hasCctv; }
+    public void setHasCctv(int hasCctv) { this.hasCctv = hasCctv; }
 
-    public int getHas_diaper_table() { return has_diaper_table; }
-    public void setHas_diaper_table(int has_diaper_table) { this.has_diaper_table = has_diaper_table; }
+    public int getHasDiaperTable() { return hasDiaperTable; }
+    public void setHasDiaperTable(int hasDiaperTable) { this.hasDiaperTable = hasDiaperTable; }
 
-    public String getDiaper_table_location() { return diaper_table_location; }
-    public void setDiaper_table_location(String diaper_table_location) { this.diaper_table_location = diaper_table_location; }
+    public String getDiaperTableLocation() { return diaperTableLocation; }
+    public void setDiaperTableLocation(String diaperTableLocation) { this.diaperTableLocation = diaperTableLocation; }
 
-    public Date getData_reference_date() { return data_reference_date; }
-    public void setData_reference_date(Date data_reference_date) { this.data_reference_date = data_reference_date; }
+    public Date getDataReferenceDate() { return dataReferenceDate; }
+    public void setDataReferenceDate(Date dataReferenceDate) { this.dataReferenceDate = dataReferenceDate; }
 }
