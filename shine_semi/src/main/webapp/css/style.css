@@ -1,0 +1,114 @@
+/* css/style.css */
+
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Pretendard', sans-serif;
+}
+
+.main-container {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  background-color: #B0DEDA;
+}
+
+/* 사이드바 */
+.sidebar {
+  width: 320px;
+  background-color: white;
+  display: flex;
+  flex-direction: column;  
+}
+
+/* 로고 영역 */
+.sidebar-logo {
+  padding: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.sidebar-logo img {
+  width: 200px;
+}
+
+/* 검색창 */
+.sidebar-content {
+  margin-bottom: 20px;
+  padding: 0 20px;
+}
+
+.search-box {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border: 1px solid #CECECE;
+  border-radius: 100px;
+  background-color: white;
+}
+
+
+.search-input {
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 16px;
+  color: #1D1D1F;
+  width: 100%;
+  font-family: 'Pretendard', sans-serif;
+}
+
+
+/* 메뉴 리스트 */
+.menu-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 0 20px;
+}
+
+.menu-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+}
+
+.menu-text {
+  font-size: 16px;
+  color: #1D1D1F;  
+}
+
+
+/* 하단 푸터 */
+.sidebar-footer {
+  position: fixed;
+  width: 320px;
+  bottom: 0;
+  padding: 40px;
+  background-color: #3A81FF;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 16px;
+}
+
+/* 메인 컨텐츠 */
+.main-content {
+  flex-grow: 1;
+  padding: 40px;
+}
+
+.main-header h1 {
+  font-size: 24px;
+  color: #1D1D1F;
+}
