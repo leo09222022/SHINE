@@ -21,6 +21,12 @@
 		<servlet-name>UserToiletServlet</servlet-name>
 		<servlet-class>com.emerlet.controller.UserToiletServlet</servlet-class>
 	</servlet>
+	
+	<!-- 화장실 검색 서블릿 등록 -->
+	<servlet>
+		<servlet-name>ToiletSearchServlet</servlet-name>
+		<servlet-class>com.emerlet.controller.ToiletSearchServlet</servlet-class>
+	</servlet>
 
 	<!-- 서블릿 매핑 -->
 	<servlet-mapping>
@@ -38,6 +44,12 @@
 	<servlet-mapping>
 		<servlet-name>UserToiletServlet</servlet-name>
 		<url-pattern>*.do</url-pattern>
+	</servlet-mapping>
+	
+	<!-- 화장실 검색 서블릿 매핑 -->
+	<servlet-mapping>
+		<servlet-name>ToiletSearchServlet</servlet-name>
+		<url-pattern>/toiletSearch</url-pattern>
 	</servlet-mapping>
 
 	<listener>

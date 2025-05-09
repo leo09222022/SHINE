@@ -96,11 +96,40 @@ input[type="text"], textarea {
 	font-size: 14px;
 	margin-top: 5px;
 }
+
+/* 별점 스타일 */
+.rating {
+    display: flex;
+    flex-direction: row-reverse;
+    gap: 4px;
+    margin: 10px 0;
+}
+
+.rating input {
+    display: none;
+}
+
+.rating label {
+    cursor: pointer;
+    width: 24px;
+    height: 24px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath d='M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279-7.416-3.967-7.417 3.967 1.481-8.279-6.064-5.828 8.332-1.151z' fill='%23e0e0e0'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+}
+
+.rating input:checked ~ label,
+.rating label:hover,
+.rating input:checked + label:hover,
+.rating input:checked ~ label:hover {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath d='M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279-7.416-3.967-7.417 3.967 1.481-8.279-6.064-5.828 8.332-1.151z' fill='%23f5bc00'/%3E%3C/svg%3E");
+}
 </style>
 </head>
 <body>
 	<div class="container">
-		<h2>공중화장실 추가 요청</h2>
+		<h2>화장실 등록</h2>
 
 		<c:if test="${not empty errorMessage}">
 			<div class="error-message">${errorMessage}</div>
@@ -110,20 +139,20 @@ input[type="text"], textarea {
 
 		<form action="toiletAddOK.do" method="post">
 			<div class="form-group">
-				<label for="userName">등록자 이름 *</label> <input type="text"
+				<label for="userName"> 1. 화장실명 *</label> <input type="text"
 					id="userName" name="userName" required>
 			</div>
 
 			<div class="form-group">
-				<label for="userRoadAddress">화장실 도로명주소 (맵 터치시 자동입력)*</label> <input
+				<label for="userRoadAddress"> 2. 주소 (맵 터치시 자동입력) *</label> <input
 					type="text" id="userRoadAddress" name="userRoadAddress" required>
 			</div>
 
 			<div class="form-group">
-				<label>화장실 정보</label>
+				<label> 3. 상세정보 </label>
 
 				<div class="radio-group">
-					<label>남성용 화장실</label>
+					<label>남자화장실이 있나요?</label>
 					<div class="radio-options">
 						<div class="radio-option">
 							<input type="radio" id="userMaleToiletY" name="userMaleToilet"
@@ -141,7 +170,7 @@ input[type="text"], textarea {
 				</div>
 
 				<div class="radio-group">
-					<label>여성용 화장실</label>
+					<label>여자화장실이 있나요?</label>
 					<div class="radio-options">
 						<div class="radio-option">
 							<input type="radio" id="userFemaleToiletY"
@@ -162,7 +191,7 @@ input[type="text"], textarea {
 				</div>
 
 				<div class="radio-group">
-					<label>장애인 화장실</label>
+					<label>장애인화장실이 있나요?</label>
 					<div class="radio-options">
 						<div class="radio-option">
 							<input type="radio" id="userDisabledToiletY"
@@ -183,7 +212,7 @@ input[type="text"], textarea {
 				</div>
 
 				<div class="radio-group">
-					<label>기저귀 교환대</label>
+					<label>기저귀 교환대가 있나요?</label>
 					<div class="radio-options">
 						<div class="radio-option">
 							<input type="radio" id="userHasDiaperTableY"
@@ -203,18 +232,53 @@ input[type="text"], textarea {
 					</div>
 				</div>
 			</div>
-
+            
+            <div class="form-group">
+                <label>4. 추가 정보</label>
+                
+                <div>
+                    <label>청결도</label>
+                    <div class="rating">
+                        <input type="radio" id="cleanliness5" name="cleanliness" value="5">
+                        <label for="cleanliness5" title="5점"></label>
+                        <input type="radio" id="cleanliness4" name="cleanliness" value="4">
+                        <label for="cleanliness4" title="4점"></label>
+                        <input type="radio" id="cleanliness3" name="cleanliness" value="3" checked>
+                        <label for="cleanliness3" title="3점"></label>
+                        <input type="radio" id="cleanliness2" name="cleanliness" value="2">
+                        <label for="cleanliness2" title="2점"></label>
+                        <input type="radio" id="cleanliness1" name="cleanliness" value="1">
+                        <label for="cleanliness1" title="1점"></label>
+                    </div>
+                </div>
+                
+                <div>
+                    <label>안전성</label>
+                    <div class="rating">
+                        <input type="radio" id="safety5" name="safety" value="5">
+                        <label for="safety5" title="5점"></label>
+                        <input type="radio" id="safety4" name="safety" value="4">
+                        <label for="safety4" title="4점"></label>
+                        <input type="radio" id="safety3" name="safety" value="3" checked>
+                        <label for="safety3" title="3점"></label>
+                        <input type="radio" id="safety2" name="safety" value="2">
+                        <label for="safety2" title="2점"></label>
+                        <input type="radio" id="safety1" name="safety" value="1">
+                        <label for="safety1" title="1점"></label>
+                    </div>
+                </div>
+                
 			<div class="form-group">
-				<label for="userDescription">상세설명 (개방시간, 특이사항 등)</label>
-				<textarea id="userDescription" name="userDescription" rows="4"></textarea>
+				<label for="userDescription">5. 코멘트</label>
+				<textarea id="userDescription" name="userDescription" rows="4" placeholder="Add any other useful information about the toilet here"></textarea>
 			</div>
 
 			<!-- Hidden fields for coordinates -->
-			<input type="hidden" id="userLat" name="userLat"> <input
-				type="hidden" id="userLng" name="userLng">
+			<input type="hidden" id="userLat" name="userLat"> 
+            <input type="hidden" id="userLng" name="userLng">
 
 			<div class="form-group">
-				<button type="submit" class="btn">등록 요청하기</button>
+				<button type="submit" class="btn">화장실 등록</button>
 			</div>
 		</form>
 	</div>
@@ -315,6 +379,24 @@ input[type="text"], textarea {
                 }
             });
         }
+
+        // 별점 시스템 초기화 (페이지 로드 시)
+        document.addEventListener('DOMContentLoaded', function() {
+            // 청결도 별점
+            const cleanlinessRating = document.querySelectorAll('input[name="cleanliness"]');
+            // 안전성 별점
+            const safetyRating = document.querySelectorAll('input[name="safety"]');
+            // 접근성 별점
+            const accessibilityRating = document.querySelectorAll('input[name="accessibility"]');
+            // 비품 별점
+            const suppliesRating = document.querySelectorAll('input[name="supplies"]');
+            
+            // 기본값 설정 (3점으로 설정)
+            document.getElementById('cleanliness3').checked = true;
+            document.getElementById('safety3').checked = true;
+            document.getElementById('accessibility3').checked = true;
+            document.getElementById('supplies3').checked = true;
+        });
     </script>
 
 	<script async

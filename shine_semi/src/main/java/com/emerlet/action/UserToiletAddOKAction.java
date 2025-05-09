@@ -6,7 +6,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.emerlet.dao.UserToiletDAO;
+import com.emerlet.dao.ReviewDAO;
 import com.emerlet.vo.UserToiletVO;
+import com.emerlet.vo.ReviewVO;
 
 public class UserToiletAddOKAction {
 
@@ -64,11 +66,26 @@ public class UserToiletAddOKAction {
 			userToilet.setPhotoUrl("");
 
 			UserToiletDAO userToiletDAO = new UserToiletDAO();
-			boolean result = userToiletDAO.addUserToilet(userToilet);
+			int toiletId = userToiletDAO.addUserToilet(userToilet); // 수정된 메서드 (ID 반환)
 
-			System.out.println("result: " + result);
+			System.out.println("toiletId: " + toiletId);
 
-			if (result) {
+			if (toiletId > 0) {
+				ReviewVO review = new ReviewVO();
+
+				review.setCleanliness(Integer.parseInt(request.getParameter("cleanliness")));
+				review.setSafety(Integer.parseInt(request.getParameter("safety")));
+				
+				review.setAccessibility(-1); 
+				review.setSupplies(-1);
+				
+				review.setUserToiletId(toiletId);
+
+				ReviewDAO reviewDAO = new ReviewDAO();
+				boolean reviewResult = reviewDAO.addReview(review, true);
+
+				System.out.println("리뷰 저장 결과: " + reviewResult);
+
 				request.setAttribute("message", "화장실 등록이 성공적으로 요청되었습니다. 관리자 검토 후 지도에 표시됩니다.");
 				return "toiletAddOK.jsp";
 			} else {
@@ -77,6 +94,8 @@ public class UserToiletAddOKAction {
 			}
 		} catch (Exception e) {
 			System.out.println("예외 발생: " + e.getMessage());
+			e.printStackTrace();
+			request.setAttribute("errorMessage", "시스템 오류가 발생했습니다: " + e.getMessage());
 			return "toiletAdd.jsp";
 		}
 	}
