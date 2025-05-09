@@ -58,6 +58,21 @@ h2 {
 	background-color: #2E8B57;
 }
 
+.search-link {
+    background-color: #FF9800;
+    color: white;
+    text-decoration: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+    font-size: 14px;
+    transition: background-color 0.3s;
+    margin-left: 8px;
+}
+
+.search-link:hover {
+    background-color: #F57C00;
+}
+
 .filter-badge {
 	display: inline-flex;
 	align-items: center;
@@ -85,65 +100,6 @@ h2 {
 	color: #d93025;
 }
 
-/* 검색 폼 스타일 */
-.search-container {
-    display: flex;
-    align-items: center;
-    margin-left: 15px;
-    flex-grow: 1;
-    max-width: 400px;
-}
-
-.search-form {
-    display: flex;
-    width: 100%;
-}
-
-.search-input {
-    flex-grow: 1;
-    padding: 6px 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px 0 0 4px;
-    font-size: 14px;
-}
-
-.search-button {
-    background-color: #4285F4;
-    color: white;
-    border: none;
-    padding: 6px 12px;
-    border-radius: 0 4px 4px 0;
-    cursor: pointer;
-    font-size: 14px;
-}
-
-.search-button:hover {
-    background-color: #3367d6;
-}
-
-.search-badge {
-    display: inline-flex;
-    align-items: center;
-    background-color: #fde293;
-    padding: 5px 10px;
-    border-radius: 20px;
-    margin-left: 10px;
-    font-size: 14px;
-    color: #5f6368;
-}
-
-.reset-search {
-    cursor: pointer;
-    margin-left: 8px;
-    color: #5f6368;
-    font-size: 18px;
-    text-decoration: none;
-}
-
-.reset-search:hover {
-    color: #d93025;
-}
-
 .actions-container {
     display: flex;
     align-items: center;
@@ -152,15 +108,7 @@ h2 {
 
 <div class="header">
 	<div style="display: flex; align-items: center;">
-		<%-- 세션에서 검색 상태 확인 --%>
-		<c:if test="${sessionScope.isSearched}">
-			<div class="search-badge">
-				<span>"${sessionScope.searchKeyword}" 검색결과: ${fn:length(sessionScope.searchToilets)}개</span>
-				<a href="ToiletSearchServlet" class="reset-search" title="검색 초기화">×</a>
-			</div>
-		</c:if>
-		
-		<%-- 세션에서 필터링 상태 확인 --%>
+		<%-- 필터링 상태 확인 --%>
 		<c:if test="${sessionScope.isFiltered}">
 			<div class="filter-badge">
 				<span>필터 적용됨</span>
@@ -181,19 +129,65 @@ h2 {
 			</div>
 		</c:if>
 	</div>
-	
-	<!-- 검색 폼 -->
-	<div class="search-container">
-		<form class="search-form" action="toiletSearch" method="get">
-			<input type="text" name="keyword" placeholder="주소로 검색 (예: 세종)" 
-				class="search-input" value="${sessionScope.searchKeyword}">
-			<button type="submit" class="search-button">검색</button>
-		</form>
-	</div>
 
-	<!-- 버튼 컨테이너: 필터링 버튼과 화장실 등록 버튼 -->
+	<!-- 버튼 컨테이너: 검색 버튼, 필터링 버튼, 화장실 등록 버튼 -->
 	<div class="actions-container">
+		<a href="toiletSearch.do" class="search-link">화장실 검색</a>
 		<a href="toiletFiltering.do" class="filter-link">화장실 필터링</a>
 		<a href="toiletAdd.do" class="add-toilet-link">화장실 등록</a>
 	</div>
 </div>
+
+<script>
+// 검색된 화장실 파라미터 처리
+document.addEventListener("DOMContentLoaded", function() {
+    // URL 파라미터에서 선택된 화장실 좌표 확인
+    const urlParams = new URLSearchParams(window.location.search);
+    const selectLat = urlParams.get('select_lat');
+    const selectLng = urlParams.get('select_lng');
+    
+    if (selectLat && selectLng) {
+        // 전역 변수에 선택된 좌표 저장 (map.jsp의 initMap에서 사용)
+        window.selectedToiletLat = parseFloat(selectLat);
+        window.selectedToiletLng = parseFloat(selectLng);
+    }
+});
+</script>
+
+<script>
+// map.jsp에서 사용하기 위한 함수 추가
+// 선택된 화장실이 있을 경우 해당 화장실로 지도 이동 및 정보창 표시
+window.onload = function() {
+    const selectLat = "${param.select_lat}";
+    const selectLng = "${param.select_lng}";
+    
+    if (selectLat && selectLng) {
+        const selectedLocation = {
+            lat: parseFloat(selectLat),
+            lng: parseFloat(selectLng)
+        };
+        
+        // 선택된 위치로 지도 이동
+        setTimeout(function() {
+            if (window.map) {
+                window.map.setCenter(selectedLocation);
+                window.map.setZoom(18); // 더 가까이 줌인
+                
+                // 모든 마커를 확인하여 선택된 위치의 마커를 찾고 정보창 표시
+                if (window.markers) {
+                    for (let i = 0; i < window.markers.length; i++) {
+                        const markerPosition = window.markers[i].getPosition();
+                        if (Math.abs(markerPosition.lat() - selectedLocation.lat) < 0.000001 && 
+                            Math.abs(markerPosition.lng() - selectedLocation.lng) < 0.000001) {
+                            
+                            // 마커 클릭 이벤트 트리거
+                            google.maps.event.trigger(window.markers[i], 'click');
+                            break;
+                        }
+                    }
+                }
+            }
+        }, 1000); // 지도가 완전히 로드된 후에 실행되도록 지연
+    }
+};
+</script>
