@@ -154,7 +154,8 @@ public class ToiletDAO {
             return 0;
         }
     }
-
+    
+    
     public ArrayList<ToiletVO> findAll() {
 	    ArrayList<ToiletVO> toilets = new ArrayList<>();
 
