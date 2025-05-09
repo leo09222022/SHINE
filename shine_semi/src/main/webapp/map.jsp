@@ -29,7 +29,7 @@ h2 {
 
 #centerToUserBtn {
 	position: absolute;
-	top: 60px;         
+	top: 60px;
 	right: 10px;
 	z-index: 5;
 	padding: 5px 8px;
@@ -39,176 +39,170 @@ h2 {
 	border-radius: 4px;
 	cursor: pointer;
 	color: blue;
-	box-shadow: 0 2px 6px rgba(0,0,0,0.15); 
+	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+#toiletInfoPanel {
+	position: absolute;
+	bottom: 30px;
+	left: 50%;
+	transform: translateX(-50%);
+	background: white;
+	border-radius: 10px;
+	padding: 20px;
+	box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
+	z-index: 10;
+	display: none;
+	min-width: 280px;
 }
 </style>
 </head>
 <body>
-	<!-- [지원] 작업 파트 include -->
 	<jsp:include page="mapJeewonPart.jsp" />
 	<h2>EMERLET</h2>
-	<button id="centerToUserBtn" onclick="centerMapToUser()">📍 내
-		근처 화장실 찾기</button>
+	<button id="centerToUserBtn" onclick="centerMapToUser()">📍 내 근처 화장실 찾기</button>
 	<div id="map"></div>
-
+	<div id="toiletInfoPanel"></div> <!-- 화장실 상세 정보 판넬을 위한 div -->
 	<script>
-	
-	document.addEventListener("DOMContentLoaded", () => {
-		  if (navigator.geolocation) {
-		    navigator.permissions.query({ name: "geolocation" }).then((result) => {
-		      if (result.state === "prompt") {
-		        navigator.geolocation.getCurrentPosition(
-		          (position) => {
-		            console.log("위치 권한 허용됨");
-		          },
-		          (error) => {
-		            console.warn("위치 접근 실패", error.message);
-		          }
-		        );
-		      } else if (result.state === "denied") {
-		        alert("위치 권한이 차단되어 있습니다.\n브라우저 설정에서 허용해주세요.");
-		      }
-		    });
-		  }
-		});
-  let map;
-  let userLocation = null;
-  let userMarker = null;
+		let map;
+		let userLocation = null;
+		let userMarker = null;
+		let markers = [];
+
+		function getCurrentUserLocation(callback) {
+			if (navigator.geolocation) {
+				navigator.geolocation.getCurrentPosition(
+					(position) => {
+						userLocation = {
+							lat: position.coords.latitude,
+							lng: position.coords.longitude
+						};
+						if (!userMarker) {
+							userMarker = new google.maps.Marker({
+								position: userLocation,
+								map: map,
+								title: "내 위치",
+								icon: {
+									path: google.maps.SymbolPath.CIRCLE,
+									scale: 8,
+									fillColor: "#4285F4",
+									fillOpacity: 1,
+									strokeColor: "#ffffff",
+									strokeWeight: 2
+								}
+							});
+						} else {
+							userMarker.setPosition(userLocation);
+						}
+						if (callback) callback(userLocation);
+					},
+					() => alert("위치 정보를 불러올 수 없습니다.")
+				);
+			} else {
+				alert("이 브라우저는 위치 정보를 지원하지 않습니다.");
+			}
+		}
+
+		function centerMapToUser() {
+			getCurrentUserLocation((loc) => {
+				map.setCenter(loc);
+				map.setZoom(17);
+			});
+		}
+
+		function closeInfoPanel() {
+			const panel = document.getElementById("toiletInfoPanel");
+			panel.style.display = "none";
+			markers.forEach(m => m.setOpacity(1));  // 모두 원상복구
+		}
 
 
+		function initMap() {
+			const center = { lat: 37.5665, lng: 126.9780 };
+			map = new google.maps.Map(document.getElementById("map"), {
+				zoom: 14,
+				center: center
+			});
+			getCurrentUserLocation(loc => map.setCenter(loc));
 
-  // 현재 사용자 위치 구하는 함수 
-  function getCurrentUserLocation(callback) {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          userLocation = {
-            lat: position.coords.latitude,
-            lng: position.coords.longitude
-          };
+			const toilets = [
+				<c:forEach var="toilet" items="${toilets}" varStatus="status">
+				{
+					name: "${fn:escapeXml(toilet.name)}",
+					lat: ${toilet.lat},
+					lng: ${toilet.lng},
+					addressRoad: "${fn:escapeXml(toilet.addressRoad)}",
+					addressLot: "${fn:escapeXml(toilet.addressLot)}",
+					maleToilet: ${toilet.maleToilet},
+					maleUrinal: ${toilet.maleUrinal},
+					maleDisabledToilet: ${toilet.maleDisabledToilet},
+					maleDisabledUrinal: ${toilet.maleDisabledUrinal},
+					femaleToilet: ${toilet.femaleToilet},
+					femaleDisabledToilet: ${toilet.femaleDisabledToilet},
+					phoneNumber: "${fn:escapeXml(toilet.phoneNumber)}",
+					openTimeDetail: "${fn:escapeXml(toilet.openTimeDetail)}",
+					hasEmergencyBell: ${toilet.hasEmergencyBell},
+					emergencyBellLocation: "${fn:escapeXml(toilet.emergencyBellLocation)}",
+					hasCctv: ${toilet.hasCctv},
+					hasDiaperTable: ${toilet.hasDiaperTable},
+					diaperTableLocation: "${fn:escapeXml(toilet.diaperTableLocation)}"
+				}<c:if test="${!status.last}">,</c:if>
+				</c:forEach>
+			];
 
-          if (!userMarker) {
-            userMarker = new google.maps.Marker({
-              position: userLocation,
-              map: map,
-              title: "내 위치",
-              icon: {
-                path: google.maps.SymbolPath.CIRCLE,
-                scale: 8,
-                fillColor: "#4285F4",
-                fillOpacity: 1,
-                strokeColor: "#ffffff",
-                strokeWeight: 2
-              }
-            });
-          } else {
-            userMarker.setPosition(userLocation);
-          }
+			toilets.forEach(toilet => {
+				if (toilet.lat !== 0 && toilet.lng !== 0) {
+					const marker = new google.maps.Marker({
+						position: { lat: toilet.lat, lng: toilet.lng },
+						map: map,
+						title: toilet.name
+					});
+					markers.push(marker);
+					marker.addListener("click", () => {
+						map.panTo(marker.getPosition());
+						map.panBy(0, -150);
+						markers.forEach(m => {
+							if (m !== marker) {
+								m.setOpacity(0.3);  // 흐리게
+							} else {
+								m.setOpacity(1);    // 클릭한 마커는 선명하게
+							}
+						});
 
-          if (callback) callback(userLocation);
-        },
-        () => alert("위치 정보를 불러올 수 없습니다.")
-      );
-    } else {
-      alert("이 브라우저는 위치 정보를 지원하지 않습니다.");
-    }
-  }
+						marker.setMap(map);
 
-  // [내 근처 화장실] 검색 기능의 내 위치에 줌인하는 함수 
-  function centerMapToUser() {
-    getCurrentUserLocation((loc) => {
-      map.setCenter(loc);
-      map.setZoom(17);
-    });
-  }
+						const getInfoLine = (label, value) => {
+							return value && value !== "null" ? label + ": " + value + "<br>" : "";
+						};
+						const getCheckIcon = val => val === null || val === undefined ? "❓" : (parseInt(val) > 0 ? "✔" : "✖");
+						const getYesNo = val => val == 1 ? '✔' : '✖';
 
-  // 맵 이니셜라이징 함수 
-  function initMap() {
-    const center = { lat: 37.5665, lng: 126.9780 };
-    map = new google.maps.Map(document.getElementById("map"), {
-      zoom: 14,
-      center: center
-    });
-
-    getCurrentUserLocation((loc) => {
-      map.setCenter(loc);
-    });
-
-// 화장실 배열 만들기 (모든 상세 정보 추가) 
-   const toilets = [
-     <c:forEach var="toilet" items="${toilets}" varStatus="status">
-       {
-         name: "${fn:escapeXml(toilet.name)}",
-         lat: ${toilet.lat},
-         lng: ${toilet.lng},
-         addressRoad: "${fn:escapeXml(toilet.addressRoad)}",
-         addressLot: "${fn:escapeXml(toilet.addressLot)}",
-         maleToilet: ${toilet.maleToilet},
-         maleUrinal: ${toilet.maleUrinal},
-         maleDisabledToilet: ${toilet.maleDisabledToilet},
-         maleDisabledUrinal: ${toilet.maleDisabledUrinal},
-         femaleToilet: ${toilet.femaleToilet},
-         femaleDisabledToilet: ${toilet.femaleDisabledToilet},
-         phoneNumber: "${fn:escapeXml(toilet.phoneNumber)}",
-         openTimeDetail: "${fn:escapeXml(toilet.openTimeDetail)}",
-         hasEmergencyBell: ${toilet.hasEmergencyBell},
-         emergencyBellLocation: "${fn:escapeXml(toilet.emergencyBellLocation)}",
-         hasCctv: ${toilet.hasCctv},
-         hasDiaperTable: ${toilet.hasDiaperTable},
-         diaperTableLocation: "${fn:escapeXml(toilet.diaperTableLocation)}"
-       }<c:if test="${!status.last}">,</c:if>
-     </c:forEach>
-   ];
-// 화장실을 맵에 마커로 표시 
-   toilets.forEach(toilet => {
-     if (toilet.lat !== 0 && toilet.lng !== 0) {
-       const marker = new google.maps.Marker({
-         position: { lat: toilet.lat, lng: toilet.lng },
-         map: map,
-         title: toilet.name
-       });
-
-       marker.addListener("click", () => {
-       	  const getInfoLine = (label, value) => {
-       	    return value && value !== "null" ? label + ": " + value + "<br>" : "";
-       	  };
-
-       	  const getYesNo = (val) => val == 1 ? 'O' : 'X';
-
-       	  const infoContent = '<div style="min-width:240px">' +
-       	    '<h3>' + toilet.name + '</h3>' +
-       	    getInfoLine("📍 도로명 주소", toilet.addressRoad) +
-       	    getInfoLine("🏠 지번 주소", toilet.addressLot) +
-       	    getInfoLine("🚹 남자 대변기", toilet.maleToilet) + getInfoLine("소변기", toilet.maleUrinal) +
-       	    getInfoLine("♿ 남자 장애인 대변기", toilet.maleDisabledToilet) + getInfoLine("소변기", toilet.maleDisabledUrinal) +
-       	    getInfoLine("🚺 여자 대변기", toilet.femaleToilet) +
-       	    getInfoLine("♿ 여자 장애인 대변기", toilet.femaleDisabledToilet) +
-       	    getInfoLine("📞 전화번호", toilet.phoneNumber) +
-       	    getInfoLine("⏰ 개방시간", toilet.openTimeDetail) +
-       	    '🆘 비상벨: ' + getYesNo(toilet.hasEmergencyBell) + '<br>' +
-       	    getInfoLine("🔔 비상벨 위치", toilet.emergencyBellLocation) +
-       	    '📹 CCTV: ' + getYesNo(toilet.hasCctv) + '<br>' +
-       	    '👶 기저귀 교환대: ' + getYesNo(toilet.hasDiaperTable) + '<br>' +
-       	    getInfoLine("🔸 기저귀 교환대 위치", toilet.diaperTableLocation) +
-       	    '<a href="MapServlet?lat=' + toilet.lat + '&lng=' + toilet.lng + '" target="_blank"><button>🚗 길찾기</button></a>' 
-       	    '</div>';
-
-       	  const infoWindow = new google.maps.InfoWindow({
-       	    content: infoContent
-       	  });
-
-       	  infoWindow.open(map, marker);
-       	});
-     }
-   });
- }
-
-
-</script>
-
-	<script async
-		src="https://maps.googleapis.com/maps/api/js?key=${applicationScope.google_map_api}&callback=initMap">
-</script>
-
+						document.getElementById("toiletInfoPanel").innerHTML = '<div style="min-width:240px">' +
+							'<div style="position:absolute; top:0; right:0;">' +
+							'<button onclick="closeInfoPanel()" style="border:none; background:none; font-size:14px; cursor:pointer;">❌</button>' +
+							'</div>' +
+							'<h3>' + toilet.name + '</h3>' +
+							getInfoLine("📍 도로명 주소", toilet.addressRoad) +
+							getInfoLine("🏠 지번 주소", toilet.addressLot) +
+							'🚹 남자 화장실: ' + getCheckIcon(toilet.maleToilet) + '<br>' +
+							'♿ 남자 장애인 화장실: ' + getCheckIcon(toilet.maleDisabledToilet) + '<br>' +
+							'🚺 여자 화장실: ' + getCheckIcon(toilet.femaleToilet) + '<br>' +
+							'♿ 여자 장애인 화장실: ' + getCheckIcon(toilet.femaleDisabledToilet) + '<br>' +
+							getInfoLine("📞 전화번호", toilet.phoneNumber) +
+							getInfoLine("⏰ 개방시간", toilet.openTimeDetail) +
+							'🆘 비상벨: ' + getYesNo(toilet.hasEmergencyBell) + '<br>' +
+							getInfoLine("🔔 비상벨 위치", toilet.emergencyBellLocation) +
+							'📹 CCTV: ' + getYesNo(toilet.hasCctv) + '<br>' +
+							'👶 기저귀 교환대: ' + getYesNo(toilet.hasDiaperTable) + '<br>' +
+							getInfoLine("🔸 기저귀 교환대 위치", toilet.diaperTableLocation) +
+							'<a href="MapServlet?lat=' + toilet.lat + '&lng=' + toilet.lng + '" target="_blank"><button>🚗 길찾기</button></a>' +
+							'</div>';
+						document.getElementById("toiletInfoPanel").style.display = "block";
+					});
+				}
+			});
+		}
+	</script>
+	<script async src="https://maps.googleapis.com/maps/api/js?key=${applicationScope.google_map_api}&callback=initMap"></script>
 </body>
 </html>
