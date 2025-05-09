@@ -40,17 +40,16 @@ h2 {
 	cursor: pointer;
 	color: blue;
 }
-
 </style>
 </head>
 <body>
-<!-- [지원] 작업 파트 include -->
+	<!-- [지원] 작업 파트 include -->
 	<jsp:include page="mapJeewonPart.jsp" />
- <h2>EMERLET</h2>
-	 <button id="centerToUserBtn" onclick="centerMapToUser()">📍 내
+	<h2>EMERLET</h2>
+	<button id="centerToUserBtn" onclick="centerMapToUser()">📍 내
 		근처 화장실 찾기</button>
 	<div id="map"></div>
-	
+
 	<script>
 	let map;
 	  let userLocation = null;
