@@ -60,8 +60,6 @@ public class UserToiletServlet extends HttpServlet {
 		String contextPath = request.getContextPath();
 		String command = requestURI.substring(contextPath.length());
 
-		System.out.println("Command: " + command);
-
 		String view = null;
 
 		try {
@@ -79,7 +77,6 @@ public class UserToiletServlet extends HttpServlet {
 				RequestDispatcher dispatcher = request.getRequestDispatcher(view);
 				dispatcher.forward(request, response);
 			} else {
-				System.err.println("No view returned for command: " + command);
 				response.sendError(HttpServletResponse.SC_NOT_FOUND);
 			}
 		} catch (Exception e) {

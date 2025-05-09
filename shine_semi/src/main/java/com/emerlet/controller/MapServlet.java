@@ -20,45 +20,47 @@ import com.emerlet.vo.ToiletVO;
 @WebServlet("/MapServlet")
 public class MapServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public MapServlet() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#HttpServlet()
 	 */
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // 세션에서 필터링된 화장실 목록 확인
-        HttpSession session = request.getSession();
-        ArrayList<ToiletVO> filteredToilets = (ArrayList<ToiletVO>) session.getAttribute("filteredToilets");
-        boolean isFiltered = (session.getAttribute("isFiltered") != null) ? 
-                              (Boolean) session.getAttribute("isFiltered") : false;
-        
-        ToiletDAO toiletDAO = new ToiletDAO();
+	public MapServlet() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 
-        // CSV 경로 설정 (웹서버 루트 기준)
-        String csvPath = getServletContext().getRealPath("공중화장실.csv");
-        toiletDAO.setupDB(csvPath);
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		// 세션에서 필터링된 화장실 목록 확인
+		HttpSession session = request.getSession();
+		ArrayList<ToiletVO> filteredToilets = (ArrayList<ToiletVO>) session.getAttribute("filteredToilets");
+		boolean isFiltered = (session.getAttribute("isFiltered") != null) ? (Boolean) session.getAttribute("isFiltered")
+				: false;
 
-        // 필터링된 데이터가 있고 필터 상태가 true인 경우, 필터링된 데이터 사용
-        if (filteredToilets != null && isFiltered) {
-            System.out.println("필터링된 화장실 데이터 사용: " + filteredToilets.size() + "개");
-            request.setAttribute("toilets", filteredToilets);
-        } else {
-            // 그렇지 않으면 모든 화장실 데이터 사용
-            ArrayList<ToiletVO> allToilets = toiletDAO.findAll();
-            System.out.println("전체 화장실 데이터 사용: " + allToilets.size() + "개");
-            request.setAttribute("toilets", allToilets);
-        }
+		ToiletDAO toiletDAO = new ToiletDAO();
 
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/map.jsp");
-        dispatcher.forward(request, response);
-    }
+		// CSV 경로 설정 (웹서버 루트 기준)
+		String csvPath = getServletContext().getRealPath("공중화장실.csv");
+		toiletDAO.setupDB(csvPath);
+
+		// 필터링된 데이터가 있고 필터 상태가 true인 경우, 필터링된 데이터 사용
+		if (filteredToilets != null && isFiltered) {
+			System.out.println("필터링된 화장실 데이터 사용: " + filteredToilets.size() + "개");
+			request.setAttribute("toilets", filteredToilets);
+		} else {
+			// 그렇지 않으면 모든 화장실 데이터 사용
+			ArrayList<ToiletVO> allToilets = toiletDAO.findAll();
+			System.out.println("전체 화장실 데이터 사용: " + allToilets.size() + "개");
+			request.setAttribute("toilets", allToilets);
+		}
+
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/map.jsp");
+		dispatcher.forward(request, response);
+	}
 
 //    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 //        // ToiletDAO 객체 생성
@@ -76,9 +78,11 @@ public class MapServlet extends HttpServlet {
 //    }
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}

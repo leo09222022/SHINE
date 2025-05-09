@@ -10,16 +10,16 @@
 		<servlet-class>com.emerlet.controller.MapServlet</servlet-class> <!-- 서블릿 클래스의 경로 -->
 	</servlet>
 	
-	<!-- 화장실 추가 서블릿 등록 -->
-	<servlet>
-		<servlet-name>UserToiletServlet</servlet-name>
-		<servlet-class>com.emerlet.controller.UserToiletServlet</servlet-class>
-	</servlet>
-	
 	<!-- 화장실 필터링 서블릿 등록 -->
 	<servlet>
 		<servlet-name>ToiletFilteringServlet</servlet-name>
 		<servlet-class>com.emerlet.controller.ToiletFilteringServlet</servlet-class>
+	</servlet>
+	
+	<!-- 화장실 추가 서블릿 등록 -->
+	<servlet>
+		<servlet-name>UserToiletServlet</servlet-name>
+		<servlet-class>com.emerlet.controller.UserToiletServlet</servlet-class>
 	</servlet>
 
 	<!-- 서블릿 매핑 -->
@@ -28,7 +28,7 @@
 		<url-pattern>/map</url-pattern> <!-- URL 경로 (브라우저에서 접근할 URL) -->
 	</servlet-mapping>
 	
-	<!-- 화장실 필터링 서블릿 매핑 (먼저 선언하여 우선순위 부여) -->
+	<!-- 화장실 필터링 서블릿 매핑  -->
 	<servlet-mapping>
 		<servlet-name>ToiletFilteringServlet</servlet-name>
 		<url-pattern>/toiletFiltering.do</url-pattern>
