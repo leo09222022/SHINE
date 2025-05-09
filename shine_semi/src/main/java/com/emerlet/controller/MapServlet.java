@@ -35,6 +35,7 @@ public class MapServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+
 		// 세션에서 필터링된 화장실 목록 확인
 		HttpSession session = request.getSession();
 		ArrayList<ToiletVO> filteredToilets = (ArrayList<ToiletVO>) session.getAttribute("filteredToilets");
@@ -49,12 +50,10 @@ public class MapServlet extends HttpServlet {
 
 		// 필터링된 데이터가 있고 필터 상태가 true인 경우, 필터링된 데이터 사용
 		if (filteredToilets != null && isFiltered) {
-			System.out.println("필터링된 화장실 데이터 사용: " + filteredToilets.size() + "개");
 			request.setAttribute("toilets", filteredToilets);
 		} else {
 			// 그렇지 않으면 모든 화장실 데이터 사용
 			ArrayList<ToiletVO> allToilets = toiletDAO.findAll();
-			System.out.println("전체 화장실 데이터 사용: " + allToilets.size() + "개");
 			request.setAttribute("toilets", allToilets);
 		}
 

@@ -42,15 +42,12 @@ public class ToiletFilteringServlet extends HttpServlet {
 			String hasDiaperTable = request.getParameter("hasDiaperTable");
 			String resetFilters = request.getParameter("resetFilters");
 			String viewMap = request.getParameter("viewMap");
-			String saveMapPosition = request.getParameter("saveMapPosition");
-			String noRedirect = request.getParameter("noRedirect");
 
 			// 세션 가져오기
 			HttpSession session = request.getSession();
 
 			// 필터 초기화 요청이 있을 경우
 			if ("true".equals(resetFilters)) {
-				System.out.println("▶ 필터 초기화 요청 처리");
 				session.removeAttribute("filteredToilets");
 				session.removeAttribute("hasEmergencyBell");
 				session.removeAttribute("hasCctv");

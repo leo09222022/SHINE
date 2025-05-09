@@ -8,7 +8,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>공중화장실 필터링</title>
+<title>필터링</title>
 <style>
 body {
 	font-family: Arial, sans-serif;
@@ -101,7 +101,7 @@ h2 {
 </head>
 <body>
 	<div class="container">
-		<h2>안전시설 필터 설정</h2>
+		<h2>공중화장실 필터링</h2>
 
 		<div class="info-message">
 			<c:choose>
@@ -119,21 +119,20 @@ h2 {
 				<input type="checkbox" id="hasEmergencyBell" name="hasEmergencyBell"
 					value="Y" <c:if test="${hasEmergencyBell eq 'Y'}">checked</c:if>>
 				<span class="feature-icon">🔔</span> <label for="hasEmergencyBell">비상벨
-					있음</label>
+				</label>
 			</div>
 
 			<div class="filter-option">
 				<input type="checkbox" id="hasCctv" name="hasCctv" value="Y"
 					<c:if test="${hasCctv eq 'Y'}">checked</c:if>> <span
-					class="feature-icon">📹</span> <label for="hasCctv">CCTV
-					설치됨</label>
+					class="feature-icon">📹</span> <label for="hasCctv">CCTV </label>
 			</div>
 
 			<div class="filter-option">
 				<input type="checkbox" id="hasDiaperTable" name="hasDiaperTable"
 					value="Y" <c:if test="${hasDiaperTable eq 'Y'}">checked</c:if>>
 				<span class="feature-icon">👶</span> <label for="hasDiaperTable">기저귀
-					교환대 있음</label>
+					교환대</label>
 			</div>
 
 			<input type="hidden" name="viewMap" value="true">
