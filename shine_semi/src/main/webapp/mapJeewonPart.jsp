@@ -92,5 +92,5 @@ h2 {
 		</c:if>
 	</div>
 
-	<a href="ToiletFilteringServlet" class="filter-link">화장실 필터링</a>
+	<a href="toiletFiltering.do" class="filter-link">화장실 필터링</a>
 </div>
