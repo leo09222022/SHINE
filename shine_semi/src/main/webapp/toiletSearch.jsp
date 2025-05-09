@@ -184,7 +184,6 @@ h2 {
     
     <script>
 	    function goToMap(lat, lng) {
-	        // 세션 스토리지에 선택한 화장실 좌표 저장 (페이지 간 데이터 전달)
 	        sessionStorage.setItem('selectedToiletLat', lat);
 	        sessionStorage.setItem('selectedToiletLng', lng);
 	        window.location.href = "map";
