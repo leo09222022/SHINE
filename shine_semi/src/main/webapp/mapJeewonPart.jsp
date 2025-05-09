@@ -33,7 +33,7 @@ h2 {
 	background-color: #4285F4;
 	color: white;
 	text-decoration: none;
-	padding: 8px 60px;
+	padding: 8px 12px;
 	border-radius: 4px;
 	font-size: 14px;
 	transition: background-color 0.3s;
