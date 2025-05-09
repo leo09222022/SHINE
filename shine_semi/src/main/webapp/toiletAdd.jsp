@@ -99,31 +99,31 @@ input[type="text"], textarea {
 
 /* 별점 스타일 */
 .rating {
-    display: flex;
-    flex-direction: row-reverse;
-    gap: 4px;
-    margin: 10px 0;
+	display: flex;
+	flex-direction: row-reverse;
+	gap: 4px;
+	margin: 10px 0;
 }
 
 .rating input {
-    display: none;
+	display: none;
 }
 
 .rating label {
-    cursor: pointer;
-    width: 24px;
-    height: 24px;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath d='M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279-7.416-3.967-7.417 3.967 1.481-8.279-6.064-5.828 8.332-1.151z' fill='%23e0e0e0'/%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: contain;
+	cursor: pointer;
+	width: 24px;
+	height: 24px;
+	background-image:
+		url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath d='M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279-7.416-3.967-7.417 3.967 1.481-8.279-6.064-5.828 8.332-1.151z' fill='%23e0e0e0'/%3E%3C/svg%3E");
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: contain;
 }
 
-.rating input:checked ~ label,
-.rating label:hover,
-.rating input:checked + label:hover,
-.rating input:checked ~ label:hover {
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath d='M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279-7.416-3.967-7.417 3.967 1.481-8.279-6.064-5.828 8.332-1.151z' fill='%23f5bc00'/%3E%3C/svg%3E");
+.rating input:checked ~ label, .rating label:hover, .rating input:checked+label:hover,
+	.rating input:checked ~ label:hover {
+	background-image:
+		url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath d='M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279-7.416-3.967-7.417 3.967 1.481-8.279-6.064-5.828 8.332-1.151z' fill='%23f5bc00'/%3E%3C/svg%3E");
 }
 </style>
 </head>
@@ -232,54 +232,55 @@ input[type="text"], textarea {
 					</div>
 				</div>
 			</div>
-            
-            <div class="form-group">
-                <label>4. 추가 정보</label>
-                
-                <div>
-                    <label>청결도</label>
-                    <div class="rating">
-                        <input type="radio" id="cleanliness5" name="cleanliness" value="5">
-                        <label for="cleanliness5" title="5점"></label>
-                        <input type="radio" id="cleanliness4" name="cleanliness" value="4">
-                        <label for="cleanliness4" title="4점"></label>
-                        <input type="radio" id="cleanliness3" name="cleanliness" value="3" checked>
-                        <label for="cleanliness3" title="3점"></label>
-                        <input type="radio" id="cleanliness2" name="cleanliness" value="2">
-                        <label for="cleanliness2" title="2점"></label>
-                        <input type="radio" id="cleanliness1" name="cleanliness" value="1">
-                        <label for="cleanliness1" title="1점"></label>
-                    </div>
-                </div>
-                
-                <div>
-                    <label>안전성</label>
-                    <div class="rating">
-                        <input type="radio" id="safety5" name="safety" value="5">
-                        <label for="safety5" title="5점"></label>
-                        <input type="radio" id="safety4" name="safety" value="4">
-                        <label for="safety4" title="4점"></label>
-                        <input type="radio" id="safety3" name="safety" value="3" checked>
-                        <label for="safety3" title="3점"></label>
-                        <input type="radio" id="safety2" name="safety" value="2">
-                        <label for="safety2" title="2점"></label>
-                        <input type="radio" id="safety1" name="safety" value="1">
-                        <label for="safety1" title="1점"></label>
-                    </div>
-                </div>
-                
-			<div class="form-group">
-				<label for="userDescription">5. 코멘트</label>
-				<textarea id="userDescription" name="userDescription" rows="4" placeholder="Add any other useful information about the toilet here"></textarea>
-			</div>
-
-			<!-- Hidden fields for coordinates -->
-			<input type="hidden" id="userLat" name="userLat"> 
-            <input type="hidden" id="userLng" name="userLng">
 
 			<div class="form-group">
-				<button type="submit" class="btn">화장실 등록</button>
-			</div>
+				<label>4. 추가 정보</label>
+
+				<div>
+					<label>청결도</label>
+					<div class="rating">
+						<input type="radio" id="cleanliness5" name="cleanliness" value="5">
+						<label for="cleanliness5" title="5점"></label> <input type="radio"
+							id="cleanliness4" name="cleanliness" value="4"> <label
+							for="cleanliness4" title="4점"></label> <input type="radio"
+							id="cleanliness3" name="cleanliness" value="3" checked> <label
+							for="cleanliness3" title="3점"></label> <input type="radio"
+							id="cleanliness2" name="cleanliness" value="2"> <label
+							for="cleanliness2" title="2점"></label> <input type="radio"
+							id="cleanliness1" name="cleanliness" value="1"> <label
+							for="cleanliness1" title="1점"></label>
+					</div>
+				</div>
+
+				<div>
+					<label>안전성</label>
+					<div class="rating">
+						<input type="radio" id="safety5" name="safety" value="5">
+						<label for="safety5" title="5점"></label> <input type="radio"
+							id="safety4" name="safety" value="4"> <label
+							for="safety4" title="4점"></label> <input type="radio"
+							id="safety3" name="safety" value="3" checked> <label
+							for="safety3" title="3점"></label> <input type="radio"
+							id="safety2" name="safety" value="2"> <label
+							for="safety2" title="2점"></label> <input type="radio"
+							id="safety1" name="safety" value="1"> <label
+							for="safety1" title="1점"></label>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label for="userDescription">5. 코멘트</label>
+					<textarea id="userDescription" name="userDescription" rows="4"
+						placeholder="Add any other useful information about the toilet here"></textarea>
+				</div>
+
+				<!-- Hidden fields for coordinates -->
+				<input type="hidden" id="userLat" name="userLat"> <input
+					type="hidden" id="userLng" name="userLng">
+
+				<div class="form-group">
+					<button type="submit" class="btn">화장실 등록</button>
+				</div>
 		</form>
 	</div>
 
