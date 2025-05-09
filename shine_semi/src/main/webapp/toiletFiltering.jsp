@@ -97,6 +97,53 @@ h2 {
 .btn-secondary:hover {
 	background-color: #3367d6;
 }
+
+/* 토글 스위치 스타일 */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 24px;
+  margin-right: 15px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: .4s;
+  border-radius: 24px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 16px;
+  width: 16px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  transition: .4s;
+  border-radius: 50%;
+}
+
+input:checked + .slider {
+  background-color: #2196F3;
+}
+
+input:checked + .slider:before {
+  transform: translateX(26px);
+}
 </style>
 </head>
 <body>
@@ -116,32 +163,55 @@ h2 {
 
 		<form id="filterForm" action="ToiletFilteringServlet" method="get">
 			<div class="filter-option">
-				<input type="checkbox" id="hasEmergencyBell" name="hasEmergencyBell"
-					value="Y" <c:if test="${hasEmergencyBell eq 'Y'}">checked</c:if>>
-				<span class="feature-icon">🔔</span> <label for="hasEmergencyBell">비상벨
-				</label>
+				<label class="switch">
+                    <input type="checkbox" id="hasMaleToilet" name="hasMaleToilet"
+                        value="Y" <c:if test="${hasMaleToilet eq 'Y'}">checked</c:if>>
+                    <span class="slider"></span>
+                </label>
+				<span class="feature-icon">🚹</span> <label for="hasMaleToilet">남자화장실</label>
 			</div>
 
 			<div class="filter-option">
-				<input type="checkbox" id="hasCctv" name="hasCctv" value="Y"
-					<c:if test="${hasCctv eq 'Y'}">checked</c:if>> <span
-					class="feature-icon">📹</span> <label for="hasCctv">CCTV </label>
+				<label class="switch">
+                    <input type="checkbox" id="hasFemaleToilet" name="hasFemaleToilet"
+                        value="Y" <c:if test="${hasFemaleToilet eq 'Y'}">checked</c:if>>
+                    <span class="slider"></span>
+                </label>
+				<span class="feature-icon">🚺</span> <label for="hasFemaleToilet">여자화장실</label>
 			</div>
 
 			<div class="filter-option">
-				<input type="checkbox" id="hasDiaperTable" name="hasDiaperTable"
-					value="Y" <c:if test="${hasDiaperTable eq 'Y'}">checked</c:if>>
-				<span class="feature-icon">👶</span> <label for="hasDiaperTable">기저귀
-					교환대</label>
+				<label class="switch">
+                    <input type="checkbox" id="hasMaleDisabledToilet" name="hasMaleDisabledToilet"
+                        value="Y" <c:if test="${hasMaleDisabledToilet eq 'Y'}">checked</c:if>>
+                    <span class="slider"></span>
+                </label>
+				<span class="feature-icon">♿</span> <label for="hasMaleDisabledToilet">남성 장애인 화장실</label>
+			</div>
+
+			<div class="filter-option">
+				<label class="switch">
+                    <input type="checkbox" id="hasFemaleDisabledToilet" name="hasFemaleDisabledToilet"
+                        value="Y" <c:if test="${hasFemaleDisabledToilet eq 'Y'}">checked</c:if>>
+                    <span class="slider"></span>
+                </label>
+				<span class="feature-icon">♿</span> <label for="hasFemaleDisabledToilet">여성 장애인 화장실</label>
+			</div>
+
+			<div class="filter-option">
+				<label class="switch">
+                    <input type="checkbox" id="hasDiaperTable" name="hasDiaperTable"
+                        value="Y" <c:if test="${hasDiaperTable eq 'Y'}">checked</c:if>>
+                    <span class="slider"></span>
+                </label>
+				<span class="feature-icon">👶</span> <label for="hasDiaperTable">기저귀 교환대</label>
 			</div>
 
 			<input type="hidden" name="viewMap" value="true">
-			<button type="submit" class="btn btn-primary">필터 적용 & 지도로
-				돌아가기</button>
+			<button type="submit" class="btn btn-primary">필터 적용 &amp; 지도로 돌아가기</button>
 		</form>
 
-		<a
-			href="ToiletFilteringServlet?resetFilters=true&saveMapPosition=true&lat=${sessionScope.mapLat}&lng=${sessionScope.mapLng}&zoom=${sessionScope.mapZoom}"
+		<a href="ToiletFilteringServlet?resetFilters=true"
 			class="btn btn-secondary">필터 초기화</a>
 	</div>
 </body>
