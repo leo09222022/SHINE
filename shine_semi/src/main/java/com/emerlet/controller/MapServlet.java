@@ -34,6 +34,23 @@ public class MapServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         ToiletDAO toiletDAO = new ToiletDAO();
 
+        String lat = request.getParameter("lat");
+        String lng = request.getParameter("lng");
+
+        if (lat != null && lng != null) {
+            lat = lat.trim();
+            lng = lng.trim();
+
+            // Google Maps 리디렉션 URL 구성
+            String redirectUrl = "https://www.google.com/maps/dir/"
+                    + "?api=1"
+                    + "&destination=" + lat + "," + lng
+                    + "&travelmode=walking";  // 걷기 모드 명시
+
+            response.sendRedirect(redirectUrl);
+            return;
+        }
+        
         // CSV 경로 설정 (웹서버 루트 기준)
         String csvPath = getServletContext().getRealPath("공중화장실.csv");
         toiletDAO.setupDB(csvPath);
