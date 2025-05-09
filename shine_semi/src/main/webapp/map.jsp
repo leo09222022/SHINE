@@ -52,6 +52,25 @@ h2 {
 	<div id="map"></div>
 
 	<script>
+	
+	document.addEventListener("DOMContentLoaded", () => {
+		  if (navigator.geolocation) {
+		    navigator.permissions.query({ name: "geolocation" }).then((result) => {
+		      if (result.state === "prompt") {
+		        navigator.geolocation.getCurrentPosition(
+		          (position) => {
+		            console.log("위치 권한 허용됨");
+		          },
+		          (error) => {
+		            console.warn("위치 접근 실패", error.message);
+		          }
+		        );
+		      } else if (result.state === "denied") {
+		        alert("위치 권한이 차단되어 있습니다.\n브라우저 설정에서 허용해주세요.");
+		      }
+		    });
+		  }
+		});
   let map;
   let userLocation = null;
   let userMarker = null;
