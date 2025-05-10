@@ -131,11 +131,11 @@ if (currentLang == null)
 			<footer class="side_footer">
 				<div>
 					<div class="lang-selector">
-						<a href="setLang.jsp?lang=ko"
+						<a href="setLang.jsp?lang=ko" onclick="reloadGoogleMapScript('ko')"
 							class="lang-btn <%="ko".equals(currentLang) ? "active" : ""%>">한국어</a>
-						<a href="setLang.jsp?lang=en"
+						<a href="setLang.jsp?lang=en" onclick="reloadGoogleMapScript('en')"
 							class="lang-btn <%="en".equals(currentLang) ? "active" : ""%>">English</a>
-						<a href="setLang.jsp?lang=ja"
+						<a href="setLang.jsp?lang=ja" onclick="reloadGoogleMapScript('ja')"
 							class="lang-btn <%="ja".equals(currentLang) ? "active" : ""%>">日本語</a>
 					</div>
 				</div>
@@ -201,9 +201,28 @@ if (currentLang == null)
 	<!-- JS 파일 연결 -->
 	<script src="js/mapScript.js"></script>
 
+
+<!-- 랭귀지 관련 함수 -->
+<!-- onclick에 세션이벤트까지 같이 하는방식으로 수정해야되는데 귀찮으므로 일단 둠 -->
+<script>
+function reloadGoogleMapScript(langCode) {
+  const oldScript = document.querySelector('script[src*="maps.googleapis.com"]');
+  if (oldScript) oldScript.remove();
+
+  const newScript = document.createElement("script");
+  newScript.src = `https://maps.googleapis.com/maps/api/js?key=<%= application.getAttribute("google_map_api") %>&callback=initMap&language=${langCode}`;
+  newScript.async = true;
+  document.head.appendChild(newScript);
+}
+</script>
+
+
+
 	<!-- 구글맵이 외부 JS보다 나중에 호출되어야함 위치변경 금지 -->
+	<!-- 랭귀지 관련 파라메터 추가함 -->
 	<script async
-		src="https://maps.googleapis.com/maps/api/js?key=${applicationScope.google_map_api}&callback=initMap"></script>
+  src="https://maps.googleapis.com/maps/api/js?key=${applicationScope.google_map_api}&callback=initMap&language=<%= lang %>"></script>
+
 
 
 </body>
