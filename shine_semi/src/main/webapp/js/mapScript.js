@@ -310,14 +310,16 @@ function initMap() {
             📹 CCTV: ${getCheckIcon(toilet.hasCctv)}<br>
             👶 기저귀 교환대: ${getCheckIcon(toilet.hasDiaperTable)}<br>
             🔸 기저귀 교환대 위치: ${toilet.diaperTableLocation}<br>
-            <a href="MapServlet?lat=${toilet.lat}&lng=${toilet.lng}" target="_blank"><button>🚗 길찾기</button></a>
+            <!-- <a href="MapServlet?lat=${toilet.lat}&lng=${toilet.lng}" target="_blank"><button>🚗 길찾기</button></a> -->
+			<button onclick="openKakaoPopUp()">🚶 길찾기</button>
+
           </div>`;
 
 				const infoWindow = new google.maps.InfoWindow({ content: infoContent });
 				infoWindow.open(map, marker);
 				window.currentInfoWindow = infoWindow;
 			});
-		}
+		};
 	});
 
 
@@ -368,4 +370,16 @@ window.openModalWithPage =function openModalWithPage(url) {
 function closeModal() {
   document.getElementById("modalOverlay").style.display = "none";
 }
+
+// 동적으로 팝업 스크립트 로딩
+(function loadPopupScriptIfNeeded() {
+  if (!window.openKakaoPopUp) {
+    const script = document.createElement('script');
+    script.src = 'js/kakaoMapPopUp.js'; 
+    script.onload = () => console.log("kakaoMapPopUp.js loaded"); // 디버깅용
+    document.head.appendChild(script);
+  }
+})();
+
+
 
