@@ -237,14 +237,17 @@ function initMap() {
             📹 CCTV: ${getCheckIcon(toilet.hasCctv)}<br>
             👶 기저귀 교환대: ${getCheckIcon(toilet.hasDiaperTable)}<br>
             🔸 기저귀 교환대 위치: ${toilet.diaperTableLocation}<br>
-            <a href="MapServlet?lat=${toilet.lat}&lng=${toilet.lng}" target="_blank"><button>🚗 길찾기</button></a>
+            <!-- <a href="MapServlet?lat=${toilet.lat}&lng=${toilet.lng}" target="_blank"><button>🚗 길찾기</button></a> -->
+			<a href="https://map.kakao.com/?sName=내위치&eName=${encodeURIComponent(toilet.name)}&eX=${toilet.lat}&eY=${toilet.lng}" target="_blank">
+			      <button>🚶 길찾기</button> </a> 
+  
           </div>`;
 
 				const infoWindow = new google.maps.InfoWindow({ content: infoContent });
 				infoWindow.open(map, marker);
 				window.currentInfoWindow = infoWindow;
 			});
-		}
+		};
 	});
 
 
