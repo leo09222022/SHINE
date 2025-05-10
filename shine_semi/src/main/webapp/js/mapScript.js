@@ -384,9 +384,10 @@ function openCustomPopup(toilet) {
             <img src="img/pop_directions.svg" alt=""><span>길 안내</span>
           </div>
           <div style="font-size: 14px; color: #919191">이 화장실 정보는<br/>2025년 5월 1일에 마지막으로 확인되었습니다.</div>
-          <div style="display: flex; gap: 4px; align-items: center">
-            <div style="color: #3a81ff; font-size: 14px">정보 오류 신고</div>
-          </div>
+		  <div style="display: flex; gap: 4px; align-items: center; cursor: pointer;"
+		       onclick="goToReportPage(${toilet.toilet_id}, null)">
+		    <div style="color: #3a81ff; font-size: 14px">정보 오류 신고</div>
+		  </div>
         </div>
 
         <div style="width: 280px; display: flex; flex-direction: column; gap: 8px">
@@ -407,6 +408,8 @@ function openCustomPopup(toilet) {
   popup.style.display = "block";
 }
 
+
+// 체크, X 표시 판정
 function renderFacilityRow(label, iconPath, value) {
   let iconStatus = "img/pop_question.svg";
   const num = parseInt(value);
@@ -427,6 +430,20 @@ function renderFacilityRow(label, iconPath, value) {
   `;
 }
 
+// 아이디 들고 신고 페이지로 넘어가기 위한 함수
+function goToReportPage(toiletId = null, userToiletId = null) {
+  let url = "toiletReport.jsp?";
+  if (toiletId !== null) {
+    url += "toiletId=" + toiletId;
+  } else if (userToiletId !== null) {
+    url += "userToiletId=" + userToiletId;
+  } else {
+    alert("잘못된 접근입니다.");
+    return;
+  }
+
+  location.href = url;
+}
 
 
 
