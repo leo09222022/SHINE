@@ -134,12 +134,13 @@ function initMap() {
 	const selectLng = urlParams.get('select_lng') || sessionStorage.getItem('selectedToiletLng');
 
 	let initialCenter = center;
-	let initialZoom = 14;
+	let initialZoom = 16;
+	// 14에서 16으로 수정함
 
-	// 선택 화장실이 있으면 중심과 줌 조정???????
+	// 선택 화장실이 있으면 중심과 줌 조정 원래 줌 레벨18에서 20으로 수정함 변경함 - SN
 	if (selectLat && selectLng) {
 		initialCenter = { lat: parseFloat(selectLat), lng: parseFloat(selectLng) };
-		initialZoom = 18;
+		initialZoom = 20;
 		sessionStorage.removeItem('selectedToiletLat');
 		sessionStorage.removeItem('selectedToiletLng');
 	}
@@ -199,7 +200,13 @@ function initMap() {
 			const marker = new google.maps.Marker({
 				position: { lat: toilet.lat, lng: toilet.lng },
 				map: map,
-				title: toilet.name
+				title: toilet.name,
+				icon: {
+					url: "img/map-marker.svg",
+					scaledSize: new google.maps.Size(40, 40), 
+					anchor: new google.maps.Point(20, 40) 
+				}
+				
 			});
 			
 			// 
