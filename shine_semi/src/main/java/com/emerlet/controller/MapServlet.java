@@ -17,7 +17,7 @@ import com.emerlet.vo.ToiletVO;
 /**
  * Servlet implementation class MapServlet
  */
-@WebServlet("/MapServlet")
+@WebServlet("/Emerlet")
 public class MapServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 

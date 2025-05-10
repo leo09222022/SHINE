@@ -10,6 +10,12 @@ if (lang == null)
 Locale locale = new Locale(lang);
 ResourceBundle bundle = ResourceBundle.getBundle("messages", locale);
 %>
+<%
+String currentLang = (String) session.getAttribute("lang");
+if (currentLang == null)
+	currentLang = "ko";
+%>
+
 
 <!DOCTYPE html>
 <html lang="ko">
@@ -18,6 +24,12 @@ ResourceBundle bundle = ResourceBundle.getBundle("messages", locale);
 <title>내 근처 공중화장실</title>
 <link rel="stylesheet" href="css/style.css" />
 <link rel="stylesheet" href="css/oldStyle.css" />
+
+<script>
+// 페이지 모달용 스크립트...킹쩔수 없음
+  const popupCloseText = "<%= bundle.getString("popup.close") %>";
+</script>
+
 </head>
 <body>
 	<div class="main-container">
@@ -52,46 +64,48 @@ ResourceBundle bundle = ResourceBundle.getBundle("messages", locale);
 				</div>
 
 				<!-- 토글될 필터 목록 -->
-				<!-- 남자화장실 -->
-				<div class="filter-option">
-					<div class="filter-icon-text">
-						<img src="img/toggle_man.svg" /> <span><%=bundle.getString("filter.male")%></span>
-					</div>
-					<label class="switch"> <input type="checkbox"
-						name="hasMaleToilet" /> <span class="slider"></span>
-					</label>
-				</div>
 
-				<!-- 여자화장실 -->
-				<div class="filter-option">
-					<div class="filter-icon-text">
-						<img src="img/toggle_woman.svg" /> <span><%=bundle.getString("filter.female")%></span>
+				<div id="filterOptions">
+					<!-- 남자화장실 -->
+					<div class="filter-option">
+						<div class="filter-icon-text">
+							<img src="img/toggle_man.svg" /> <span><%=bundle.getString("filter.male")%></span>
+						</div>
+						<label class="switch"> <input type="checkbox"
+							name="hasMaleToilet" /> <span class="slider"></span>
+						</label>
 					</div>
-					<label class="switch"> <input type="checkbox"
-						name="hasFemaleToilet" /> <span class="slider"></span>
-					</label>
-				</div>
 
-				<!-- 기저귀 교환대 -->
-				<div class="filter-option">
-					<div class="filter-icon-text">
-						<img src="img/toggle_baby.svg" /> <span><%=bundle.getString("filter.diaper")%></span>
+					<!-- 여자화장실 -->
+					<div class="filter-option">
+						<div class="filter-icon-text">
+							<img src="img/toggle_woman.svg" /> <span><%=bundle.getString("filter.female")%></span>
+						</div>
+						<label class="switch"> <input type="checkbox"
+							name="hasFemaleToilet" /> <span class="slider"></span>
+						</label>
 					</div>
-					<label class="switch"> <input type="checkbox"
-						name="hasDiaperTable" /> <span class="slider"></span>
-					</label>
-				</div>
 
-				<!-- 장애인 이용 가능 -->
-				<div class="filter-option">
-					<div class="filter-icon-text">
-						<img src="img/toggle_dis.svg" /> <span><%=bundle.getString("filter.disabled")%></span>
+					<!-- 기저귀 교환대 -->
+					<div class="filter-option">
+						<div class="filter-icon-text">
+							<img src="img/toggle_baby.svg" /> <span><%=bundle.getString("filter.diaper")%></span>
+						</div>
+						<label class="switch"> <input type="checkbox"
+							name="hasDiaperTable" /> <span class="slider"></span>
+						</label>
 					</div>
-					<label class="switch"> <input type="checkbox"
-						name="hasDisabledToilet" /> <span class="slider"></span>
-					</label>
-				</div>
 
+					<!-- 장애인 이용 가능 -->
+					<div class="filter-option">
+						<div class="filter-icon-text">
+							<img src="img/toggle_dis.svg" /> <span><%=bundle.getString("filter.disabled")%></span>
+						</div>
+						<label class="switch"> <input type="checkbox"
+							name="hasDisabledToilet" /> <span class="slider"></span>
+						</label>
+					</div>
+				</div>
 
 				<!-- 화장실 등록 메뉴 아이템 -->
 				<a href="toiletAdd.do" class="menu-item"> <img
@@ -112,22 +126,27 @@ ResourceBundle bundle = ResourceBundle.getBundle("messages", locale);
 					<img src="img/menu_more.svg" />
 				</div>
 			</nav>
-			<div>
-				<div>
-					<a href="setLang.jsp?lang=ko"><%=bundle.getString("lang.korean")%></a>
-				</div>
-				<div>
-					<a href="setLang.jsp?lang=en"><%=bundle.getString("lang.english")%></a>
-				</div>
-				<div>
-					<a href="setLang.jsp?lang=ja"><%=bundle.getString("lang.japanese")%></a>
-				</div>
-			</div>
+
 			<!-- 푸터 영역 -->
-			<footer class="sidebar-footer">
-				<div><%=bundle.getString("footer.about")%></div>
-				<div><%=bundle.getString("footer.contact")%></div>
-				<div><%=bundle.getString("footer.support")%></div>
+			<footer class="side_footer">
+				<div>
+					<div class="lang-selector">
+						<a href="setLang.jsp?lang=ko"
+							class="lang-btn <%="ko".equals(currentLang) ? "active" : ""%>">한국어</a>
+						<a href="setLang.jsp?lang=en"
+							class="lang-btn <%="en".equals(currentLang) ? "active" : ""%>">English</a>
+						<a href="setLang.jsp?lang=ja"
+							class="lang-btn <%="ja".equals(currentLang) ? "active" : ""%>">日本語</a>
+					</div>
+				</div>
+
+
+				<div class="about-section">
+					<div><%=bundle.getString("footer.about")%></div>
+					<div><%=bundle.getString("footer.contact")%></div>
+					<div><%=bundle.getString("footer.support")%></div>
+				</div>
+
 			</footer>
 		</aside>
 
@@ -136,12 +155,6 @@ ResourceBundle bundle = ResourceBundle.getBundle("messages", locale);
 			<div id="map"></div>
 		</main>
 	</div>
-
-	<!-- [지원] 작업 파트 include -->
-	<jsp:include page="mapJeewonPart.jsp" />
-	<h2>EMERLET</h2>
-	<button id="centerToUserBtn" onclick="centerMapToUser()">📍 내
-		근처 화장실 찾기</button>
 
 	<script>
       // JSTL로 받아온 데이터를 JS에서 접근할 수 있게 window에 저장
@@ -175,8 +188,14 @@ ResourceBundle bundle = ResourceBundle.getBundle("messages", locale);
 		<div id="modalBody"
 			style="background: #fff; width: 90%; max-width: 800px; padding: 20px; border-radius: 8px; position: relative;">
 			<button onclick="closeModal()"
-				style="position: absolute; top: 10px; right: 10px">✖</button>
+				style="float: right;" class="popup-close-btn"><%= bundle.getString("popup.close") %></button>
 		</div>
+	</div>
+
+	<!-- 마커용 팝업 컴포넌트 -->
+	<div id="customInfoPopup">
+		<button onclick="closeCustomPopup()" style="float: right;" class="popup-close-btn"> <%= bundle.getString("popup.close") %></button>
+		<div id="popupContent">Loading...</div>
 	</div>
 
 	<!-- JS 파일 연결 -->
@@ -185,7 +204,7 @@ ResourceBundle bundle = ResourceBundle.getBundle("messages", locale);
 	<!-- 구글맵이 외부 JS보다 나중에 호출되어야함 위치변경 금지 -->
 	<script async
 		src="https://maps.googleapis.com/maps/api/js?key=${applicationScope.google_map_api}&callback=initMap"></script>
-		
-		
+
+
 </body>
 </html>

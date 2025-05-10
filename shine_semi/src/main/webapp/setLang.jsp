@@ -4,5 +4,5 @@
   if (lang != null) {
     session.setAttribute("lang", lang);
   }
-  response.sendRedirect("map.jsp");
+  response.sendRedirect("Emerlet");
 %>
