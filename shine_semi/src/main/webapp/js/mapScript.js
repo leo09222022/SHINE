@@ -4,7 +4,73 @@ let userLocation = null;
 let userMarker = null;
 window.markers = [];
 window.currentInfoWindow = null;
+let selectedMarker = null; 
 
+
+function filterToilets(keyword) {
+  const list = window.toiletData.filter(toilet =>
+    toilet.name.includes(keyword) || toilet.addressRoad.includes(keyword)
+  );
+
+  const resultsDiv = document.getElementById("searchResults");
+  resultsDiv.innerHTML = "";
+
+  list.forEach(toilet => {
+    const div = document.createElement("div");
+    div.className = "search-result-item";
+    div.innerHTML = `
+      <strong>${toilet.name}</strong><br>
+      <small>${toilet.addressRoad}</small>
+    `;
+    div.onclick = () => {
+      centerMapToLocation(toilet.lat, toilet.lng);
+
+      const markerObj = window.toiletMarkers.find(obj =>
+        obj.data.lat === toilet.lat && obj.data.lng === toilet.lng
+      );
+
+      if (markerObj) {
+        const infoWindow = new google.maps.InfoWindow({
+          content: `
+            <div style="min-width:240px">
+              <h3>${toilet.name}</h3>
+              📍 도로명 주소: ${toilet.addressRoad}<br>
+              🏠 지번 주소: ${toilet.addressLot}<br>
+              ...
+            </div>`
+        });
+
+        if (window.currentInfoWindow) window.currentInfoWindow.close();
+        infoWindow.open(map, markerObj.marker);
+        window.currentInfoWindow = infoWindow;
+      }
+    };
+
+    resultsDiv.appendChild(div);
+  });
+}
+
+// 검색어 클릭 시 위치로 이동
+function centerMapToLocation(lat, lng) {
+  if (map && typeof map.setCenter === "function") {
+    map.setCenter({ lat, lng });
+    map.setZoom(17);
+  } else {
+    console.warn("지도 객체가 아직 준비되지 않았습니다.");
+  }
+}
+
+
+
+// 세션언어 감지
+if (!sessionStorage.getItem("langSet")) {
+    const userLang = navigator.language || navigator.userLanguage;
+    let lang = "en";
+    if (userLang.startsWith("ko")) lang = "ko";
+    else if (userLang.startsWith("ja")) lang = "ja";
+    sessionStorage.setItem("langSet", "true");
+    location.href = "setLang.jsp?lang=" + lang;
+  };
 
 // 필터링 함수
 function applyFilter() {
@@ -192,7 +258,7 @@ function initMap() {
 		*/
 
 
-	let selectedMarker = null;
+	selectedMarker = null;
 
 	// 마커 생성 및 클릭 이벤트 설정
 	toilets.forEach(toilet => {
@@ -261,6 +327,19 @@ function initMap() {
 			google.maps.event.trigger(selectedMarker, 'click');
 		}, 500);
 	}
+	
+	// 맵 초기화 완료 체크 >> 검색어 출력용
+	window.mapReady = true; 
+	
+	
+}
+
+
+// 선택된 마커가 있으면 자동 클릭
+if (selectedMarker) {
+  setTimeout(() => {
+    google.maps.event.trigger(selectedMarker, 'click');
+  }, 500);
 }
 
 
