@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.emerlet.db.GCPTranslate;
 
 @WebServlet("/translateOne")
-public class TranslateServlet extends HttpServlet {
+public class TranslateOneServlet extends HttpServlet {
     private String apiKey;
 
     @Override
@@ -45,8 +45,10 @@ public class TranslateServlet extends HttpServlet {
                 translatedAddress.replace("\"", "\\\"")
             );
         } catch (Exception e) {
+            e.printStackTrace();
             resp.setStatus(500);
             resp.getWriter().write("{\"error\": \"Translation failed\"}");
         }
+
     }
 }
