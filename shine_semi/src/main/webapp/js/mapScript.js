@@ -5,7 +5,16 @@ let userMarker = null;
 window.markers = [];
 window.currentInfoWindow = null;
 let selectedMarker = null;
+//날짜 출력용 텍스트
+const lastVerifiedDate = new Date("2025-05-01");
+const localizedDate = lastVerifiedDate.toLocaleDateString(window.lang || "ko", {
+  year: "numeric",
+  month: "long",
+  day: "numeric"
+});
 
+
+// 서치박스용 함수
 function filterToilets(keyword) {
   const list = window.toiletData.filter(
     (toilet) =>
@@ -385,6 +394,14 @@ function openCustomPopup(toilet) {
   const content = document.getElementById("popupContent");
 
   if (!popup || !content) return;
+  
+  const lastVerifiedDate = new Date("2025-05-01");
+  const localizedDate = lastVerifiedDate.toLocaleDateString(window.lang || "ko", {
+    year: "numeric",
+    month: "long",
+    day: "numeric"
+  });
+  const verifiedMessage = window.i18n.lastVerified.replace("{0}", localizedDate);
 
   content.innerHTML = `
     <div style="padding: 20px; background: white; border-radius: 4px; flex-direction: column; justify-content: flex-start; align-items: flex-end; display: inline-flex;">
@@ -396,25 +413,25 @@ function openCustomPopup(toilet) {
             <div style="font-size: 14px">${toilet.openTimeDetail}</div>
           </div>
           <div onclick="openKakaoPopUp()" style="cursor: pointer; background: #3a81ff; color: white; padding: 8px; border-radius: 4px; display: flex; gap: 8px; align-items: center; justify-content: center; text-align: center;">
-            <img src="img/pop_directions.svg" alt=""><span>길 안내</span>
+             <img src="img/pop_directions.svg" alt=""><span>${window.i18n.guide}</span>
           </div>
-          <div style="font-size: 14px; color: #919191">이 화장실 정보는<br/>2025년 5월 1일에 마지막으로 확인되었습니다.</div>
+		  <div style="font-size: 14px; color: #919191">${verifiedMessage}</div>
           <div style="display: flex; gap: 4px; align-items: center">
-            <div style="color: #3a81ff; font-size: 14px">정보 오류 신고</div>
+            <div style="color: #3a81ff; font-size: 14px">${window.i18n.report}</div>
           </div>
         </div>
 
-        <div style="width: 280px; display: flex; flex-direction: column; gap: 8px">
-          ${renderFacilityRow("남자화장실", "img/pop_man.svg", toilet.maleToilet)}
-          ${renderFacilityRow("남성 장애인 이용 가능 화장실", "img/pop__accessible.svg", toilet.maleDisabledToilet)}
-          ${renderFacilityRow("여자화장실", "img/pop_woman.svg", toilet.femaleToilet)}
-          ${renderFacilityRow("여성 장애인 이용 가능 화장실", "img/pop__accessible.svg", toilet.femaleDisabledToilet)}
-          ${renderFacilityRow("기저귀 교환대", "img/pop_baby.svg", toilet.hasDiaperTable)}
-          <div style="font-size: 12px;">기저귀 교환대 위치 : ${toilet.diaperTableLocation}</div>
-          ${renderFacilityRow("비상벨", "img/pop_bell.svg", toilet.hasEmergencyBell)}
-          <div style="font-size: 12px;">비상벨 위치 : ${toilet.emergencyBellLocation}</div>
-          ${renderFacilityRow("CCTV", "img/pop_cctv.svg", toilet.hasCctv)}
-        </div>
+		<div style="width: 280px; display: flex; flex-direction: column; gap: 8px">
+		  ${renderFacilityRow("maleToilet", "img/pop_man.svg", toilet.maleToilet)}
+		  ${renderFacilityRow("maleDisabledToilet", "img/pop__accessible.svg", toilet.maleDisabledToilet)}
+		  ${renderFacilityRow("femaleToilet", "img/pop_woman.svg", toilet.femaleToilet)}
+		  ${renderFacilityRow("femaleDisabledToilet", "img/pop__accessible.svg", toilet.femaleDisabledToilet)}
+		  ${renderFacilityRow("diaperTable", "img/pop_baby.svg", toilet.hasDiaperTable)}
+		  <div style="font-size: 12px;">${window.i18n.diaperLocation} : ${toilet.diaperTableLocation}</div>
+		  ${renderFacilityRow("emergencyBell", "img/pop_bell.svg", toilet.hasEmergencyBell)}
+		  <div style="font-size: 12px;">${window.i18n.emergencyBellStatus} : ${toilet.emergencyBellLocation}</div>
+		  ${renderFacilityRow("cctv", "img/pop_cctv.svg", toilet.hasCctv)}
+		</div>
       </div>
     </div>
   `;
@@ -422,12 +439,14 @@ function openCustomPopup(toilet) {
   popup.style.display = "block";
 }
 
-function renderFacilityRow(label, iconPath, value) {
+function renderFacilityRow(labelKey, iconPath, value) {
   let iconStatus = "img/pop_question.svg";
   const num = parseInt(value);
   if (!isNaN(num)) {
     iconStatus = num > 0 ? "img/pop__check.svg" : "img/pop__close.svg";
   }
+
+  const label = window.i18n[labelKey];
 
   return `
     <div style="display: flex; justify-content: space-between; align-items: center;">
@@ -441,6 +460,7 @@ function renderFacilityRow(label, iconPath, value) {
     </div>
   `;
 }
+
 
 
 

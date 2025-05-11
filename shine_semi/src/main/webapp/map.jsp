@@ -30,6 +30,31 @@ if (currentLang == null)
   const popupCloseText = "<%= bundle.getString("popup.close") %>";
 </script>
 
+<script>
+// 날짜 출력용 
+window.lang = "<%= lang %>";
+
+// 다국어 마커 팝업용 스크립트
+  window.i18n = {
+    guide: "<%=bundle.getString("popup.guide")%>",
+    lastVerified: "<%=bundle.getString("popup.lastVerified")%>",
+    report: "<%=bundle.getString("popup.report")%>",
+    maleToilet: "<%=bundle.getString("popup.maleToilet")%>",
+    maleDisabledToilet: "<%=bundle.getString("popup.maleDisabledToilet")%>",
+    femaleToilet: "<%=bundle.getString("popup.femaleToilet")%>",
+    femaleDisabledToilet: "<%=bundle.getString("popup.femaleDisabledToilet")%>",
+    diaperTable: "<%=bundle.getString("popup.diaperTable")%>",
+    diaperLocation: "<%=bundle.getString("popup.diaperLocation")%>",
+    emergencyBell: "<%=bundle.getString("popup.emergencyBell")%>",
+    emergencyBellStatus: "<%=bundle.getString("popup.emergencyBellStatus")%>",
+    cctv: "<%=bundle.getString("popup.cctv")%>",
+    lastVerified: "<%=bundle.getString("popup.lastVerified")%>",  
+    confirmed: "<%=bundle.getString("popup.confirmed")%>"        
+  };
+</script>
+
+
+
 </head>
 <body>
 	<div class="main-container">
