@@ -429,20 +429,38 @@ function openCustomPopup(toilet) {
   
   if (window.innerWidth <= 768) {
     content.innerHTML = `
-      <div style="display:flex; flex-direction: column; gap: 12px;">
+      <div style="display:flex; flex-direction: column; gap: 16px;">
         <div>
           <div style="font-size: 18px; font-weight: 600;">${toilet.name}</div>
-		  <!-- <div style="font-size: 14px;">청결도 : ${toilet.cleanliness}</div> -->
-		  <!-- <div style="font-size: 14px;">안전성 : ${toilet.safety}</div> -->
+          <div style="font-size: 14px;">청결도 ⭐ ${toilet.cleanliness} &nbsp; 안전성 ⭐ ${toilet.safety}</div>
           <div style="font-size: 14px;">${toilet.addressRoad}</div>
           <div style="font-size: 14px;">${toilet.openTimeDetail}</div>
         </div>
+
         <button onclick="openKakaoPopUp()" style="background: #3a81ff; color: white; border: none; border-radius: 8px; padding: 10px 0; font-size: 16px;">
           ${window.i18n.guide}
         </button>
+
+        ${renderFacilityRow("maleToilet", "img/pop_man.svg", toilet.maleToilet)}
+        ${renderFacilityRow("maleDisabledToilet", "img/pop__accessible.svg", toilet.maleDisabledToilet)}
+        ${renderFacilityRow("femaleToilet", "img/pop_woman.svg", toilet.femaleToilet)}
+        ${renderFacilityRow("femaleDisabledToilet", "img/pop__accessible.svg", toilet.femaleDisabledToilet)}
+        ${renderFacilityRow("diaperTable", "img/pop_baby.svg", toilet.hasDiaperTable)}
+        <div style="font-size: 12px;">${window.i18n.diaperLocation} : ${toilet.diaperTableLocation}</div>
+        ${renderFacilityRow("emergencyBell", "img/pop_bell.svg", toilet.hasEmergencyBell)}
+        <div style="font-size: 12px;">${window.i18n.emergencyBellStatus} : ${toilet.emergencyBellLocation}</div>
+        ${renderFacilityRow("cctv", "img/pop_cctv.svg", toilet.hasCctv)}
+
+        <div style="font-size: 12px; color: #999; text-align: center;">
+          이 화장실 정보는 2025년 5월 1일에 마지막으로 확인되었습니다.
+        </div>
+        <div style="font-size: 12px; text-align: center;">
+          <a href="#" style="color: #3a81ff; font-weight: 600;">정보 오류 신고 ></a>
+        </div>
       </div>
     `;
-  } else {
+  }
+ else {
 	 content.innerHTML = `
 	    <div style="padding: 20px; background: white; border-radius: 4px; flex-direction: column; justify-content: flex-start; align-items: flex-end; display: inline-flex;">
 	      <div style="display: flex; gap: 40px">
@@ -560,5 +578,48 @@ function closeCustomPopup() {
     script.onload = () => console.log("kakaoMapPopUp.js loaded"); // 디버깅용
     document.head.appendChild(script);
   }
+})();
+
+// 팝업 스크롤바로 내릴 시 모바일 화면에서 아래로 사라지게 하는 함수 
+(function enablePopupSwipeClose() {
+  const popup = document.getElementById("customInfoPopup");
+  let startY = 0;
+  let isDragging = false;
+
+  popup.addEventListener("touchstart", (e) => {
+    const y = e.touches[0].clientY;
+    const bar = popup.querySelector(".popup-dragbar");
+    const barRect = bar.getBoundingClientRect();
+
+    if (y >= barRect.top - 20 && y <= barRect.bottom + 20) {
+      isDragging = true;
+      startY = y;
+    }
+  });
+
+
+  popup.addEventListener("touchmove", (e) => {
+    if (!isDragging) return;
+    const deltaY = e.touches[0].clientY - startY;
+    
+    // 80px 이상 아래로 스와이프 시 팝업 닫기
+    if (deltaY > 80) {
+      popup.style.transition = "transform 0.3s ease-out, opacity 0.3s ease-out";
+      popup.style.transform = "translateY(100%)";
+      popup.style.opacity = "0";
+
+      setTimeout(() => {
+        popup.style.display = "none";
+        popup.style.transform = ""; // 초기화
+        popup.style.opacity = "";
+        popup.style.transition = "";
+      }, 300);
+
+      isDragging = false;
+    }
+  });
+  popup.addEventListener("touchend", () => {
+    isDragging = false;
+  });
 })();
 

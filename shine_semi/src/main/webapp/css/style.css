@@ -547,12 +547,23 @@ border: 1px solid #3A81FF;
 		transform: translateX(-50%);
 		width: calc(100% - 32px);
 		max-width: 360px;
+		max-height: 50vh;
+		overflow-y: auto;
 		background: white;
 		border-radius: 16px 16px 0 0;
 		box-shadow: 0 -2px 12px rgba(0, 0, 0, 0.15);
 		padding: 20px;
 		z-index: 9999;
 		display: none;
+	}
+
+	/* 상단 바 (드래그바처럼 보이게) */
+	.popup-dragbar {
+		width: 40px;
+		height: 5px;
+		background: #ccc;
+		border-radius: 5px;
+		margin: 8px auto;
 	}
 	#popupContent {
 		pointer-events: auto;

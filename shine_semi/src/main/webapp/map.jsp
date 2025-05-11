@@ -230,6 +230,7 @@ window.lang = "<%=lang%>";
 
 	<!-- 마커용 팝업 컴포넌트 -->
 	<div id="customInfoPopup">
+		<div class="popup-dragbar" style="width: 48px; height: 8px; background: #ccc; border-radius: 4px; margin: 0 auto 12px auto; cursor: grab;"></div>
 		<button onclick="closeCustomPopup()" style="float: right;"
 			class="popup-close-btn">
 			<%=bundle.getString("popup.close")%></button>
