@@ -21,7 +21,7 @@ ResourceBundle bundle = ResourceBundle.getBundle("messages", locale);
 		<div class="mo-top">
 			<img class="clickable" src="img/logo_row.svg"> <img
 				class="clickable" src="img/mo_menu.svg" 
-				onclick="location.href='mo_menu.html'" />
+				onclick="location.href='mo_menu.jsp'" />
 
 
 		</div>
