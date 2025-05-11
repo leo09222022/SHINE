@@ -159,7 +159,7 @@ public class ToiletDAO {
     public ArrayList<ToiletVO> findAll() {
 	    ArrayList<ToiletVO> toilets = new ArrayList<>();
 
-	    String sql = "SELECT name, address_road, address_lot, " +
+	    String sql = "SELECT toilet_id, name, address_road, address_lot, " +
 	               "male_toilet, male_urinal, male_disabled_toilet, male_disabled_urinal, " +
 	               "male_child_toilet, male_child_urinal, " +
 	               "female_toilet, female_disabled_toilet, female_child_toilet, " +
@@ -175,6 +175,7 @@ public class ToiletDAO {
 
 	        while (rs.next()) {
 	            ToiletVO toilet = new ToiletVO();
+	            toilet.setToiletId(rs.getInt("toilet_id"));
 	            toilet.setName(rs.getString("name"));
 	            toilet.setAddressRoad(rs.getString("address_road"));
 	            toilet.setAddressLot(rs.getString("address_lot"));
