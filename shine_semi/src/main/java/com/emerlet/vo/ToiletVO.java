@@ -3,6 +3,7 @@ package com.emerlet.vo;
 import java.util.Date;
 
 public class ToiletVO {
+	private int toiletId; 
     private double lat;
     private double lng;
     private String name;
@@ -27,6 +28,14 @@ public class ToiletVO {
     private Date dataReferenceDate;
 
     public ToiletVO() {}
+    
+    public int getToiletId() {
+        return toiletId;
+    }
+
+    public void setToiletId(int toiletId) {
+        this.toiletId = toiletId;
+    }
 
     public double getLat() { return lat; }
     public void setLat(double lat) { this.lat = lat; }
