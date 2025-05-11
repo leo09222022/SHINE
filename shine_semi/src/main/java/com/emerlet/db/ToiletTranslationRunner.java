@@ -1,9 +1,21 @@
 package com.emerlet.db;
 
+import com.emerlet.db.GCPTranslate;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.sql.*;
+import java.util.Properties;
 
 public class ToiletTranslationRunner {
     public static void main(String[] args) throws Exception {
+    	Properties props = new Properties();
+    	try (InputStream in = new FileInputStream("src/main/webapp/WEB-INF/shine.properties")) {
+    	    props.load(in);
+    	    GCPTranslate.setApiKey(props.getProperty("google_translate_api"));
+    	}
+
         Connection conn = ConnectionProvider.getConnection();
         String selectSql = "SELECT toilet_id, name, address_road FROM toilets";
         PreparedStatement ps = conn.prepareStatement(selectSql);
@@ -20,8 +32,8 @@ public class ToiletTranslationRunner {
 
             // 화장실 이름 번역
             if (name != null && !name.trim().isEmpty() && !exists(conn, "foreign_name", toiletId)) {
-                String engName = LibreTranslate.translate(name, "en");
-                String jpnName = LibreTranslate.translate(name, "ja");
+                String engName = GCPTranslate.translate(name, "en");
+                String jpnName = GCPTranslate.translate(name, "ja");
                 insertForeignName(conn, toiletId, engName, jpnName);
                 insertedName++;
                 System.out.println("✅ 이름 번역 완료: " + name);
@@ -29,8 +41,8 @@ public class ToiletTranslationRunner {
 
             // 도로명 주소 번역
             if (roadAddress != null && !roadAddress.trim().isEmpty() && !exists(conn, "foreign_address", toiletId)) {
-                String engAddr = LibreTranslate.translate(roadAddress, "en");
-                String jpnAddr = LibreTranslate.translate(roadAddress, "ja");
+                String engAddr = GCPTranslate.translate(roadAddress, "en");
+                String jpnAddr = GCPTranslate.translate(roadAddress, "ja");
                 insertForeignAddress(conn, toiletId, engAddr, jpnAddr);
                 insertedAddr++;
                 System.out.println("✅ 주소 번역 완료: " + roadAddress);
