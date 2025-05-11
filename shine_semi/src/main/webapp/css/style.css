@@ -295,8 +295,8 @@ input:checked+.slider:before {
 }
 
 #customInfoPopup {
-	display: none; 
-	position : absolute;
+	display: none;
+	position: absolute;
 	bottom: 20px;
 	left: calc(50% + 160px); /* 사이드바 절반만큼 오른쪽으로 */
 	transform: translateX(-50%);
@@ -309,23 +309,133 @@ input:checked+.slider:before {
 	position: absolute;
 }
 
-
 /* 공통 닫기 버튼*/
 .popup-close-btn {
-  background: #1D1D1F;
-  color: white;
-  border: none;
-  border-radius: 50px;
-  font-size: 12px;
-  font-weight: 600;
-  font-family: 'Pretendard', sans-serif;
-  padding: 6px 12px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 6px;
+	background: #1D1D1F;
+	color: white;
+	border: none;
+	border-radius: 50px;
+	font-size: 12px;
+	font-weight: 600;
+	font-family: 'Pretendard', sans-serif;
+	padding: 6px 12px;
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+	gap: 6px;
 }
 
 .popup-close-btn:hover {
-  background: #333;
+	background: #333;
+}
+
+/* 모바일 메인 스타일*/
+.mobile-button-group {
+
+	padding: 20px;
+	display: inline-flex;
+	justify-content: center;
+	align-items: center;
+	gap: 12px;
+}
+
+/* 아이콘 전용 버튼 (둥근 배경 안에 아이콘만) */
+.icon-button {
+	width: 36px;
+	height: 36px;
+	padding: 8px 20px;
+	background: white;
+	border-radius: 4px;
+	outline: 1px solid #3A81FF;
+	outline-offset: -1px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+/* 텍스트 포함된 버튼 (공통) */
+.text-button {
+	height: 36px;
+	padding: 8px;
+	border-radius: 4px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 4px;
+}
+
+/* 외곽선 버튼 */
+.outline-button {
+	background: white;
+	outline: 1px solid #3A81FF;
+	outline-offset: -1px;
+	color: #3A81FF;
+}
+
+/* 채워진 버튼 */
+.filled-button {
+	background: #3A81FF;
+	color: white;
+}
+
+/* 텍스트 */
+.text {
+	font-size: 16px;
+	font-family: 'Pretendard', sans-serif;
+	font-weight: 600;
+	color: inherit;
+}
+
+/* 기본값: 데스크탑에서는 모바일 메뉴 숨김 */
+.mobile-nav {
+	display: none;
+}
+
+/* 모바일 환경 */
+@media ( max-width : 768px) {
+	.sidebar {
+		display: none;
+	}
+	.mobile-nav {
+		position: absolute; /* 또는 fixed */
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100vh; /* 원하는 높이 */
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		align-items: stretch;
+		z-index: 1000;
+		 pointer-events: none;
+	}
+	
+	.mobile-nav .clickable {
+  pointer-events: auto;
+   cursor: pointer;
+}
+	
+	
+	.mo-center-wrapper {
+		display: flex;
+		justify-content: center;
+	}
+	.mo-top {
+		width: 100%;
+		height: 48px;
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		align-items: center;
+		padding: 12px 20px;
+		background-color: white;
+	}
+	#customInfoPopup {
+		left: calc(50%);
+	}
+	.search-box {
+		margin: 20px;
+		width: 60%;
+		min-width: 300px;
+	}
 }

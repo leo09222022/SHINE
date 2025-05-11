@@ -388,40 +388,52 @@ function openCustomPopup(toilet) {
   });
   const verifiedMessage = window.i18n.lastVerified.replace("{0}", localizedDate);
 
-  content.innerHTML = `
-    <div style="padding: 20px; background: white; border-radius: 4px; flex-direction: column; justify-content: flex-start; align-items: flex-end; display: inline-flex;">
-      <div style="display: flex; gap: 40px">
-        <div style="width: 280px; display: flex; flex-direction: column; gap: 20px">
-          <div style="display: flex; flex-direction: column; gap: 8px">
-            <div style="font-size: 24px; font-weight: 600">${toilet.name}</div>
-            <div style="font-size: 14px">${toilet.addressRoad}</div>
-            <div style="font-size: 14px">${toilet.openTimeDetail}</div>
-          </div>
-          <div onclick="openKakaoPopUp()" style="cursor: pointer; background: #3a81ff; color: white; padding: 8px; border-radius: 4px; display: flex; gap: 8px; align-items: center; justify-content: center; text-align: center;">
-             <img src="img/pop_directions.svg" alt=""><span>${window.i18n.guide}</span>
-          </div>
-		  <div style="font-size: 14px; color: #919191">${verifiedMessage}</div>
-          <div style="display: flex; gap: 4px; align-items: center">
-            <div style="color: #3a81ff; font-size: 14px">${window.i18n.report}</div>
-          </div>
-        </div>
-
-		<div style="width: 280px; display: flex; flex-direction: column; gap: 8px">
-		  ${renderFacilityRow("maleToilet", "img/pop_man.svg", toilet.maleToilet)}
-		  ${renderFacilityRow("maleDisabledToilet", "img/pop__accessible.svg", toilet.maleDisabledToilet)}
-		  ${renderFacilityRow("femaleToilet", "img/pop_woman.svg", toilet.femaleToilet)}
-		  ${renderFacilityRow("femaleDisabledToilet", "img/pop__accessible.svg", toilet.femaleDisabledToilet)}
-		  ${renderFacilityRow("diaperTable", "img/pop_baby.svg", toilet.hasDiaperTable)}
-		  <div style="font-size: 12px;">${window.i18n.diaperLocation} : ${toilet.diaperTableLocation}</div>
-		  ${renderFacilityRow("emergencyBell", "img/pop_bell.svg", toilet.hasEmergencyBell)}
-		  <div style="font-size: 12px;">${window.i18n.emergencyBellStatus} : ${toilet.emergencyBellLocation}</div>
-		  ${renderFacilityRow("cctv", "img/pop_cctv.svg", toilet.hasCctv)}
-		</div>
-      </div>
-    </div>
-  `;
-
   popup.style.display = "block";
+  
+  if (window.innerWidth <= 768) {
+     // 모바일 전용 UI
+     content.innerHTML = `
+       <div style="font-size:18px;font-weight:bold">${toilet.name}</div>
+       <div>${toilet.addressRoad}</div>
+       <div>${toilet.openTimeDetail}</div>
+       <button onclick="openKakaoPopUp()">길찾기</button>
+       <button onclick="closeCustomPopup()">닫기</button>
+     `;
+   } else {
+	 content.innerHTML = `
+	    <div style="padding: 20px; background: white; border-radius: 4px; flex-direction: column; justify-content: flex-start; align-items: flex-end; display: inline-flex;">
+	      <div style="display: flex; gap: 40px">
+	        <div style="width: 280px; display: flex; flex-direction: column; gap: 20px">
+	          <div style="display: flex; flex-direction: column; gap: 8px">
+	            <div style="font-size: 24px; font-weight: 600">${toilet.name}</div>
+	            <div style="font-size: 14px">${toilet.addressRoad}</div>
+	            <div style="font-size: 14px">${toilet.openTimeDetail}</div>
+	          </div>
+	          <div onclick="openKakaoPopUp()" style="cursor: pointer; background: #3a81ff; color: white; padding: 8px; border-radius: 4px; display: flex; gap: 8px; align-items: center; justify-content: center; text-align: center;">
+	             <img src="img/pop_directions.svg" alt=""><span>${window.i18n.guide}</span>
+	          </div>
+	 	  <div style="font-size: 14px; color: #919191">${verifiedMessage}</div>
+	          <div style="display: flex; gap: 4px; align-items: center">
+	            <div style="color: #3a81ff; font-size: 14px">${window.i18n.report}</div>
+	          </div>
+	        </div>
+
+	 	<div style="width: 280px; display: flex; flex-direction: column; gap: 8px">
+	 	  ${renderFacilityRow("maleToilet", "img/pop_man.svg", toilet.maleToilet)}
+	 	  ${renderFacilityRow("maleDisabledToilet", "img/pop__accessible.svg", toilet.maleDisabledToilet)}
+	 	  ${renderFacilityRow("femaleToilet", "img/pop_woman.svg", toilet.femaleToilet)}
+	 	  ${renderFacilityRow("femaleDisabledToilet", "img/pop__accessible.svg", toilet.femaleDisabledToilet)}
+	 	  ${renderFacilityRow("diaperTable", "img/pop_baby.svg", toilet.hasDiaperTable)}
+	 	  <div style="font-size: 12px;">${window.i18n.diaperLocation} : ${toilet.diaperTableLocation}</div>
+	 	  ${renderFacilityRow("emergencyBell", "img/pop_bell.svg", toilet.hasEmergencyBell)}
+	 	  <div style="font-size: 12px;">${window.i18n.emergencyBellStatus} : ${toilet.emergencyBellLocation}</div>
+	 	  ${renderFacilityRow("cctv", "img/pop_cctv.svg", toilet.hasCctv)}
+	 	</div>
+	      </div>
+	    </div>
+	  `;
+   }
+ 
 }
 
 function renderFacilityRow(labelKey, iconPath, value) {

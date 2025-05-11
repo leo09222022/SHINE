@@ -27,12 +27,12 @@ if (currentLang == null)
 
 <script>
 // 페이지 모달용 스크립트...킹쩔수 없음
-  const popupCloseText = "<%= bundle.getString("popup.close") %>";
+  const popupCloseText = "<%=bundle.getString("popup.close")%>";
 </script>
 
 <script>
 // 날짜 출력용 
-window.lang = "<%= lang %>";
+window.lang = "<%=lang%>";
 
 // 다국어 마커 팝업용 스크립트
   window.i18n = {
@@ -58,7 +58,13 @@ window.lang = "<%= lang %>";
 </head>
 <body>
 	<div class="main-container">
-		<!-- 사이드바 영역 -->
+		<!-- 모바일 UI -->
+		<jsp:include page="map_mo.jsp" />
+
+
+
+
+		<!-- PC사이드바 영역 -->
 		<aside class="sidebar">
 			<!-- 로고 영역 -->
 			<div class="sidebar-logo">
@@ -156,11 +162,14 @@ window.lang = "<%= lang %>";
 			<footer class="side_footer">
 				<div>
 					<div class="lang-selector">
-						<a href="setLang.jsp?lang=ko" onclick="reloadGoogleMapScript('ko')"
+						<a href="setLang.jsp?lang=ko"
+							onclick="reloadGoogleMapScript('ko')"
 							class="lang-btn <%="ko".equals(currentLang) ? "active" : ""%>">한국어</a>
-						<a href="setLang.jsp?lang=en" onclick="reloadGoogleMapScript('en')"
+						<a href="setLang.jsp?lang=en"
+							onclick="reloadGoogleMapScript('en')"
 							class="lang-btn <%="en".equals(currentLang) ? "active" : ""%>">English</a>
-						<a href="setLang.jsp?lang=ja" onclick="reloadGoogleMapScript('ja')"
+						<a href="setLang.jsp?lang=ja"
+							onclick="reloadGoogleMapScript('ja')"
 							class="lang-btn <%="ja".equals(currentLang) ? "active" : ""%>">日本語</a>
 					</div>
 				</div>
@@ -212,14 +221,16 @@ window.lang = "<%= lang %>";
 		style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); justify-content: center; align-items: center; z-index: 9999;">
 		<div id="modalBody"
 			style="background: #fff; width: 90%; max-width: 800px; padding: 20px; border-radius: 8px; position: relative;">
-			<button onclick="closeModal()"
-				style="float: right;" class="popup-close-btn"><%= bundle.getString("popup.close") %></button>
+			<button onclick="closeModal()" style="float: right;"
+				class="popup-close-btn"><%=bundle.getString("popup.close")%></button>
 		</div>
 	</div>
 
 	<!-- 마커용 팝업 컴포넌트 -->
 	<div id="customInfoPopup">
-		<button onclick="closeCustomPopup()" style="float: right;" class="popup-close-btn"> <%= bundle.getString("popup.close") %></button>
+		<button onclick="closeCustomPopup()" style="float: right;"
+			class="popup-close-btn">
+			<%=bundle.getString("popup.close")%></button>
 		<div id="popupContent">Loading...</div>
 	</div>
 
@@ -227,15 +238,15 @@ window.lang = "<%= lang %>";
 	<script src="js/mapScript.js"></script>
 
 
-<!-- 랭귀지 관련 함수 -->
-<!-- onclick에 세션이벤트까지 같이 하는방식으로 수정해야되는데 귀찮으므로 일단 둠 -->
-<script>
+	<!-- 랭귀지 관련 함수 -->
+	<!-- onclick에 세션이벤트까지 같이 하는방식으로 수정해야되는데 귀찮으므로 일단 둠 -->
+	<script>
 function reloadGoogleMapScript(langCode) {
   const oldScript = document.querySelector('script[src*="maps.googleapis.com"]');
   if (oldScript) oldScript.remove();
 
   const newScript = document.createElement("script");
-  newScript.src = `https://maps.googleapis.com/maps/api/js?key=<%= application.getAttribute("google_map_api") %>&callback=initMap&language=${langCode}`;
+  newScript.src = `https://maps.googleapis.com/maps/api/js?key=<%=application.getAttribute("google_map_api")%>&callback=initMap&language=${langCode}`;
   newScript.async = true;
   document.head.appendChild(newScript);
 }
@@ -246,7 +257,7 @@ function reloadGoogleMapScript(langCode) {
 	<!-- 구글맵이 외부 JS보다 나중에 호출되어야함 위치변경 금지 -->
 	<!-- 랭귀지 관련 파라메터 추가함 -->
 	<script async
-  src="https://maps.googleapis.com/maps/api/js?key=${applicationScope.google_map_api}&callback=initMap&language=<%= lang %>"></script>
+		src="https://maps.googleapis.com/maps/api/js?key=${applicationScope.google_map_api}&callback=initMap&language=<%= lang %>"></script>
 
 
 
