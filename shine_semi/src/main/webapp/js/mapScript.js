@@ -468,12 +468,10 @@ function openCustomPopup(toilet) {
         <div style="font-size: 12px;">${window.i18n.emergencyBellStatus} : ${toilet.emergencyBellLocation}</div>
         ${renderFacilityRow("cctv", "img/pop_cctv.svg", toilet.hasCctv)}
 
-        <div style="font-size: 12px; color: #999; text-align: center;">
-          이 화장실 정보는 2025년 5월 1일에 마지막으로 확인되었습니다.
-        </div>
-        <div style="font-size: 12px; text-align: center;">
-          <a href="#" style="color: #3a81ff; font-weight: 600;">정보 오류 신고 ></a>
-        </div>
+		<div style="font-size: 14px; color: #919191">${verifiedMessage}</div>
+		<div style="display: flex; gap: 4px; align-items: center">
+			<div style="color: #3a81ff; font-size: 14px">${window.i18n.report}</div>
+		</div>
       </div>
     `;
   }
