@@ -363,14 +363,15 @@ function initMap() {
       // 마커 클릭 시 InfoWindow 표시
       marker.addListener("click", () => {
 		const lang = sessionStorage.getItem("lang") || navigator.language.slice(0, 2);
-		  console.log("마커 클릭됨 / 현재 언어:", lang);
         // 마커 위치를 지도 중심으로 이동시키기
         map.setCenter(marker.getPosition());
         // 커스텀 팝업으로 변경
         //openCustomPopup(toilet);
 
-		const ctx = window.location.pathname.split("/")[1]; // 
-		fetch(`/${ctx}/translateOne?name=${encodeURIComponent(toilet.name)}&address=${encodeURIComponent(toilet.addressRoad)}&lang=${lang}`)
+		// 한국어일 경우 번역하지 않고 원본 데이터 사용
+		if (lang !== "ko") {
+		  const ctx = window.location.pathname.split("/")[1]; // 
+		  fetch(`/${ctx}/translateOne?name=${encodeURIComponent(toilet.name)}&address=${encodeURIComponent(toilet.addressRoad)}&lang=${lang}`)
 		    .then(res => {
 		      if (!res.ok) throw new Error("번역 실패");
 		      return res.json();
@@ -381,9 +382,13 @@ function initMap() {
 		      openCustomPopup(toilet);
 		    })
 		    .catch(err => {
-		      console.error("❌ 번역 실패", err);
+		      console.error("번역 실패", err);
 		      openCustomPopup(toilet); // 번역 실패시 원본으로 fallback
-			  });
+		    });
+		} else {
+		  // 한국어일 때는 번역 없이 바로 팝업을 열도록 처리
+		  openCustomPopup(toilet);
+		}
         // 기존팝업 코드 아래
         /* 
 				if (window.currentInfoWindow) window.currentInfoWindow.close();
