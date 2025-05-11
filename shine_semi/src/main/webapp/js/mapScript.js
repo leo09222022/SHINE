@@ -13,6 +13,43 @@ const localizedDate = lastVerifiedDate.toLocaleDateString(window.lang || "ko", {
   day: "numeric"
 });
 
+// 모바일 메뉴
+function toggleMobileMenu() {
+  const menu = document.getElementById("mobileMenu");
+  menu.classList.toggle("show");
+}
+
+
+
+
+// 랭귀지 설정 팝업 ( 모바일)
+function changeLang(lang) {
+  location.href = `setLang.jsp?lang=${lang}`;
+}
+
+function openLangPopup() {
+  const popup = document.getElementById("langPopup");
+  const body = popup.querySelector(".lang-popup-body");
+
+  popup.style.display = "flex";
+  body.style.animation = "slideUp 0.3s ease-out forwards";
+}
+
+function closeLangPopup() {
+  const popup = document.getElementById("langPopup");
+  const body = popup.querySelector(".lang-popup-body");
+
+  // slideDown 애니메이션 후 display none
+  body.style.animation = "slideDown 0.3s ease-in forwards";
+
+  // 애니메이션 끝난 후 완전히 닫기
+  setTimeout(() => {
+    popup.style.display = "none";
+  }, 300); // 애니메이션과 동일한 시간
+}
+
+
+
 
 // 서치박스용 함수
 function filterToilets(keyword) {
