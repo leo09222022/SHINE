@@ -428,15 +428,21 @@ function openCustomPopup(toilet) {
   popup.style.display = "block";
   
   if (window.innerWidth <= 768) {
-     // 모바일 전용 UI
-     content.innerHTML = `
-       <div style="font-size:18px;font-weight:bold">${toilet.name}</div>
-       <div>${toilet.addressRoad}</div>
-       <div>${toilet.openTimeDetail}</div>
-       <button onclick="openKakaoPopUp()">길찾기</button>
-       <button onclick="closeCustomPopup()">닫기</button>
-     `;
-   } else {
+    content.innerHTML = `
+      <div style="display:flex; flex-direction: column; gap: 12px;">
+        <div>
+          <div style="font-size: 18px; font-weight: 600;">${toilet.name}</div>
+		  <!-- <div style="font-size: 14px;">청결도 : ${toilet.cleanliness}</div> -->
+		  <!-- <div style="font-size: 14px;">안전성 : ${toilet.safety}</div> -->
+          <div style="font-size: 14px;">${toilet.addressRoad}</div>
+          <div style="font-size: 14px;">${toilet.openTimeDetail}</div>
+        </div>
+        <button onclick="openKakaoPopUp()" style="background: #3a81ff; color: white; border: none; border-radius: 8px; padding: 10px 0; font-size: 16px;">
+          ${window.i18n.guide}
+        </button>
+      </div>
+    `;
+  } else {
 	 content.innerHTML = `
 	    <div style="padding: 20px; background: white; border-radius: 4px; flex-direction: column; justify-content: flex-start; align-items: flex-end; display: inline-flex;">
 	      <div style="display: flex; gap: 40px">
@@ -555,3 +561,4 @@ function closeCustomPopup() {
     document.head.appendChild(script);
   }
 })();
+

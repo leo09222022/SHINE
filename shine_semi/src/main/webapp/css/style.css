@@ -540,12 +540,27 @@ border: 1px solid #3A81FF;
 		padding: 12px 20px;
 		background-color: white;
 	}
-	#customInfoPopup {
-		left: calc(50%);
+  	#customInfoPopup {
+		position: fixed !important;
+		bottom: 0;
+		left: 50%;
+		transform: translateX(-50%);
+		width: calc(100% - 32px);
+		max-width: 360px;
+		background: white;
+		border-radius: 16px 16px 0 0;
+		box-shadow: 0 -2px 12px rgba(0, 0, 0, 0.15);
+		padding: 20px;
+		z-index: 9999;
+		display: none;
+	}
+	#popupContent {
+		pointer-events: auto;
 	}
 	.search-box {
 		margin: 20px;
 		width: 60%;
 		min-width: 300px;
 	}
+	
 }
