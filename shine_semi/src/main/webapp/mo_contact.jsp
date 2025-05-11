@@ -1,0 +1,47 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ page import="java.util.Locale, java.util.ResourceBundle"%>
+<%
+String lang = (String) session.getAttribute("lang");
+if (lang == null)
+	lang = "ko";
+Locale locale = new Locale(lang);
+ResourceBundle bundle = ResourceBundle.getBundle("messages", locale);
+%>
+
+<%@ page import="java.text.MessageFormat"%>
+
+<%
+String email = "emerlet@gmail.com";
+String rawMessage = bundle.getString("contact.message");
+String formattedMessage = MessageFormat.format(rawMessage, email);
+%>
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="css/mo_style.css" />
+</head>
+<body>
+	<div class="menu-header">
+		<img class="cursor" src="img/logo_row.svg"
+			onclick="location.href='index.html'"> <img class="cursor"
+			src="img/pop__close.svg" onclick="location.href='index.html'" />
+	</div>
+
+	<div class="content-wrapper">
+		<div class="content-container">
+			<div class="content-title"><%=bundle.getString("footer.contact")%></div>
+			<div class="content-description">
+				<%=formattedMessage%>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
