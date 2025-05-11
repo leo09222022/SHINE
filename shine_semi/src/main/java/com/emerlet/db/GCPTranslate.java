@@ -8,46 +8,36 @@ import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 
 public class GCPTranslate {
-	private static String apiKey;
+    public static String translate(String text, String targetLang, String apiKey) throws Exception {
+        if (apiKey == null || apiKey.isEmpty()) {
+            throw new IllegalStateException("API 키가 전달되지 않았습니다.");
+        }
 
-	public static void setApiKey(String key) {
-		apiKey = key;
-	}
+        String encodedText = URLEncoder.encode(text, StandardCharsets.UTF_8);
+        String urlStr = String.format(
+            "https://translation.googleapis.com/language/translate/v2?key=%s&q=%s&source=ko&target=%s&format=text",
+            apiKey, encodedText, targetLang
+        );
 
-	public static String translate(String text, String targetLang) throws Exception {
-		if (apiKey == null || apiKey.isEmpty()) {
-			throw new IllegalStateException("API 키가 설정되지 않았습니다.");
-		}
+        HttpURLConnection conn = (HttpURLConnection) new URL(urlStr).openConnection();
+        conn.setRequestMethod("GET");
 
-		String encodedText = URLEncoder.encode(text, StandardCharsets.UTF_8);
-		String urlStr = String.format(
-				"https://translation.googleapis.com/language/translate/v2?key=%s&q=%s&source=ko&target=%s&format=text",
-				apiKey, encodedText, targetLang);
+        BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
+        StringBuilder response = new StringBuilder();
+        String line;
+        while ((line = br.readLine()) != null) response.append(line);
 
-		URL url = new URL(urlStr);
-		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-		conn.setRequestMethod("GET");
+        String result = response.toString();
 
-		BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
-		StringBuilder response = new StringBuilder();
-		String line;
-		while ((line = br.readLine()) != null) {
-			response.append(line);
-		}
+        String marker = "\"translatedText\":";
+        int start = result.indexOf(marker);
+        if (start == -1) throw new RuntimeException("translatedText 필드가 없음");
 
-		String result = response.toString();
+        start = result.indexOf("\"", start + marker.length()) + 1;
+        int end = result.indexOf("\"", start);
+        if (start <= 0 || end <= start) throw new RuntimeException("번역 파싱 실패: " + result);
 
-		// "translatedText":"실제값" 추출
-		String marker = "\"translatedText\":";
-		int start = result.indexOf(marker);
-		if (start == -1)
-			throw new RuntimeException("translatedText 필드가 응답에 없습니다.");
-
-		start = result.indexOf("\"", start + marker.length()) + 1;
-		int end = result.indexOf("\"", start);
-		if (start <= 0 || end <= start)
-			throw new RuntimeException("번역 결과 파싱 실패: " + result);
-
-		return result.substring(start, end);
-	}
+        return result.substring(start, end);
+    }
 }
+

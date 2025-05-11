@@ -320,7 +320,22 @@ function initMap() {
         map.setCenter(marker.getPosition());
         // 커스텀 팝업으로 변경
         openCustomPopup(toilet);
+		const lang = sessionStorage.getItem("lang") || navigator.language.slice(0, 2);
 
+		fetch(`/translateOne?name=${encodeURIComponent(toilet.name)}&address=${encodeURIComponent(toilet.addressRoad)}&lang=${lang}`)
+		  .then(res => res.json())
+		  .then(data => {
+		    // 번역된 이름/주소를 기존 화장실 객체에 임시 저장
+		    toilet.translatedName = data.name;
+		    toilet.translatedAddress = data.address;
+
+		    // 커스텀 팝업 열기
+		    openCustomPopup(toilet);
+		  })
+		  .catch(err => {
+		    console.error("번역 실패", err);
+		    openCustomPopup(toilet); // 실패 시에도 기본 값으로 열기
+		  });
         // 기존팝업 코드 아래
         /* 
 				if (window.currentInfoWindow) window.currentInfoWindow.close();
@@ -376,8 +391,8 @@ function openCustomPopup(toilet) {
       <div style="display: flex; gap: 40px">
         <div style="width: 280px; display: flex; flex-direction: column; gap: 20px">
           <div style="display: flex; flex-direction: column; gap: 8px">
-            <div style="font-size: 24px; font-weight: 600">${toilet.name}</div>
-            <div style="font-size: 14px">${toilet.addressRoad}</div>
+            <div style="font-size: 24px; font-weight: 600">${toilet.translatedName || toilet.name}</div>
+            <div style="font-size: 14px">${toilet.translatedAddress || toilet.addressRoad}</div>
             <div style="font-size: 14px">${toilet.openTimeDetail}</div>
           </div>
           <div onclick="openKakaoPopUp()" style="cursor: pointer; background: #3a81ff; color: white; padding: 8px; border-radius: 4px; display: flex; gap: 8px; align-items: center; justify-content: center; text-align: center;">
