@@ -15,7 +15,7 @@ public class ReviewDAO {
 	public ArrayList<ReviewVO> findReview(Integer userToiletId, Integer toiletId) {
 		ArrayList<ReviewVO> reviews = new ArrayList<ReviewVO>();
 
-		String sql = "select cleanliness, safety, createdAt from reviews where (userToiletId = ? and toiletId is null) or (toiletId = ? and userToiletId is null) order by createdAt desc";
+		String sql = "select cleanliness, safety, created_at from reviews where (user_toilet_id = ? and toilet_id is null) or (toilet_id = ? and user_toilet_id is null) order by created_at desc";
 
 		try {
 			Connection conn = ConnectionProvider.getConnection();
@@ -46,7 +46,7 @@ public class ReviewDAO {
 	public int insertReview(ReviewVO vo) {
 		int result = -1;
 
-		String sql = "insert into reviews (cleanliness,safety,createdAt,userToiletId,toiletId) values (?,?,?,?,?)";
+		String sql = "insert into reviews (cleanliness,safety,created_at,user_toilet_id, toilet_id) values (?,?,?,?,?)";
 
 		// finally에서 닫기 위해 try-catch 바깥에 생성
 		Connection conn = null;
@@ -62,16 +62,17 @@ public class ReviewDAO {
 
 			// userToiletId랑 toiletId 중 하나만 값이 있고, 다른 하나는 null
 			if (vo.getUserToiletId() != 0) {
-				pstmt.setObject(5, vo.getUserToiletId());
-				pstmt.setNull(6, java.sql.Types.INTEGER);
-			} else {
+				pstmt.setObject(4, vo.getUserToiletId());
 				pstmt.setNull(5, java.sql.Types.INTEGER);
-				pstmt.setObject(6, vo.getToiletId());
+			} else {
+				pstmt.setNull(4, java.sql.Types.INTEGER);
+				pstmt.setObject(5, vo.getToiletId());
 			}
 			result = pstmt.executeUpdate();
 
 		} catch (Exception e) {
-			System.out.println("리뷰 등록 오류 : " + e.getMessage());
+			//System.out.println("리뷰 등록 오류 : " + e.getMessage());
+			e.printStackTrace();
 		} finally {
 			ConnectionProvider.close(conn, pstmt);
 		}

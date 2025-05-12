@@ -68,6 +68,9 @@ ResourceBundle bundle = ResourceBundle.getBundle("messages", locale);
 	}
 }
 </style>
+  <meta charset="UTF-8">
+  <title>Korean Toilet Guide</title>
+  <link rel="stylesheet" href="css/mo_style.css" />
 </head>
 <body>
 	<div class="menu-header">
