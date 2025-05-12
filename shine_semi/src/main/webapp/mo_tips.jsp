@@ -13,14 +13,6 @@ ResourceBundle bundle = ResourceBundle.getBundle("messages", locale);
   <meta charset="UTF-8">
   <title>Korean Toilet Guide</title>
   <link rel="stylesheet" href="css/mo_style.css" />
-  <style>
-    .tip-section { padding: 16px; border-bottom: 1px solid #eee; }
-    .tip-toggle { font-size: 16px; font-weight: 500; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
-    .tip-content { display: none; margin-top: 10px; font-size: 14px; background: #f7f8fc; padding: 12px; border-radius: 6px; line-height: 1.5; }
-    .tip-section.open .tip-content { display: block; }
-    .sign-title { font-weight: 600; margin-top: 10px; margin-bottom: 6px; }
-    .sign-button { background-color: #111; color: white; padding: 10px; border: none; border-radius: 4px; font-size: 14px; width: 100%; margin-bottom: 6px; }
-  </style>
 </head>
 <body>
 <div class="menu-header">

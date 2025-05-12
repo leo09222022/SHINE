@@ -29,7 +29,7 @@ ResourceBundle bundle = ResourceBundle.getBundle("messages", locale);
 
 	<!-- 메뉴 항목 -->
 	<div class="menu-items">
-		<div class="menu-item" onclick="location.href='mo_menu.html'">
+		<div class="menu-item" onclick="location.href='mo_about.jsp'">
 			<span><%=bundle.getString("footer.about")%></span> <img
 				src="img/menu_more.svg">
 		</div>
