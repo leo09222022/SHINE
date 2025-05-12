@@ -25,7 +25,7 @@ String formattedMessage = MessageFormat.format(rawMessage, email);
 <html>
 <head>
 <meta charset="UTF-8">
-<title><%=bundle.getString("about.title")%></title>
+<title>Emerlet</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="css/mo_style.css" />
 <style>
@@ -115,7 +115,7 @@ body {
 
 	<div class="content-wrapper">
 		<div class="content-container">
-			<div class="page-title"><%=bundle.getString("about.title")%></div>
+			<div class="sn-title"><%=bundle.getString("about.title")%></div>
 
 			<div class="text-content"><%=bundle.getString("about.intro1")%></div>
 
@@ -125,7 +125,7 @@ body {
 		</div>
 
 		<div class="content-container">
-			<div class="page-title"><%=bundle.getString("about.features.title")%></div>
+			<div class="sn-subtitle"><%=bundle.getString("about.features.title")%></div>
 
 			<div class="text-content"><%=bundle.getString("about.features.location")%></div>
 
@@ -139,7 +139,7 @@ body {
 		</div>
 
 		<div class="content-container">
-			<div class="page-title"><%=bundle.getString("about.definition.title")%></div>
+			<div class="sn-subtitle"><%=bundle.getString("about.definition.title")%></div>
 
 			<div class="text-content"><%=bundle.getString("about.definition.desc")%></div>
 
@@ -155,13 +155,13 @@ body {
 		</div>
 
 		<div class="content-container">
-			<div class="page-title"><%=bundle.getString("about.participation.title")%></div>
+			<div class="sn-subtitle"><%=bundle.getString("about.participation.title")%></div>
 
 			<div class="text-content"><%=bundle.getString("about.participation.desc")%></div>
 		</div>
 
 		<div class="content-container">
-			<div class="content-title"><%=bundle.getString("footer.contact")%></div>
+			<div class="sn-subtitle"><%=bundle.getString("footer.contact")%></div>
 			<div class="content-description">
 				<%=formattedMessage%>
 			</div>

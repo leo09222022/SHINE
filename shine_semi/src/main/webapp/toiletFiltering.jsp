@@ -22,7 +22,7 @@ if (currentLang == null)
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<title>공중화장실 필터링</title>
+<title>Emerlet</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <!-- Pretendard Font -->
@@ -184,10 +184,10 @@ a.reset-link:hover {
 		<div class="filter-count">
 			<c:choose>
 				<c:when test="${fn:length(toilets) > 0}">
-					<strong>${fn:length(toilets)}</strong>개의 화장실이 검색되었습니다.
+					<strong>${fn:length(toilets)}</strong><%=bundle.getString("filter.result")%>
         </c:when>
 				<c:otherwise>
-					<strong>0개</strong>의 화장실이 검색되었습니다.
+					<strong>0</strong><%=bundle.getString("filter.result")%>
         </c:otherwise>
 			</c:choose>
 		</div>
@@ -243,11 +243,11 @@ a.reset-link:hover {
 
 
 			<input type="hidden" name="viewMap" value="true">
-			<button type="submit">필터 적용 &amp; 지도로 돌아가기</button>
+			<button type="submit"><%=bundle.getString("filter.apply")%> &amp; <%=bundle.getString("filter.backToMap")%></button>
 		</form>
 
-		<a href="ToiletFilteringServlet?resetFilters=true" class="reset-link">필터
-			초기화</a>
+		<a href="ToiletFilteringServlet?resetFilters=true" class="reset-link"><%=bundle.getString("menu.filter")%>
+			<%=bundle.getString("filter.reset")%></a>
 	</div>
 
 	<!-- 랭귀지 관련 함수 -->

@@ -9,7 +9,7 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>언어 설정</title>
+  <title>Emerlet</title>
   <script>
     //  클라이언트에 sessionStorage.lang 설정
     const lang = "<%= lang %>";

@@ -69,7 +69,7 @@ ResourceBundle bundle = ResourceBundle.getBundle("messages", locale);
 }
 </style>
   <meta charset="UTF-8">
-  <title>Korean Toilet Guide</title>
+  <title>Emerlet</title>
   <link rel="stylesheet" href="css/mo_style.css" />
 </head>
 <body>
@@ -80,7 +80,7 @@ ResourceBundle bundle = ResourceBundle.getBundle("messages", locale);
 	</div>
 	<div class="content-wrapper">
 		<div class="content-container">
-			<div class="content-title">Korean Toilet Guide</div>
+			<div class="sn-title"><%=bundle.getString("tip.title")%></div>
 			<%
 			for (int i = 1; i <= 10; i++) {
 			%>
@@ -95,8 +95,8 @@ ResourceBundle bundle = ResourceBundle.getBundle("messages", locale);
 					<c:choose>
 						<c:when test="<%=i == 1%>">
 							<div class="sign-title"><%=bundle.getString("sign.example")%></div>
-							<button class="sign-button"><%=bundle.getString("tip.firstSign1")%></button>
-							<button class="sign-button"><%=bundle.getString("tip.firstSign2")%></button>
+							<button class="sign-button">휴지는 변기에 넣지 마세요</button>
+							<button class="sign-button">휴지는 휴지통에 버려주세요</button>
 						</c:when>
 						<c:when test="<%=i == 2%>">
 							<button class="sign-button"><%=bundle.getString("tip.secondSign")%></button>

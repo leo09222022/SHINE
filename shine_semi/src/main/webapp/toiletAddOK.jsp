@@ -6,7 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>화장실 등록 요청 완료</title>
+<title>Emerlet</title>
 <style>
 body {
 	font-family: Arial, sans-serif;

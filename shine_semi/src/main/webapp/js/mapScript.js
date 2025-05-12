@@ -3,6 +3,7 @@ let map;
 let userLocation = null;
 let userMarker = null;
 window.markers = [];
+window.userToiletMarkers = []; 
 window.currentInfoWindow = null;
 let selectedMarker = null;
 //날짜 출력용 텍스트
@@ -184,10 +185,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // 아이콘 텍스트 결정 함수
 function getCheckIcon(val) {
-	if (val === null || val === undefined) return "❓";
+	if (val === null || val === undefined || val === "") return "❓";
+
+	if (typeof val === "string") {
+		val = val.trim().toUpperCase();
+		if (val === "Y") return "✔";
+		if (val === "N") return "✖";
+	}
+
 	const num = parseInt(val);
-	return isNaN(num) ? "❓" : num > 0 ? "✔" : "✖";
+	if (!isNaN(num)) {
+		return num > 0 ? "✔" : "✖";
+	}
+
+	return "❓";
 }
+
 
 // 필터 토글
 document.addEventListener("DOMContentLoaded", function() {
@@ -298,8 +311,10 @@ function initMap() {
 	}
 
 	// 서버에서 전달받은 화장실 목록 JSTL 반복문으로 JS 배열로 변환???????????????
-	const toilets = window.toiletData || []; // 외부에서 삽입된 변수??
+	const toilets = window.toiletData || [];
+	const userToilets = window.userToiletData || [];
 	window.toiletMarkers = [];
+	window.userToiletMarkers = [];
 
 	// SN
 	// 서버에서 전달받은 화장실 목록 JSTL 반복문으로 JS 배열로 변환
@@ -422,6 +437,60 @@ function initMap() {
 			});
 		}
 	});
+	
+	userToilets.forEach((toilet) => {
+			if (toilet.lat !== 0 && toilet.lng !== 0) {
+				const canvas = document.createElement("canvas");
+				canvas.width = 40;
+				canvas.height = 40;
+				const ctx = canvas.getContext("2d");
+
+				// 배경 원
+				ctx.beginPath();
+				ctx.arc(20, 20, 18, 0, 2 * Math.PI);
+				ctx.fillStyle = "#ff3b30"; // 빨간색
+				ctx.fill();
+
+				// 중앙 흰색 점
+				ctx.beginPath();
+				ctx.arc(20, 20, 5, 0, 2 * Math.PI);
+				ctx.fillStyle = "white";
+				ctx.fill();
+
+				const marker = new google.maps.Marker({
+					position: { lat: toilet.lat, lng: toilet.lng },
+					map: map,
+					title: toilet.name,
+					icon: {
+						url: canvas.toDataURL(),
+						scaledSize: new google.maps.Size(40, 40),
+						anchor: new google.maps.Point(20, 40),
+					},
+				});
+				window.userToiletMarkers.push({ marker, data: toilet });
+				marker.addListener("click", () => {
+					const lang = sessionStorage.getItem("lang") || navigator.language.slice(0, 2);
+					map.setCenter(marker.getPosition());
+					if (lang !== "ko") {
+						const ctx = window.location.pathname.split("/")[1];
+						fetch(`/${ctx}/translateOne?name=${encodeURIComponent(toilet.name)}&address=${encodeURIComponent(toilet.addressRoad)}&lang=${lang}`)
+							.then(res => res.json())
+							.then(data => {
+								toilet.translatedName = data.name;
+								toilet.translatedAddress = data.address;
+								openCustomPopup(toilet);
+							})
+							.catch(err => {
+								console.error("번역 실패", err);
+								openCustomPopup(toilet);
+							});
+					} else {
+						openCustomPopup(toilet);
+					}
+				});
+			}
+		});
+
 
 	// 선택된 마커가 있으면 자동 클릭
 	if (selectedMarker) {
@@ -543,12 +612,20 @@ function openCustomPopup(toilet) {
 
 function renderFacilityRow(labelKey, iconPath, value) {
 	let iconStatus = "img/pop_question.svg";
-	const num = parseInt(value);
-	if (!isNaN(num)) {
-		iconStatus = num > 0 ? "img/pop__check.svg" : "img/pop__close.svg";
-	}
-
 	const label = window.i18n[labelKey];
+
+	if (value === null || value === undefined || value === "") {
+		iconStatus = "img/pop_question.svg";
+	} else if (typeof value === "string") {
+		const val = value.trim().toUpperCase();
+		if (val === "Y") iconStatus = "img/pop__check.svg";
+		else if (val === "N") iconStatus = "img/pop__close.svg";
+	} else {
+		const num = parseInt(value);
+		if (!isNaN(num)) {
+			iconStatus = num > 0 ? "img/pop__check.svg" : "img/pop__close.svg";
+		}
+	}
 
 	return `
     <div style="display: flex; justify-content: space-between; align-items: center;">
@@ -562,6 +639,7 @@ function renderFacilityRow(labelKey, iconPath, value) {
     </div>
   `;
 }
+
 
 
 

@@ -1,3 +1,6 @@
+<%@page import="com.emerlet.vo.UserToiletVO"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="com.emerlet.dao.UserToiletDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -16,6 +19,11 @@ if (currentLang == null)
 	currentLang = "ko";
 %>
 
+<%
+    UserToiletDAO dao = new UserToiletDAO();
+    ArrayList<UserToiletVO> userToilets = dao.findApprovedToilets(); // status='approved'만 가져오는 메소드
+    request.setAttribute("userToilets", userToilets);
+%>
 
 <!DOCTYPE html>
 <html lang="ko">
@@ -115,7 +123,7 @@ window.lang = "<%=lang%>";
 							<img src="img/toggle_woman.svg" /> <span><%=bundle.getString("filter.female")%></span>
 						</div>
 						<label class="switch"> <input type="checkbox"
-							name="hasFemaleToilet" /> <span class="slider"></span>
+							name="hasFemaleToilet" /> <span class="slider"></span> 
 						</label>
 					</div>
 
@@ -180,7 +188,7 @@ window.lang = "<%=lang%>";
 				<div class="about-section">
 					<div class="cursor-pointer" onclick="openModalWithPage('mo_about.jsp')"><%=bundle.getString("footer.about")%></div>
 					<div class="cursor-pointer" onclick="openModalWithPage('mo_contact.jsp')"><%=bundle.getString("footer.contact")%></div>
-					<div class="cursor-pointer" onclick="openModalWithPage('mo_tips.jsp')"><%=bundle.getString("footer.support")%></div>
+					<div class="cursor-pointer" onclick="openModalWithPage('mo_support.jsp')"><%=bundle.getString("footer.support")%></div>
 				</div>
 
 			</footer>
@@ -216,6 +224,30 @@ window.lang = "<%=lang%>";
         }<c:if test="${!status.last}">,</c:if>
         </c:forEach>
       ];
+      
+     
+      window.userToiletData = [
+    	  <c:forEach var="toilet" items="${userToilets}" varStatus="loop">
+    	  {
+    	    name: "${fn:escapeXml(toilet.userName)}",
+    	    lat: ${toilet.userLat},
+    	    lng: ${toilet.userLng},
+    	    addressRoad: "${fn:escapeXml(toilet.userRoadAddress)}",
+    	    maleToilet: "${toilet.userMaleToilet}",
+    	    femaleToilet: "${toilet.userFemaleToilet}",
+    	    maleDisabledToilet: "${toilet.userMaleDisabledToilet}",
+    	    femaleDisabledToilet: "${toilet.userFemaleDisabledToilet}",
+    	    hasDiaperTable: "${toilet.userHasDiaperTable}",
+    	    hasEmergencyBell: "${toilet.userHasEmergencyBell}",
+    	    hasCctv: "${toilet.userHasCctv}",
+    	    description: "${fn:escapeXml(toilet.userDescription)}"
+    	  }<c:if test="${!loop.last}">,</c:if>
+    	  </c:forEach>
+    	];
+
+
+    	  console.log("✅ userToiletData = ", window.userToiletData);
+
     </script>
 
 	<!-- 모달 컴포넌트 -->
@@ -266,6 +298,9 @@ function reloadGoogleMapScript(langCode) {
 		src="https://maps.googleapis.com/maps/api/js?key=${applicationScope.google_map_api}&callback=initMap&language=<%= lang %>"></script>
 
 
+<script type="text/javascript">
+console.log(userToiletID);
+</script>
 
 </body>
 </html>
