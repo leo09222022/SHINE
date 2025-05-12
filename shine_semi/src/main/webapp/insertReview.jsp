@@ -28,5 +28,13 @@
 
     <button type="submit">리뷰 등록</button>
 </form>
+<script>
+document.querySelector("form").addEventListener("submit", function(e) {
+    const cleanliness = document.querySelector("input[name='cleanliness']:checked");
+    const safety = document.querySelector("input[name='safety']:checked");
+    console.log("cleanliness:", cleanliness?.value);
+    console.log("safety:", safety?.value);
+});
+</script>
 </body>
 </html>

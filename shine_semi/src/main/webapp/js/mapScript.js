@@ -491,7 +491,7 @@ function openCustomPopup(toilet) {
 			<div style="color: #3a81ff; font-size: 14px">${window.i18n.report}</div>
 		</div>
 		<button 
-		  onclick="onReviewButtonClick()" 
+		  onclick="onReviewButtonClick('${toilet.id}')" 
 		  style="background: none; border: none; padding: 0; color: #3a81ff; font-size: 14px; cursor: pointer;">
 		  ${window.i18n.insertReview}
 		</button>
