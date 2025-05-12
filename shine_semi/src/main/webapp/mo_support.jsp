@@ -29,13 +29,7 @@ String formattedMessage = MessageFormat.format(rawMessage, email);
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="css/mo_style.css" />
 <style>
-body {
-	margin: 0;
-	padding: 0;
-	font-family: 'Pretendard';
-	background-color: #FFFFFF;
-	color: #1D1D1F;
-}
+
 
 .content-container {
 	display: flex;
@@ -113,14 +107,14 @@ body {
 
 	<div class="content-wrapper">
 		<div class="content-container">
-			<div class="page-title"><%=bundle.getString("support.title")%></div>
+			<div class="sn-title"><%=bundle.getString("support.title")%></div>
 
 			<div class="text-content"><%=bundle.getString("support.description")%></div>
 
 		</div>
 
 		<div class="content-container">
-			<div class="page-title"><%=bundle.getString("report.title")%></div>
+			<div class="sn-subtitle"><%=bundle.getString("report.title")%></div>
 
 			<div class="text-content"><%=bundle.getString("report.quotes1")%></div>
 
@@ -132,7 +126,7 @@ body {
 		</div>
 
 		<div class="content-container">
-			<div class="page-title"><%=bundle.getString("donation.title")%></div>
+			<div class="sn-subtitle"><%=bundle.getString("donation.title")%></div>
 
 			<div class="text-content"><%=bundle.getString("donation.description1")%></div>
 
