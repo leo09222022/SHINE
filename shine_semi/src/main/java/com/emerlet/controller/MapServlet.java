@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.emerlet.dao.ToiletDAO;
+import com.emerlet.dao.UserToiletDAO;
 import com.emerlet.vo.ToiletVO;
 
 /**
@@ -37,6 +38,7 @@ public class MapServlet extends HttpServlet {
 	        throws ServletException, IOException {
 
 	    ToiletDAO toiletDAO = new ToiletDAO();
+	    UserToiletDAO userToiletDAO = new UserToiletDAO();
 
 	    String lat = request.getParameter("lat");
 	    String lng = request.getParameter("lng");
@@ -75,6 +77,9 @@ public class MapServlet extends HttpServlet {
 	        ArrayList<ToiletVO> allToilets = toiletDAO.findAll();
 	        request.setAttribute("toilets", allToilets);
 	    }
+	    
+	    // 사용자 등록 화장실 데이터 (status = 'approved')
+	 	request.setAttribute("userToilets", userToiletDAO.findApprovedToilets());
 
 	    // 선택된 화장실 정보 전달
 	    if (selectLat != null && selectLng != null) {

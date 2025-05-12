@@ -1,3 +1,6 @@
+<%@page import="com.emerlet.vo.UserToiletVO"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="com.emerlet.dao.UserToiletDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -16,6 +19,11 @@ if (currentLang == null)
 	currentLang = "ko";
 %>
 
+<%
+    UserToiletDAO dao = new UserToiletDAO();
+    ArrayList<UserToiletVO> userToilets = dao.findApprovedToilets(); // status='approved'만 가져오는 메소드
+    request.setAttribute("userToilets", userToilets);
+%>
 
 <!DOCTYPE html>
 <html lang="ko">
@@ -115,7 +123,7 @@ window.lang = "<%=lang%>";
 							<img src="img/toggle_woman.svg" /> <span><%=bundle.getString("filter.female")%></span>
 						</div>
 						<label class="switch"> <input type="checkbox"
-							name="hasFemaleToilet" /> <span class="slider"></span>
+							name="hasFemaleToilet" /> <span class="slider"></span> 
 						</label>
 					</div>
 
@@ -216,6 +224,32 @@ window.lang = "<%=lang%>";
         }<c:if test="${!status.last}">,</c:if>
         </c:forEach>
       ];
+      
+     
+      window.userToiletData = [
+    	  <c:forEach var="toilet" items="${userToilets}" varStatus="loop">
+    	  {
+    	    name: "${fn:escapeXml(toilet.userName)}",
+    	    lat: ${toilet.userLat},
+    	    lng: ${toilet.userLng},
+    	    addressRoad: "${fn:escapeXml(toilet.userRoadAddress)}",
+    	    maleToilet: "${empty toilet.userMaleToilet ? '' : toilet.userMaleToilet}",
+    	    femaleToilet: "${empty toilet.userFemaleToilet ? '' : toilet.userFemaleToilet}",
+    	    maleDisabledToilet: "${empty toilet.userDisabledToilet ? '' : toilet.userDisabledToilet}",
+    	    femaleDisabledToilet: "",
+    	    hasDiaperTable: "${empty toilet.userHasDiaperTable ? '' : toilet.userHasDiaperTable}",
+    	    description: "${fn:escapeXml(toilet.userDescription)}",
+    	    openTimeDetail: "",
+    	    phoneNumber: "",
+    	    emergencyBellLocation: "",
+    	    hasEmergencyBell: "",
+    	    hasCctv: "",
+    	    diaperTableLocation: ""
+    	  }<c:if test="${!loop.last}">,</c:if>
+    	  </c:forEach>
+    	];
+    	  console.log("✅ userToiletData = ", window.userToiletData);
+
     </script>
 
 	<!-- 모달 컴포넌트 -->
