@@ -472,8 +472,8 @@ function openCustomPopup(toilet) {
           <div style="font-size: 14px;">${toilet.openTimeDetail}</div>
         </div>
 
-        <button onclick="openKakaoPopUp()" style="background: #3a81ff; color: white; border: none; border-radius: 8px; padding: 10px 0; font-size: 16px;">
-          ${window.i18n.guide}
+        <button onclick="openKakaoPopUp()" style="background: #3a81ff; color: white; border: none; border-radius: 8px; padding: 10px 0; font-size: 16px; display: flex; gap: 8px; align-items: center; justify-content: center; text-align: center;">
+          <img src="img/pop_directions.svg" alt=""><span>${window.i18n.guide}</span>
         </button>
 
         ${renderFacilityRow("maleToilet", "img/pop_man.svg", toilet.maleToilet)}

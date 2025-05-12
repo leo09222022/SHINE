@@ -229,12 +229,15 @@ window.lang = "<%=lang%>";
 	</div>
 
 	<!-- 마커용 팝업 컴포넌트 -->
+	<!-- <div class="popup-dragbar" style="width: 48px; height: 8px; background: #ccc; border-radius: 4px; margin: 0 auto 12px auto; cursor: grab;"></div> -->
 	<div id="customInfoPopup">
-		<div class="popup-dragbar" style="width: 48px; height: 8px; background: #ccc; border-radius: 4px; margin: 0 auto 12px auto; cursor: grab;"></div>
-		<button onclick="closeCustomPopup()" style="float: right;"
-			class="popup-close-btn">
-			<%=bundle.getString("popup.close")%></button>
-		<div id="popupContent">Loading...</div>
+		<div style="display:flex; flex-direction:column;">
+			<button onclick="closeCustomPopup()" 
+				class="popup-close-btn mo-close-btn">
+				<%=bundle.getString("popup.close")%></button>
+			<div id="popupContent">Loading...</div>
+		</div>
+
 	</div>
 
 	<!-- JS 파일 연결 -->
