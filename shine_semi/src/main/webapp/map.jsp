@@ -60,6 +60,9 @@ window.lang = "<%=lang%>";
     cctv: "<%=bundle.getString("popup.cctv")%>",
     lastVerified: "<%=bundle.getString("popup.lastVerified")%>",  
     confirmed: "<%=bundle.getString("popup.confirmed")%>"        
+    review: "<%=bundle.getString("toilet.review")%>"        
+    cleanliness: "<%=bundle.getString("toilet.cleanliness")%>"        
+    safety: "<%=bundle.getString("toilet.safety")%>"        
   };
 </script>
 
