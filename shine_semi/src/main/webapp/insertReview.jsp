@@ -12,10 +12,10 @@
 </head>
 <body>
 <h2>리뷰 작성</h2>
-<form action="insertReviewOK.do" method="post">
-    <input type="hidden" name="toiletId" value="<%= toiletId != null ? toiletId : "" %>">
+<form action="insertReviewOK.jsp" method="post">
+    <!-- <input type="hidden" name="toiletId" value="<%= toiletId != null ? toiletId : "" %>"> -->
     <input type="hidden" name="userToiletId" value="<%= userToiletId != null ? userToiletId : "" %>">
-
+	<input type="hidden" name="toiletId" value="<%= request.getParameter("toiletId") %>">
     <p>청결도:</p>
     <% for (int i = 1; i <= 5; i++) { %>
         <label><input type="radio" name="cleanliness" value="<%=i%>"><%=i%></label>
