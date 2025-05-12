@@ -6,6 +6,7 @@ window.markers = [];
 window.userToiletMarkers = []; 
 window.currentInfoWindow = null;
 let selectedMarker = null;
+let selectedToiletID ="";
 //날짜 출력용 텍스트
 const lastVerifiedDate = new Date("2025-05-01");
 const localizedDate = lastVerifiedDate.toLocaleDateString(window.lang || "ko", {
@@ -377,6 +378,14 @@ function initMap() {
 
 			// 마커 클릭 시 InfoWindow 표시
 			marker.addListener("click", () => {
+				// id,name 파라메터로 전달
+				console.log("선택된 화장실 NAME:", toilet.name);
+				console.log("선택된 화장실 ID:", toilet.toiletId);
+				console.log("선택된 화장실*:", toilet);
+				 
+				 // toilet.name 값을 다음 페이지에 쿼리 파라미터로 전달
+				 selectedToiletID = encodeURIComponent(toilet.toiletId);
+				
 				const lang = sessionStorage.getItem("lang") || navigator.language.slice(0, 2);
 				// 마커 위치를 지도 중심으로 이동시키기
 				map.setCenter(marker.getPosition());
@@ -584,7 +593,7 @@ function openCustomPopup(toilet) {
 	 	  
 	          <div style="display: flex; flex-direction:column; gap: 4px;">
 			  <div style="font-size: 14px; color: #919191">${verifiedMessage}</div>
-	            <div style="color: #3a81ff; font-size: 14px; cursor: pointer;">${window.i18n.report}</div>
+	            <div style="color: #3a81ff; font-size: 14px; cursor: pointer;" onclick="location.href='toiletReport.jsp?toiletID=' + selectedToiletID">${window.i18n.report}</div>
 				<div 
 				  	  onclick="onReviewButtonClick()" 
 				  	  style="background: none; border: none; padding: 0; color: #3a81ff; font-size: 14px; cursor: pointer;">

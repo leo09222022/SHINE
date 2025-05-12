@@ -20,9 +20,9 @@ if (currentLang == null)
 %>
 
 <%
-    UserToiletDAO dao = new UserToiletDAO();
-    ArrayList<UserToiletVO> userToilets = dao.findApprovedToilets(); // status='approved'만 가져오는 메소드
-    request.setAttribute("userToilets", userToilets);
+UserToiletDAO dao = new UserToiletDAO();
+ArrayList<UserToiletVO> userToilets = dao.findApprovedToilets(); // status='approved'만 가져오는 메소드
+request.setAttribute("userToilets", userToilets);
 %>
 
 <!DOCTYPE html>
@@ -128,7 +128,7 @@ window.lang = "<%=lang%>";
 							<img src="img/toggle_woman.svg" /> <span><%=bundle.getString("filter.female")%></span>
 						</div>
 						<label class="switch"> <input type="checkbox"
-							name="hasFemaleToilet" /> <span class="slider"></span> 
+							name="hasFemaleToilet" /> <span class="slider"></span>
 						</label>
 					</div>
 
@@ -166,8 +166,7 @@ window.lang = "<%=lang%>";
 				</div>
 
 				<!-- Korean Toilet Guide 메뉴 아이템 -->
-				<div class="menu-item"
-					onclick="openModalWithPage('mo_tips.jsp')">
+				<div class="menu-item" onclick="openModalWithPage('mo_tips.jsp')">
 					<img src="img/meny_guide.svg" /> <span class="menu-text"><%=bundle.getString("menu.guide")%></span>
 					<img src="img/menu_more.svg" />
 				</div>
@@ -191,9 +190,12 @@ window.lang = "<%=lang%>";
 
 
 				<div class="about-section">
-					<div class="cursor-pointer" onclick="openModalWithPage('mo_about.jsp')"><%=bundle.getString("footer.about")%></div>
-					<div class="cursor-pointer" onclick="openModalWithPage('mo_contact.jsp')"><%=bundle.getString("footer.contact")%></div>
-					<div class="cursor-pointer" onclick="openModalWithPage('mo_support.jsp')"><%=bundle.getString("footer.support")%></div>
+					<div class="cursor-pointer"
+						onclick="openModalWithPage('mo_about.jsp')"><%=bundle.getString("footer.about")%></div>
+					<div class="cursor-pointer"
+						onclick="openModalWithPage('mo_contact.jsp')"><%=bundle.getString("footer.contact")%></div>
+					<div class="cursor-pointer"
+						onclick="openModalWithPage('mo_support.jsp')"><%=bundle.getString("footer.support")%></div>
 				</div>
 
 			</footer>
@@ -210,6 +212,7 @@ window.lang = "<%=lang%>";
       window.toiletData = [
         <c:forEach var="toilet" items="${toilets}" varStatus="status">
         {
+        toiletId: ${toilet.toiletId},	
           name: "${fn:escapeXml(toilet.name)}",
           lat: ${toilet.lat},
           lng: ${toilet.lng},
@@ -259,7 +262,7 @@ window.lang = "<%=lang%>";
 	<div id="modalOverlay"
 		style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); justify-content: center; align-items: center; z-index: 9999;">
 		<div id="modalBody"
-			style="background: #fff; width: 90%; max-width: 800px; min-width:769px; padding: 20px; border-radius: 8px; position: relative;">
+			style="background: #fff; width: 90%; max-width: 800px; min-width: 769px; padding: 20px; border-radius: 8px; position: relative;">
 			<button onclick="closeModal()" style="float: right;"
 				class="popup-close-btn"><%=bundle.getString("popup.close")%></button>
 		</div>
@@ -268,8 +271,8 @@ window.lang = "<%=lang%>";
 	<!-- 마커용 팝업 컴포넌트 -->
 	<!-- <div class="popup-dragbar" style="width: 48px; height: 8px; background: #ccc; border-radius: 4px; margin: 0 auto 12px auto; cursor: grab;"></div> -->
 	<div id="customInfoPopup">
-		<div style="display:flex; flex-direction:column;">
-			<button onclick="closeCustomPopup()" 
+		<div style="display: flex; flex-direction: column;">
+			<button onclick="closeCustomPopup()"
 				class="popup-close-btn mo-close-btn">
 				<%=bundle.getString("popup.close")%></button>
 			<div id="popupContent">Loading...</div>
