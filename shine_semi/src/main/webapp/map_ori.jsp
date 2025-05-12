@@ -7,7 +7,7 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<title>내 근처 공중화장실</title>
+<title>Emerlet</title>
 <style>
 body {
 	font-family: Arial, sans-serif;

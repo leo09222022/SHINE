@@ -6,7 +6,7 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<title>공중화장실 필터링</title>
+<title>Emerlet</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <!-- Pretendard Font -->

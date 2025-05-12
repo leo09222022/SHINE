@@ -162,7 +162,7 @@ window.lang = "<%=lang%>";
 
 				<!-- Korean Toilet Guide 메뉴 아이템 -->
 				<div class="menu-item"
-					onclick="openModalWithPage('toiletGuide.html')">
+					onclick="openModalWithPage('mo_tips.jsp')">
 					<img src="img/meny_guide.svg" /> <span class="menu-text"><%=bundle.getString("menu.guide")%></span>
 					<img src="img/menu_more.svg" />
 				</div>
@@ -186,9 +186,9 @@ window.lang = "<%=lang%>";
 
 
 				<div class="about-section">
-					<div><%=bundle.getString("footer.about")%></div>
-					<div><%=bundle.getString("footer.contact")%></div>
-					<div><%=bundle.getString("footer.support")%></div>
+					<div class="cursor-pointer" onclick="openModalWithPage('mo_about.jsp')"><%=bundle.getString("footer.about")%></div>
+					<div class="cursor-pointer" onclick="openModalWithPage('mo_contact.jsp')"><%=bundle.getString("footer.contact")%></div>
+					<div class="cursor-pointer" onclick="openModalWithPage('mo_tips.jsp')"><%=bundle.getString("footer.support")%></div>
 				</div>
 
 			</footer>
@@ -256,7 +256,7 @@ window.lang = "<%=lang%>";
 	<div id="modalOverlay"
 		style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); justify-content: center; align-items: center; z-index: 9999;">
 		<div id="modalBody"
-			style="background: #fff; width: 90%; max-width: 800px; padding: 20px; border-radius: 8px; position: relative;">
+			style="background: #fff; width: 90%; max-width: 800px; min-width:769px; padding: 20px; border-radius: 8px; position: relative;">
 			<button onclick="closeModal()" style="float: right;"
 				class="popup-close-btn"><%=bundle.getString("popup.close")%></button>
 		</div>

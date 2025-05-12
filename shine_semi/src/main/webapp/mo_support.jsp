@@ -37,8 +37,6 @@ body {
 	color: #1D1D1F;
 }
 
-
-
 .content-container {
 	display: flex;
 	flex-direction: column;
@@ -115,57 +113,37 @@ body {
 
 	<div class="content-wrapper">
 		<div class="content-container">
-			<div class="page-title"><%=bundle.getString("about.title")%></div>
+			<div class="page-title"><%=bundle.getString("support.title")%></div>
 
-			<div class="text-content"><%=bundle.getString("about.intro1")%></div>
+			<div class="text-content"><%=bundle.getString("support.description")%></div>
 
-			<div class="text-content"><%=bundle.getString("about.intro2")%></div>
-
-			<div class="text-content"><%=bundle.getString("about.intro3")%></div>
 		</div>
 
 		<div class="content-container">
-			<div class="page-title"><%=bundle.getString("about.features.title")%></div>
+			<div class="page-title"><%=bundle.getString("report.title")%></div>
 
-			<div class="text-content"><%=bundle.getString("about.features.location")%></div>
+			<div class="text-content"><%=bundle.getString("report.quotes1")%></div>
 
-			<div class="text-content"><%=bundle.getString("about.features.review")%></div>
+			<div class="text-content"><%=bundle.getString("report.quotes2")%></div>
 
-			<div class="text-content"><%=bundle.getString("about.features.registration")%></div>
+			<div class="text-content"><%=bundle.getString("report.description")%></div>
 
-			<div class="text-content"><%=bundle.getString("about.features.multilingual")%></div>
-
-			<div class="text-content"><%=bundle.getString("about.features.filter")%></div>
+			<div class="supports-btn" onclick="location.href='toiletAdd.jsp'"><%=bundle.getString("report.button")%></div>
 		</div>
 
 		<div class="content-container">
-			<div class="page-title"><%=bundle.getString("about.definition.title")%></div>
+			<div class="page-title"><%=bundle.getString("donation.title")%></div>
 
-			<div class="text-content"><%=bundle.getString("about.definition.desc")%></div>
+			<div class="text-content"><%=bundle.getString("donation.description1")%></div>
 
-			<div class="feature-list">
-				<div class="feature-item"><%=bundle.getString("about.definition.item1")%></div>
-				<div class="feature-item"><%=bundle.getString("about.definition.item2")%></div>
-				<div class="feature-item"><%=bundle.getString("about.definition.item3")%></div>
-				<div class="feature-item"><%=bundle.getString("about.definition.item4")%></div>
-				<div class="feature-item"><%=bundle.getString("about.definition.item5")%></div>
-			</div>
 
-			<div class="text-content"><%=bundle.getString("about.definition.note")%></div>
+			<div class="text-content"><%=bundle.getString("donation.description2")%></div>
+			<div class="supports-btn"><%=bundle.getString("donation.button")%></div>
 		</div>
 
-		<div class="content-container">
-			<div class="page-title"><%=bundle.getString("about.participation.title")%></div>
 
-			<div class="text-content"><%=bundle.getString("about.participation.desc")%></div>
-		</div>
 
-		<div class="content-container">
-			<div class="content-title"><%=bundle.getString("footer.contact")%></div>
-			<div class="content-description">
-				<%=formattedMessage%>
-			</div>
-		</div>
+
 	</div>
 </body>
 </html>
