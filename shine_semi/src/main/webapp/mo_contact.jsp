@@ -47,9 +47,18 @@ String formattedMessage = MessageFormat.format(rawMessage, email);
 		<div class="content-container">
 			<div class="sn-title"><%=bundle.getString("footer.contact")%></div>
 			<div class="content-description">
-				<%=formattedMessage%>
-			</div>
-		</div>
-	</div>
-</body>
+  <%=formattedMessage%>
+
+  <div style="
+    margin-top: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  ">
+    <img src="img/top_logo.svg" style="transform: scale(1.5);" />
+  </div>
+</div>
+</div>
+
 </html>
