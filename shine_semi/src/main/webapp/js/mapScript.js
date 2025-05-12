@@ -462,7 +462,7 @@ function initMap() {
 					map: map,
 					title: toilet.name,
 					icon: {
-						url: canvas.toDataURL(),
+						url: "img/custom_map-marker.svg",
 						scaledSize: new google.maps.Size(40, 40),
 						anchor: new google.maps.Point(20, 40),
 					},
@@ -536,9 +536,9 @@ function openCustomPopup(toilet) {
       <div style="display:flex; flex-direction: column; gap: 16px;">
         <div>
           <div style="font-size: 18px; font-weight: 600;">${toilet.translatedName || toilet.name}</div>
-          <div style="font-size: 14px;">청결도 ⭐ ${toilet.cleanliness} &nbsp; 안전성 ⭐ ${toilet.safety}</div>
+          <div style="font-size: 14px;">${window.i18n.cleanliness} ⭐ ${toilet.cleanliness} &nbsp; ${window.i18n.safety} ⭐ ${toilet.safety}</div>
           <div style="font-size: 14px;">${toilet.translatedAddress || toilet.addressRoad}</div>
-          <div style="font-size: 14px;">${toilet.openTimeDetail}</div>
+		  ${window.i18n.openTime} : ${toilet.openTimeDetail ? toilet.openTimeDetail : window.i18n.unknown}
         </div>
 
         <button onclick="openKakaoPopUp()" style="background: #3a81ff; color: white; border: none; border-radius: 8px; padding: 10px 0; font-size: 16px; display: flex; gap: 8px; align-items: center; justify-content: center; text-align: center;">
@@ -554,16 +554,17 @@ function openCustomPopup(toilet) {
         ${renderFacilityRow("emergencyBell", "img/pop_bell.svg", toilet.hasEmergencyBell)}
         <div style="font-size: 12px;">${window.i18n.emergencyBellStatus} : ${toilet.emergencyBellLocation}</div>
         ${renderFacilityRow("cctv", "img/pop_cctv.svg", toilet.hasCctv)}
-
+		
+		<div style="display: flex; flex-direction:column; gap: 4px; align-items: center">
 		<div style="font-size: 14px; color: #919191">${verifiedMessage}</div>
-		<div style="display: flex; gap: 4px; align-items: center">
 			<div style="color: #3a81ff; font-size: 14px">${window.i18n.report}</div>
+			<div 
+			  onclick="onReviewButtonClick()" 
+			  style="background: none; border: none; padding: 0; color: #3a81ff; font-size: 14px; cursor: pointer;">
+			  ${window.i18n.review}
+			</div>
 		</div>
-		<button 
-		  onclick="onReviewButtonClick()" 
-		  style="background: none; border: none; padding: 0; color: #3a81ff; font-size: 14px; cursor: pointer;">
-		  ${window.i18n.insertReview}
-		</button>
+
       </div>
     `;
 	}
@@ -574,22 +575,24 @@ function openCustomPopup(toilet) {
 	        <div style="width: 280px; display: flex; flex-direction: column; gap: 20px">
 	          <div style="display: flex; flex-direction: column; gap: 8px">
 	            <div style="font-size: 24px; font-weight: 600">${toilet.translatedName || toilet.name}</div>
-				<div style="font-size: 14px;">청결도 ⭐ ${toilet.cleanliness} &nbsp; 안전성 ⭐ ${toilet.safety}</div>
+				<div style="font-size: 14px;">${window.i18n.cleanliness} ⭐ ${toilet.cleanliness} &nbsp; ${window.i18n.safety} ⭐ ${toilet.safety}</div>
 	            <div style="font-size: 14px">${toilet.translatedAddress || toilet.addressRoad}</div>
-	            <div style="font-size: 14px">${toilet.openTimeDetail}</div>
+				${window.i18n.openTime} : ${toilet.openTimeDetail ? toilet.openTimeDetail : window.i18n.unknown}
 	          </div>
 	          <div onclick="openKakaoPopUp()" style="cursor: pointer; background: #3a81ff; color: white; padding: 8px; border-radius: 4px; display: flex; gap: 8px; align-items: center; justify-content: center; text-align: center;">
 	             <img src="img/pop_directions.svg" alt=""><span>${window.i18n.guide}</span>
 	          </div>
-	 	  <div style="font-size: 14px; color: #919191">${verifiedMessage}</div>
-	          <div style="display: flex; gap: 4px; align-items: center">
-	            <div style="color: #3a81ff; font-size: 14px">${window.i18n.report}</div>
+	 	  
+	          <div style="display: flex; flex-direction:column; gap: 4px;">
+			  <div style="font-size: 14px; color: #919191">${verifiedMessage}</div>
+	            <div style="color: #3a81ff; font-size: 14px; cursor: pointer;">${window.i18n.report}</div>
+				<div 
+				  	  onclick="onReviewButtonClick()" 
+				  	  style="background: none; border: none; padding: 0; color: #3a81ff; font-size: 14px; cursor: pointer;">
+				  	  ${window.i18n.review}
+				  	</div>
 	          </div>
-			  <button 
-			  	  onclick="onReviewButtonClick()" 
-			  	  style="background: none; border: none; padding: 0; color: #3a81ff; font-size: 14px; cursor: pointer;">
-			  	  ${window.i18n.insertReview}
-			  	</button>
+	
 	        </div>
 
 	 	<div style="width: 280px; display: flex; flex-direction: column; gap: 8px">

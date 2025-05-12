@@ -7,8 +7,19 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Emerlet</title>
-<link rel="stylesheet" href="css/mo_style.css" />
 <style>
+body {
+	font-family: Arial, sans-serif;
+	margin: 0;
+	padding: 20px;
+	background-color: #f5f5f5;
+}
+
+h2 {
+	padding: 10px 0;
+	color: #333;
+}
+
 .container {
 	max-width: 800px;
 	margin: 0 auto;
@@ -23,13 +34,9 @@
 }
 
 label {
-	font-family: Pretendard;
-	font-size: 16px;
-	font-weight: normal;
-	line-height: 150%;
-	letter-spacing: 0em;
-	/* Text_main */
-	color: #1D1D1F;
+	display: block;
+	margin-bottom: 5px;
+	font-weight: bold;
 }
 
 input[type="text"], textarea {
@@ -41,12 +48,12 @@ input[type="text"], textarea {
 }
 
 .radio-group {
-	margin-bottom: 20px;
+	margin-bottom: 10px;
 }
 
 .radio-options {
 	display: flex;
-	gap: 20px;
+	gap: 15px;
 	margin-top: 5px;
 }
 
@@ -56,12 +63,7 @@ input[type="text"], textarea {
 }
 
 .radio-option label {
-	font-family: Pretendard;
-	font-size: 16px;
 	font-weight: normal;
-	line-height: normal;
-	letter-spacing: 0em;
-	color: #1D1D1F;
 	margin-left: 5px;
 	margin-bottom: 0;
 }
@@ -72,8 +74,6 @@ input[type="text"], textarea {
 }
 
 .btn {
-	width: 100%;
-	height: 36px;
 	padding: 10px 15px;
 	background-color: #4285F4;
 	color: white;
@@ -108,12 +108,6 @@ input[type="text"], textarea {
 	display: none;
 }
 
-.sub-tit {
-	font-size: 16px;
-	font-weight: 500;
-	margin-bottom: 8px;
-}
-
 .rating label {
 	cursor: pointer;
 	width: 24px;
@@ -134,7 +128,7 @@ input[type="text"], textarea {
 </head>
 <body>
 	<div class="container">
-		<div class="sn-title">화장실 등록</div>
+		<h2>화장실 등록</h2>
 
 		<c:if test="${not empty errorMessage}">
 			<div class="error-message">${errorMessage}</div>
@@ -144,217 +138,210 @@ input[type="text"], textarea {
 
 		<form action="toiletAddOK.do" method="post">
 			<div class="form-group">
-				<label for="userName" class="sub-tit"> 1. 화장실명 *</label> <input
-					type="text" id="userName" name="userName" required>
+				<label for="userName"> 1. 화장실명 *</label> <input type="text"
+					id="userName" name="userName" required>
 			</div>
 
 			<div class="form-group">
-				<label for="userRoadAddress" class="sub-tit"> 2. 주소 (맵 터치시
-					자동입력) *</label> <input type="text" id="userRoadAddress"
-					name="userRoadAddress" required>
+				<label for="userRoadAddress"> 2. 주소 (맵 터치시 자동입력) *</label> <input
+					type="text" id="userRoadAddress" name="userRoadAddress" required>
 			</div>
 
 			<div class="form-group">
-				<label class="sub-tit"> 3. 상세정보 </label>
+				<label> 3. 상세정보 </label>
 
-				<div>
-
-					<div class="radio-group">
-						<label>남자화장실이 있나요?</label>
-						<div class="radio-options">
-							<div class="radio-option">
-								<input type="radio" id="userMaleToiletY" name="userMaleToilet"
-									value="Y"> <label for="userMaleToiletY">있음</label>
-							</div>
-							<div class="radio-option">
-								<input type="radio" id="userMaleToiletN" name="userMaleToilet"
-									value="N"> <label for="userMaleToiletN">없음</label>
-							</div>
-							<div class="radio-option">
-								<input type="radio" id="userMaleToiletU" name="userMaleToilet"
-									value="U" checked> <label for="userMaleToiletU">모름</label>
-							</div>
+				<div class="radio-group">
+					<label>남자화장실이 있나요?</label>
+					<div class="radio-options">
+						<div class="radio-option">
+							<input type="radio" id="userMaleToiletY" name="userMaleToilet"
+								value="Y"> <label for="userMaleToiletY">있음</label>
+						</div>
+						<div class="radio-option">
+							<input type="radio" id="userMaleToiletN" name="userMaleToilet"
+								value="N"> <label for="userMaleToiletN">없음</label>
+						</div>
+						<div class="radio-option">
+							<input type="radio" id="userMaleToiletU" name="userMaleToilet"
+								value="U" checked> <label for="userMaleToiletU">모름</label>
 						</div>
 					</div>
+				</div>
 
-					<div class="radio-group">
-						<label>여자화장실이 있나요?</label>
-						<div class="radio-options">
-							<div class="radio-option">
-								<input type="radio" id="userFemaleToiletY"
-									name="userFemaleToilet" value="Y"> <label
-									for="userFemaleToiletY">있음</label>
-							</div>
-							<div class="radio-option">
-								<input type="radio" id="userFemaleToiletN"
-									name="userFemaleToilet" value="N"> <label
-									for="userFemaleToiletN">없음</label>
-							</div>
-							<div class="radio-option">
-								<input type="radio" id="userFemaleToiletU"
-									name="userFemaleToilet" value="U" checked> <label
-									for="userFemaleToiletU">모름</label>
-							</div>
+				<div class="radio-group">
+					<label>여자화장실이 있나요?</label>
+					<div class="radio-options">
+						<div class="radio-option">
+							<input type="radio" id="userFemaleToiletY"
+								name="userFemaleToilet" value="Y"> <label
+								for="userFemaleToiletY">있음</label>
+						</div>
+						<div class="radio-option">
+							<input type="radio" id="userFemaleToiletN"
+								name="userFemaleToilet" value="N"> <label
+								for="userFemaleToiletN">없음</label>
+						</div>
+						<div class="radio-option">
+							<input type="radio" id="userFemaleToiletU"
+								name="userFemaleToilet" value="U" checked> <label
+								for="userFemaleToiletU">모름</label>
 						</div>
 					</div>
+				</div>
 
-					<div class="radio-group">
-						<label>남자 장애인화장실이 있나요?</label>
-						<div class="radio-options">
-							<div class="radio-option">
-								<input type="radio" id="userMaleDisabledToiletY"
-									name="userMaleDisabledToilet" value="Y"> <label
-									for="userMaleDisabledToiletY">있음</label>
-							</div>
-							<div class="radio-option">
-								<input type="radio" id="userMaleDisabledToiletN"
-									name="userMaleDisabledToilet" value="N"> <label
-									for="userMaleDisabledToiletN">없음</label>
-							</div>
-							<div class="radio-option">
-								<input type="radio" id="userMaleDisabledToiletU"
-									name="userMaleDisabledToilet" value="U" checked> <label
-									for="userMaleDisabledToiletU">모름</label>
-							</div>
+				<div class="radio-group">
+					<label>남자 장애인화장실이 있나요?</label>
+					<div class="radio-options">
+						<div class="radio-option">
+							<input type="radio" id="userMaleDisabledToiletY"
+								name="userMaleDisabledToilet" value="Y"> <label
+								for="userMaleDisabledToiletY">있음</label>
 						</div>
-					</div>
-
-
-					<div class="radio-group">
-						<label>기저귀 교환대가 있나요?</label>
-						<div class="radio-options">
-							<div class="radio-option">
-								<input type="radio" id="userHasDiaperTableY"
-									name="userHasDiaperTable" value="Y"> <label
-									for="userHasDiaperTableY">있음</label>
-							</div>
-							<div class="radio-option">
-								<input type="radio" id="userHasDiaperTableN"
-									name="userHasDiaperTable" value="N"> <label
-									for="userHasDiaperTableN">없음</label>
-							</div>
-							<div class="radio-option">
-								<input type="radio" id="userHasDiaperTableU"
-									name="userHasDiaperTable" value="U" checked> <label
-									for="userHasDiaperTableU">모름</label>
-							</div>
+						<div class="radio-option">
+							<input type="radio" id="userMaleDisabledToiletN"
+								name="userMaleDisabledToilet" value="N"> <label
+								for="userMaleDisabledToiletN">없음</label>
 						</div>
-					</div>
-					<!-- 여자 장애인 화장실 -->
-					<div class="radio-group">
-						<label>여자 장애인 화장실이 있나요?</label>
-						<div class="radio-options">
-							<div class="radio-option">
-								<input type="radio" id="userFemaleDisabledToiletY"
-									name="userFemaleDisabledToilet" value="Y"> <label
-									for="userFemaleDisabledToiletY">있음</label>
-							</div>
-							<div class="radio-option">
-								<input type="radio" id="userFemaleDisabledToiletN"
-									name="userFemaleDisabledToilet" value="N"> <label
-									for="userFemaleDisabledToiletN">없음</label>
-							</div>
-							<div class="radio-option">
-								<input type="radio" id="userFemaleDisabledToiletU"
-									name="userFemaleDisabledToilet" value="U" checked> <label
-									for="userFemaleDisabledToiletU">모름</label>
-							</div>
-						</div>
-					</div>
-
-					<!-- 비상벨 -->
-					<div class="radio-group">
-						<label>비상벨이 있나요?</label>
-						<div class="radio-options">
-							<div class="radio-option">
-								<input type="radio" id="userHasEmergencyBellY"
-									name="userHasEmergencyBell" value="Y"> <label
-									for="userHasEmergencyBellY">있음</label>
-							</div>
-							<div class="radio-option">
-								<input type="radio" id="userHasEmergencyBellN"
-									name="userHasEmergencyBell" value="N"> <label
-									for="userHasEmergencyBellN">없음</label>
-							</div>
-							<div class="radio-option">
-								<input type="radio" id="userHasEmergencyBellU"
-									name="userHasEmergencyBell" value="U" checked> <label
-									for="userHasEmergencyBellU">모름</label>
-							</div>
-						</div>
-					</div>
-
-					<!-- CCTV -->
-					<div class="radio-group">
-						<label>CCTV가 있나요?</label>
-						<div class="radio-options">
-							<div class="radio-option">
-								<input type="radio" id="userHasCctvY" name="userHasCctv"
-									value="Y"> <label for="userHasCctvY">있음</label>
-							</div>
-							<div class="radio-option">
-								<input type="radio" id="userHasCctvN" name="userHasCctv"
-									value="N"> <label for="userHasCctvN">없음</label>
-							</div>
-							<div class="radio-option">
-								<input type="radio" id="userHasCctvU" name="userHasCctv"
-									value="U" checked> <label for="userHasCctvU">모름</label>
-							</div>
+						<div class="radio-option">
+							<input type="radio" id="userMaleDisabledToiletU"
+								name="userMaleDisabledToilet" value="U" checked> <label
+								for="userMaleDisabledToiletU">모름</label>
 						</div>
 					</div>
 				</div>
 
 
+				<div class="radio-group">
+					<label>기저귀 교환대가 있나요?</label>
+					<div class="radio-options">
+						<div class="radio-option">
+							<input type="radio" id="userHasDiaperTableY"
+								name="userHasDiaperTable" value="Y"> <label
+								for="userHasDiaperTableY">있음</label>
+						</div>
+						<div class="radio-option">
+							<input type="radio" id="userHasDiaperTableN"
+								name="userHasDiaperTable" value="N"> <label
+								for="userHasDiaperTableN">없음</label>
+						</div>
+						<div class="radio-option">
+							<input type="radio" id="userHasDiaperTableU"
+								name="userHasDiaperTable" value="U" checked> <label
+								for="userHasDiaperTableU">모름</label>
+						</div>
+					</div>
+				</div>
+				<!-- 여자 장애인 화장실 -->
+				<div class="radio-group">
+					<label>여자 장애인 화장실이 있나요?</label>
+					<div class="radio-options">
+						<div class="radio-option">
+							<input type="radio" id="userFemaleDisabledToiletY"
+								name="userFemaleDisabledToilet" value="Y"> <label
+								for="userFemaleDisabledToiletY">있음</label>
+						</div>
+						<div class="radio-option">
+							<input type="radio" id="userFemaleDisabledToiletN"
+								name="userFemaleDisabledToilet" value="N"> <label
+								for="userFemaleDisabledToiletN">없음</label>
+						</div>
+						<div class="radio-option">
+							<input type="radio" id="userFemaleDisabledToiletU"
+								name="userFemaleDisabledToilet" value="U" checked> <label
+								for="userFemaleDisabledToiletU">모름</label>
+						</div>
+					</div>
+				</div>
+
+				<!-- 비상벨 -->
+				<div class="radio-group">
+					<label>비상벨이 있나요?</label>
+					<div class="radio-options">
+						<div class="radio-option">
+							<input type="radio" id="userHasEmergencyBellY"
+								name="userHasEmergencyBell" value="Y"> <label
+								for="userHasEmergencyBellY">있음</label>
+						</div>
+						<div class="radio-option">
+							<input type="radio" id="userHasEmergencyBellN"
+								name="userHasEmergencyBell" value="N"> <label
+								for="userHasEmergencyBellN">없음</label>
+						</div>
+						<div class="radio-option">
+							<input type="radio" id="userHasEmergencyBellU"
+								name="userHasEmergencyBell" value="U" checked> <label
+								for="userHasEmergencyBellU">모름</label>
+						</div>
+					</div>
+				</div>
+
+				<!-- CCTV -->
+				<div class="radio-group">
+					<label>CCTV가 있나요?</label>
+					<div class="radio-options">
+						<div class="radio-option">
+							<input type="radio" id="userHasCctvY" name="userHasCctv"
+								value="Y"> <label for="userHasCctvY">있음</label>
+						</div>
+						<div class="radio-option">
+							<input type="radio" id="userHasCctvN" name="userHasCctv"
+								value="N"> <label for="userHasCctvN">없음</label>
+						</div>
+						<div class="radio-option">
+							<input type="radio" id="userHasCctvU" name="userHasCctv"
+								value="U" checked> <label for="userHasCctvU">모름</label>
+						</div>
+					</div>
+				</div>
+
 			</div>
 
 			<div class="form-group">
-				<label class="sub-tit">4. 추가 정보</label>
+				<label>4. 추가 정보</label>
 
-				<div style="display: flex; flex-direction: row; gap: 20px;">
-					<div>
-						<label>청결도</label>
-						<div class="rating">
-							<input type="radio" id="cleanliness5" name="cleanliness"
-								value="5"> <label for="cleanliness5" title="5점"></label>
-							<input type="radio" id="cleanliness4" name="cleanliness"
-								value="4"> <label for="cleanliness4" title="4점"></label>
-							<input type="radio" id="cleanliness3" name="cleanliness"
-								value="3" checked> <label for="cleanliness3" title="3점"></label>
-							<input type="radio" id="cleanliness2" name="cleanliness"
-								value="2"> <label for="cleanliness2" title="2점"></label>
-							<input type="radio" id="cleanliness1" name="cleanliness"
-								value="1"> <label for="cleanliness1" title="1점"></label>
-						</div>
+				<div>
+					<label>청결도</label>
+					<div class="rating">
+						<input type="radio" id="cleanliness5" name="cleanliness" value="5">
+						<label for="cleanliness5" title="5점"></label> <input type="radio"
+							id="cleanliness4" name="cleanliness" value="4"> <label
+							for="cleanliness4" title="4점"></label> <input type="radio"
+							id="cleanliness3" name="cleanliness" value="3" checked> <label
+							for="cleanliness3" title="3점"></label> <input type="radio"
+							id="cleanliness2" name="cleanliness" value="2"> <label
+							for="cleanliness2" title="2점"></label> <input type="radio"
+							id="cleanliness1" name="cleanliness" value="1"> <label
+							for="cleanliness1" title="1점"></label>
 					</div>
+				</div>
 
-					<div>
-						<label>안전성</label>
-						<div class="rating">
-							<input type="radio" id="safety5" name="safety" value="5">
-							<label for="safety5" title="5점"></label> <input type="radio"
-								id="safety4" name="safety" value="4"> <label
-								for="safety4" title="4점"></label> <input type="radio"
-								id="safety3" name="safety" value="3" checked> <label
-								for="safety3" title="3점"></label> <input type="radio"
-								id="safety2" name="safety" value="2"> <label
-								for="safety2" title="2점"></label> <input type="radio"
-								id="safety1" name="safety" value="1"> <label
-								for="safety1" title="1점"></label>
-						</div>
+				<div>
+					<label>안전성</label>
+					<div class="rating">
+						<input type="radio" id="safety5" name="safety" value="5">
+						<label for="safety5" title="5점"></label> <input type="radio"
+							id="safety4" name="safety" value="4"> <label
+							for="safety4" title="4점"></label> <input type="radio"
+							id="safety3" name="safety" value="3" checked> <label
+							for="safety3" title="3점"></label> <input type="radio"
+							id="safety2" name="safety" value="2"> <label
+							for="safety2" title="2점"></label> <input type="radio"
+							id="safety1" name="safety" value="1"> <label
+							for="safety1" title="1점"></label>
 					</div>
 				</div>
 
 				<div class="form-group">
-					<label for="userDescription" class="sub-tit">5. 코멘트</label>
+					<label for="userDescription">5. 코멘트</label>
 					<textarea id="userDescription" name="userDescription" rows="4"
 						placeholder="Add any other useful information about the toilet here"></textarea>
 				</div>
 
 				<!-- Hidden fields for coordinates -->
-				<input type="hidden" id="userLat" name="userLat"> 
-				<input type="hidden" id="userLng" name="userLng">
+				<input type="hidden" id="userLat" name="userLat"> <input
+					type="hidden" id="userLng" name="userLng">
 
-				<div>
+				<div class="form-group">
 					<button type="submit" class="btn">화장실 등록</button>
 				</div>
 		</form>

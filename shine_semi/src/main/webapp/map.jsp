@@ -59,7 +59,12 @@ window.lang = "<%=lang%>";
     emergencyBellStatus: "<%=bundle.getString("popup.emergencyBellStatus")%>",
     cctv: "<%=bundle.getString("popup.cctv")%>",
     lastVerified: "<%=bundle.getString("popup.lastVerified")%>",  
-    confirmed: "<%=bundle.getString("popup.confirmed")%>"        
+    confirmed: "<%=bundle.getString("popup.confirmed")%>",        
+    review: "<%=bundle.getString("toilet.review")%>",        
+    cleanliness: "<%=bundle.getString("toilet.cleanliness")%>",        
+    safety: "<%=bundle.getString("toilet.safety")%>",        
+    openTime: "<%=bundle.getString("toilet.openTime")%>",        
+    unknown: "<%=bundle.getString("toilet.unknown")%>"        
   };
 </script>
 
@@ -298,9 +303,6 @@ function reloadGoogleMapScript(langCode) {
 		src="https://maps.googleapis.com/maps/api/js?key=${applicationScope.google_map_api}&callback=initMap&language=<%= lang %>"></script>
 
 
-<script type="text/javascript">
-console.log(userToiletID);
-</script>
 
 </body>
 </html>
