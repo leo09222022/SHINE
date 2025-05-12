@@ -7,7 +7,7 @@ public class ReviewVO {
 	private int cleanliness;
 	private int safety;
 	private int accessibility;
-	private int supplies;
+	private String supplies;
 	private Date createdAt;
 	private int userToiletId;
 	private int toiletId;
@@ -48,11 +48,11 @@ public class ReviewVO {
 		this.accessibility = accessibility;
 	}
 
-	public int getSupplies() {
+	public String getSupplies() {
 		return supplies;
 	}
 
-	public void setSupplies(int supplies) {
+	public void setSupplies(String supplies) {
 		this.supplies = supplies;
 	}
 

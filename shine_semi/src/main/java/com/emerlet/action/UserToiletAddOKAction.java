@@ -75,14 +75,14 @@ public class UserToiletAddOKAction {
 
 				review.setCleanliness(Integer.parseInt(request.getParameter("cleanliness")));
 				review.setSafety(Integer.parseInt(request.getParameter("safety")));
-				
 				review.setAccessibility(-1); 
-				review.setSupplies(-1);
-				
+				review.setSupplies(null);  // supplies가 없으면 null 또는 빈 문자열
 				review.setUserToiletId(toiletId);
+				review.setCreatedAt(new java.util.Date());
 
 				ReviewDAO reviewDAO = new ReviewDAO();
-				boolean reviewResult = reviewDAO.addReview(review, true);
+				int result = reviewDAO.insertReview(review);
+				boolean reviewResult = result > 0;
 
 				System.out.println("리뷰 저장 결과: " + reviewResult);
 
