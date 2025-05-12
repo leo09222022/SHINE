@@ -13,6 +13,43 @@ const localizedDate = lastVerifiedDate.toLocaleDateString(window.lang || "ko", {
   day: "numeric"
 });
 
+// 모바일 메뉴
+function toggleMobileMenu() {
+  const menu = document.getElementById("mobileMenu");
+  menu.classList.toggle("show");
+}
+
+
+
+
+// 랭귀지 설정 팝업 ( 모바일)
+function changeLang(lang) {
+  location.href = `setLang.jsp?lang=${lang}`;
+}
+
+function openLangPopup() {
+  const popup = document.getElementById("langPopup");
+  const body = popup.querySelector(".lang-popup-body");
+
+  popup.style.display = "flex";
+  body.style.animation = "slideUp 0.3s ease-out forwards";
+}
+
+function closeLangPopup() {
+  const popup = document.getElementById("langPopup");
+  const body = popup.querySelector(".lang-popup-body");
+
+  // slideDown 애니메이션 후 display none
+  body.style.animation = "slideDown 0.3s ease-in forwards";
+
+  // 애니메이션 끝난 후 완전히 닫기
+  setTimeout(() => {
+    popup.style.display = "none";
+  }, 300); // 애니메이션과 동일한 시간
+}
+
+
+
 
 // 서치박스용 함수
 function filterToilets(keyword) {
@@ -410,40 +447,75 @@ function openCustomPopup(toilet) {
   });
   const verifiedMessage = window.i18n.lastVerified.replace("{0}", localizedDate);
 
-  content.innerHTML = `
-    <div style="padding: 20px; background: white; border-radius: 4px; flex-direction: column; justify-content: flex-start; align-items: flex-end; display: inline-flex;">
-      <div style="display: flex; gap: 40px">
-        <div style="width: 280px; display: flex; flex-direction: column; gap: 20px">
-          <div style="display: flex; flex-direction: column; gap: 8px">
-            <div style="font-size: 24px; font-weight: 600">${toilet.translatedName || toilet.name}</div>
-            <div style="font-size: 14px">${toilet.translatedAddress || toilet.addressRoad}</div>
-            <div style="font-size: 14px">${toilet.openTimeDetail}</div>
-          </div>
-          <div onclick="openKakaoPopUp()" style="cursor: pointer; background: #3a81ff; color: white; padding: 8px; border-radius: 4px; display: flex; gap: 8px; align-items: center; justify-content: center; text-align: center;">
-             <img src="img/pop_directions.svg" alt=""><span>${window.i18n.guide}</span>
-          </div>
-		  <div style="font-size: 14px; color: #919191">${verifiedMessage}</div>
-          <div style="display: flex; gap: 4px; align-items: center">
-            <div style="color: #3a81ff; font-size: 14px">${window.i18n.report}</div>
-          </div>
-        </div>
-
-		<div style="width: 280px; display: flex; flex-direction: column; gap: 8px">
-		  ${renderFacilityRow("maleToilet", "img/pop_man.svg", toilet.maleToilet)}
-		  ${renderFacilityRow("maleDisabledToilet", "img/pop__accessible.svg", toilet.maleDisabledToilet)}
-		  ${renderFacilityRow("femaleToilet", "img/pop_woman.svg", toilet.femaleToilet)}
-		  ${renderFacilityRow("femaleDisabledToilet", "img/pop__accessible.svg", toilet.femaleDisabledToilet)}
-		  ${renderFacilityRow("diaperTable", "img/pop_baby.svg", toilet.hasDiaperTable)}
-		  <div style="font-size: 12px;">${window.i18n.diaperLocation} : ${toilet.diaperTableLocation}</div>
-		  ${renderFacilityRow("emergencyBell", "img/pop_bell.svg", toilet.hasEmergencyBell)}
-		  <div style="font-size: 12px;">${window.i18n.emergencyBellStatus} : ${toilet.emergencyBellLocation}</div>
-		  ${renderFacilityRow("cctv", "img/pop_cctv.svg", toilet.hasCctv)}
-		</div>
-      </div>
-    </div>
-  `;
 
   popup.style.display = "block";
+  
+  if (window.innerWidth <= 768) {
+    content.innerHTML = `
+      <div style="display:flex; flex-direction: column; gap: 16px;">
+        <div>
+          <div style="font-size: 18px; font-weight: 600;">${toilet.translatedName || toilet.name}</div>
+          <div style="font-size: 14px;">청결도 ⭐ ${toilet.cleanliness} &nbsp; 안전성 ⭐ ${toilet.safety}</div>
+          <div style="font-size: 14px;">${toilet.translatedAddress || toilet.addressRoad}</div>
+          <div style="font-size: 14px;">${toilet.openTimeDetail}</div>
+        </div>
+
+        <button onclick="openKakaoPopUp()" style="background: #3a81ff; color: white; border: none; border-radius: 8px; padding: 10px 0; font-size: 16px;">
+          ${window.i18n.guide}
+        </button>
+
+        ${renderFacilityRow("maleToilet", "img/pop_man.svg", toilet.maleToilet)}
+        ${renderFacilityRow("maleDisabledToilet", "img/pop__accessible.svg", toilet.maleDisabledToilet)}
+        ${renderFacilityRow("femaleToilet", "img/pop_woman.svg", toilet.femaleToilet)}
+        ${renderFacilityRow("femaleDisabledToilet", "img/pop__accessible.svg", toilet.femaleDisabledToilet)}
+        ${renderFacilityRow("diaperTable", "img/pop_baby.svg", toilet.hasDiaperTable)}
+        <div style="font-size: 12px;">${window.i18n.diaperLocation} : ${toilet.diaperTableLocation}</div>
+        ${renderFacilityRow("emergencyBell", "img/pop_bell.svg", toilet.hasEmergencyBell)}
+        <div style="font-size: 12px;">${window.i18n.emergencyBellStatus} : ${toilet.emergencyBellLocation}</div>
+        ${renderFacilityRow("cctv", "img/pop_cctv.svg", toilet.hasCctv)}
+
+		<div style="font-size: 14px; color: #919191">${verifiedMessage}</div>
+		<div style="display: flex; gap: 4px; align-items: center">
+			<div style="color: #3a81ff; font-size: 14px">${window.i18n.report}</div>
+		</div>
+      </div>
+    `;
+  }
+ else {
+	 content.innerHTML = `
+	    <div style="padding: 20px; background: white; border-radius: 4px; flex-direction: column; justify-content: flex-start; align-items: flex-end; display: inline-flex;">
+	      <div style="display: flex; gap: 40px">
+	        <div style="width: 280px; display: flex; flex-direction: column; gap: 20px">
+	          <div style="display: flex; flex-direction: column; gap: 8px">
+	            <div style="font-size: 24px; font-weight: 600">${toilet.translatedName || toilet.name}</div>
+	            <div style="font-size: 14px">${toilet.translatedAddress || toilet.addressRoad}</div>
+	            <div style="font-size: 14px">${toilet.openTimeDetail}</div>
+	          </div>
+	          <div onclick="openKakaoPopUp()" style="cursor: pointer; background: #3a81ff; color: white; padding: 8px; border-radius: 4px; display: flex; gap: 8px; align-items: center; justify-content: center; text-align: center;">
+	             <img src="img/pop_directions.svg" alt=""><span>${window.i18n.guide}</span>
+	          </div>
+	 	  <div style="font-size: 14px; color: #919191">${verifiedMessage}</div>
+	          <div style="display: flex; gap: 4px; align-items: center">
+	            <div style="color: #3a81ff; font-size: 14px">${window.i18n.report}</div>
+	          </div>
+	        </div>
+
+	 	<div style="width: 280px; display: flex; flex-direction: column; gap: 8px">
+	 	  ${renderFacilityRow("maleToilet", "img/pop_man.svg", toilet.maleToilet)}
+	 	  ${renderFacilityRow("maleDisabledToilet", "img/pop__accessible.svg", toilet.maleDisabledToilet)}
+	 	  ${renderFacilityRow("femaleToilet", "img/pop_woman.svg", toilet.femaleToilet)}
+	 	  ${renderFacilityRow("femaleDisabledToilet", "img/pop__accessible.svg", toilet.femaleDisabledToilet)}
+	 	  ${renderFacilityRow("diaperTable", "img/pop_baby.svg", toilet.hasDiaperTable)}
+	 	  <div style="font-size: 12px;">${window.i18n.diaperLocation} : ${toilet.diaperTableLocation}</div>
+	 	  ${renderFacilityRow("emergencyBell", "img/pop_bell.svg", toilet.hasEmergencyBell)}
+	 	  <div style="font-size: 12px;">${window.i18n.emergencyBellStatus} : ${toilet.emergencyBellLocation}</div>
+	 	  ${renderFacilityRow("cctv", "img/pop_cctv.svg", toilet.hasCctv)}
+	 	</div>
+	      </div>
+	    </div>
+	  `;
+   }
+ 
 }
 
 function renderFacilityRow(labelKey, iconPath, value) {
@@ -528,3 +600,47 @@ function closeCustomPopup() {
     document.head.appendChild(script);
   }
 })();
+
+// 팝업 스크롤바로 내릴 시 모바일 화면에서 아래로 사라지게 하는 함수 
+(function enablePopupSwipeClose() {
+  const popup = document.getElementById("customInfoPopup");
+  let startY = 0;
+  let isDragging = false;
+
+  popup.addEventListener("touchstart", (e) => {
+    const y = e.touches[0].clientY;
+    const bar = popup.querySelector(".popup-dragbar");
+    const barRect = bar.getBoundingClientRect();
+
+    if (y >= barRect.top - 20 && y <= barRect.bottom + 20) {
+      isDragging = true;
+      startY = y;
+    }
+  });
+
+
+  popup.addEventListener("touchmove", (e) => {
+    if (!isDragging) return;
+    const deltaY = e.touches[0].clientY - startY;
+    
+    // 80px 이상 아래로 스와이프 시 팝업 닫기
+    if (deltaY > 80) {
+      popup.style.transition = "transform 0.3s ease-out, opacity 0.3s ease-out";
+      popup.style.transform = "translateY(100%)";
+      popup.style.opacity = "0";
+
+      setTimeout(() => {
+        popup.style.display = "none";
+        popup.style.transform = ""; // 초기화
+        popup.style.opacity = "";
+        popup.style.transition = "";
+      }, 300);
+
+      isDragging = false;
+    }
+  });
+  popup.addEventListener("touchend", () => {
+    isDragging = false;
+  });
+})();
+
