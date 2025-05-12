@@ -40,7 +40,7 @@ public class FrontController extends HttpServlet {
 		System.out.println("init 동작함");
 		String path= config.getServletContext().getRealPath("WEB-INF");
 		try {
-			Reader reader = new FileReader(path + "/kosta.properties");
+			Reader reader = new FileReader(path + "/emerlet.properties");
 			Properties prop = new Properties();
 			prop.load(reader);
 			Iterator iter = prop.keySet().iterator();
