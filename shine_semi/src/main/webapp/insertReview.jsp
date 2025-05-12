@@ -26,11 +26,6 @@
         <label><input type="radio" name="safety" value="<%=i%>"><%=i%></label>
     <% } %>
 
-    <p>화장지 비치 여부:</p>
-    <label><input type="radio" name="supplies" value="Y">있음</label>
-    <label><input type="radio" name="supplies" value="N">없음</label>
-
-    <br><br>
     <button type="submit">리뷰 등록</button>
 </form>
 </body>

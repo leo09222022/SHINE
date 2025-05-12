@@ -15,7 +15,7 @@ public class ReviewDAO {
 	public ArrayList<ReviewVO> findReview(Integer userToiletId, Integer toiletId) {
 		ArrayList<ReviewVO> reviews = new ArrayList<ReviewVO>();
 
-		String sql = "select cleanliness, safety, supplies, createdAt from reviews where (userToiletId = ? and toiletId is null) or (toiletId = ? and userToiletId is null) order by createdAt desc";
+		String sql = "select cleanliness, safety, createdAt from reviews where (userToiletId = ? and toiletId is null) or (toiletId = ? and userToiletId is null) order by createdAt desc";
 
 		try {
 			Connection conn = ConnectionProvider.getConnection();
@@ -32,7 +32,6 @@ public class ReviewDAO {
 				ReviewVO review = new ReviewVO();
 				review.setCleanliness(rs.getInt("cleanliness"));
 				review.setSafety(rs.getInt("safety"));
-				review.setSupplies(rs.getString("supplies"));
 				review.setCreatedAt(rs.getTimestamp("createdAt"));
 				reviews.add(review);
 			}
@@ -47,7 +46,7 @@ public class ReviewDAO {
 	public int insertReview(ReviewVO vo) {
 		int result = -1;
 
-		String sql = "insert into reviews (cleanliness,safety,supplies,createdAt,userToiletId,toiletId) values (?,?,?,?,?,?)";
+		String sql = "insert into reviews (cleanliness,safety,createdAt,userToiletId,toiletId) values (?,?,?,?,?)";
 
 		// finally에서 닫기 위해 try-catch 바깥에 생성
 		Connection conn = null;
@@ -59,8 +58,7 @@ public class ReviewDAO {
 
 			pstmt.setInt(1, vo.getCleanliness());
 			pstmt.setInt(2, vo.getSafety());
-			pstmt.setString(3, vo.getSupplies());
-			pstmt.setTimestamp(4, new java.sql.Timestamp(vo.getCreatedAt().getTime()));
+			pstmt.setTimestamp(3, new java.sql.Timestamp(vo.getCreatedAt().getTime()));
 
 			// userToiletId랑 toiletId 중 하나만 값이 있고, 다른 하나는 null
 			if (vo.getUserToiletId() != 0) {

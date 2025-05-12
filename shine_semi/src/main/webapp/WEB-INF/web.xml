@@ -43,7 +43,7 @@
 	<!-- 화장실 추가 서블릿 매핑 -->
 	<servlet-mapping>
 		<servlet-name>UserToiletServlet</servlet-name>
-		<url-pattern>/toiletAdd.do</url-pattern>
+		<url-pattern>/toiletAddOK.do</url-pattern>
 	</servlet-mapping>
 	
 	<!-- 화장실 검색 서블릿 매핑 -->
