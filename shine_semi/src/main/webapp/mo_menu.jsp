@@ -137,7 +137,7 @@ ResourceBundle bundle = ResourceBundle.getBundle("messages", locale);
             </div>
             
             <!-- 화장실 등록 메뉴 -->
-            <div class="menu-item" onclick="location.href='toiletAdd.do'">
+            <div class="menu-item" onclick="location.href='toiletAdd.jsp'">
                 <div class="menu-item-content">
                     <img class="menu-icon" src="img/menu_plus.svg" alt="Register">
                     <span><%=bundle.getString("menu.register")%></span>

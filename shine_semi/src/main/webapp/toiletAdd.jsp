@@ -97,7 +97,6 @@ input[type="text"], textarea {
 	margin-top: 5px;
 }
 
-/* 별점 스타일 */
 .rating {
 	display: flex;
 	flex-direction: row-reverse;
