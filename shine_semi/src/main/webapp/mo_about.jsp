@@ -25,8 +25,8 @@ String formattedMessage = MessageFormat.format(rawMessage, email);
 <html>
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title><%=bundle.getString("about.title")%></title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="css/mo_style.css" />
 <style>
 body {
@@ -37,27 +37,7 @@ body {
 	color: #1D1D1F;
 }
 
-.menu-header {
-	position: fixed; /* 고정 위치 설정 */
-	top: 0; /* 화면 상단에 배치 */
-	left: 0; /* 화면 왼쪽에 배치 */
-	width: 100%; /* 전체 너비 차지 */
-	height: 48px; /* 기존 높이 유지 */
-	background-color: white; /* 배경색 설정 */
-	z-index: 1000; /* 다른 요소 위에 표시 */
-	display: flex;
-	flex-direction: row;
-	justify-content: space-between;
-	align-items: center;
-	padding: 12px 20px;
-	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 그림자 효과 추가 */
-}
 
-.content-wrapper {
-	display: flex;
-	flex-direction: column;
-	margin-top: 72px; /* 헤더 높이 + 여유 공간 */
-}
 
 .content-container {
 	display: flex;
@@ -117,6 +97,12 @@ body {
 	font-weight: 400;
 	line-height: 24px;
 	color: #1D1D1F;
+}
+
+@media ( min-width : 768px) {
+	.menu-header {
+		display: none;
+	}
 }
 </style>
 </head>

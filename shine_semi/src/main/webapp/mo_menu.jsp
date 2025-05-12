@@ -16,6 +16,7 @@ ResourceBundle bundle = ResourceBundle.getBundle("messages", locale);
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <link rel="stylesheet" href="css/mo_style.css" />
 </head>
 <body>
@@ -41,7 +42,7 @@ ResourceBundle bundle = ResourceBundle.getBundle("messages", locale);
 			<span><%=bundle.getString("footer.support")%></span> <img
 				src="img/menu_more.svg">
 		</div>
-		<div class="menu-item" onclick="location.href='mo_menu.html'">
+		<div class="menu-item" onclick="location.href='toiletAdd.jsp'">
 			<span><%=bundle.getString("menu.register")%></span> <img
 				src="img/menu_more.svg">
 		</div>

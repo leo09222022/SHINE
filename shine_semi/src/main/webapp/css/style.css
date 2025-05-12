@@ -107,9 +107,9 @@ body {
 
 /* 검색결과 */
 .search-results {
-	max-height: 250px; /* 결과 영역 높이 제한 */
+	max-height: calc(100vh - 520px); /* 250결과 영역 높이 제한 */
 	overflow-y: auto; /* 세로 스크롤 적용 */
-	margin-top: 8px;
+	margin-top: 4px;
 }
 
 .search-result-item {
@@ -397,7 +397,7 @@ input:checked+.slider:before {
 
 .lang-popup-body {
 	background: white;
-	width: 100%;	
+	width: 100%;
 	border-radius: 12px 12px 0 0;
 	padding: 20px;
 	box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.2);
@@ -463,6 +463,10 @@ input:checked+.slider:before {
 	border: none;
 }
 
+.cursor-pointer {
+	cursor: pointer;
+}
+
 /* 모바일 메뉴 컴포넌트 */
 .mobile-menu {
 	display: none; /* 기본은 숨김 */
@@ -495,6 +499,9 @@ to {
 
 /* 모바일 환경 */
 @media ( max-width : 768px) {
+	#map {
+		margin-top: 48px;
+	}
 	.sidebar {
 		display: none;
 	}
@@ -546,12 +553,12 @@ to {
 		margin-left: auto;
 	}
 	.mo-close-btn {
-	 margin-left: auto;
+		margin-left: auto;
 	}
 
 	/* 상단 바 (드래그바처럼 보이게) */
 	.popup-dragbar {
-		width: 40px;
+		width: 60px;
 		height: 5px;
 		background: #ccc;
 		border-radius: 5px;
@@ -561,8 +568,10 @@ to {
 		pointer-events: auto;
 	}
 	.search-box {
-		margin: 20px;
-		width: 60%;
+		margin: 60px 20px 20px 20px;
+		width: 70%;
 		min-width: 300px;
+		padding: 8px 16px;
+		box-shadow: 0px 4px 10px 0px rgba(0, 0, 0, 0.3);
 	}
 }
