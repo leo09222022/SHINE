@@ -45,7 +45,7 @@ String formattedMessage = MessageFormat.format(rawMessage, email);
 
 	<div class="content-wrapper">
 		<div class="content-container">
-			<div class="content-title"><%=bundle.getString("footer.contact")%></div>
+			<div class="sn-title"><%=bundle.getString("footer.contact")%></div>
 			<div class="content-description">
 				<%=formattedMessage%>
 			</div>

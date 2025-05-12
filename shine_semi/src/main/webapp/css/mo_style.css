@@ -156,4 +156,31 @@ align-items: center;
 padding: 8px 20px;
 border-radius: 4px;
 background: #3A81FF;
+font-family: Pretendard;
+font-size: 16px;
+font-weight: 500;
+line-height: normal;
+letter-spacing: 0em;
+color: #FFFFFF;
+cursor: pointer;
+
+}
+
+.sn-title{
+font-size: 40px;
+font-weight: 600;
+line-height: normal;
+letter-spacing: 0em;
+/* Text_main */
+color: #3A81FF;
+margin-bottom: 12px;
+}
+
+.sn-subtitle{
+font-size: 20px;
+font-weight: 600;
+line-height: normal;
+letter-spacing: 0em;
+color: #1D1D1F;
+margin-bottom: 12px;
 }

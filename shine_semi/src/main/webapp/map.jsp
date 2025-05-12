@@ -188,7 +188,7 @@ window.lang = "<%=lang%>";
 				<div class="about-section">
 					<div class="cursor-pointer" onclick="openModalWithPage('mo_about.jsp')"><%=bundle.getString("footer.about")%></div>
 					<div class="cursor-pointer" onclick="openModalWithPage('mo_contact.jsp')"><%=bundle.getString("footer.contact")%></div>
-					<div class="cursor-pointer" onclick="openModalWithPage('mo_tips.jsp')"><%=bundle.getString("footer.support")%></div>
+					<div class="cursor-pointer" onclick="openModalWithPage('mo_support.jsp')"><%=bundle.getString("footer.support")%></div>
 				</div>
 
 			</footer>
@@ -298,6 +298,9 @@ function reloadGoogleMapScript(langCode) {
 		src="https://maps.googleapis.com/maps/api/js?key=${applicationScope.google_map_api}&callback=initMap&language=<%= lang %>"></script>
 
 
+<script type="text/javascript">
+console.log(userToiletID);
+</script>
 
 </body>
 </html>
