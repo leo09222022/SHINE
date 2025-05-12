@@ -3,9 +3,45 @@
 <head>
 <meta charset="UTF-8">
 <title>공중화장실 지도</title>
-<meta http-equiv="refresh" content="0; URL=map">
+<meta http-equiv="refresh" content="2; URL=map">
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<script
+	src="https://unpkg.com/lottie-web@5.7.6/build/player/lottie.min.js"></script>
+<style>
+body {
+	margin: 0;
+	padding: 0;
+	background-color: #3A81FF;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
+	font-family: 'Pretendard', sans-serif;
+}
+
+.loading-text {
+	margin-top: 20px;
+	font-size: 18px;
+	color: #3A81FF;
+	font-weight: 500;
+}
+
+#lottie-container {
+	width: 30%;
+}
+</style>
 </head>
 <body>
-	<p>로딩 중..... 자동으로 지도로 이동합니다.</p>
+	<div id="lottie-container"></div>
+	<script>
+		lottie.loadAnimation({
+			container : document.getElementById('lottie-container'),
+			renderer : 'svg',
+			loop : true,
+			autoplay : true,
+			path : 'ani/ani_loading.json'
+		});
+	</script>
 </body>
 </html>
