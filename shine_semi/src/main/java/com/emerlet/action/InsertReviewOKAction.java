@@ -14,7 +14,6 @@ public class InsertReviewOKAction {
             ReviewVO vo = new ReviewVO();
             vo.setCleanliness(Integer.parseInt(request.getParameter("cleanliness")));
             vo.setSafety(Integer.parseInt(request.getParameter("safety")));
-            vo.setSupplies(request.getParameter("supplies"));
             vo.setCreatedAt(new Date());
 
             String toiletId = request.getParameter("toiletId");
