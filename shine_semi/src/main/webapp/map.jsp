@@ -300,9 +300,6 @@ function reloadGoogleMapScript(langCode) {
 		src="https://maps.googleapis.com/maps/api/js?key=${applicationScope.google_map_api}&callback=initMap&language=<%= lang %>"></script>
 
 
-<script type="text/javascript">
-console.log(userToiletID);
-</script>
 
 </body>
 </html>

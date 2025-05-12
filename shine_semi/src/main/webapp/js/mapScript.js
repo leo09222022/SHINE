@@ -377,6 +377,12 @@ function initMap() {
 
 			// 마커 클릭 시 InfoWindow 표시
 			marker.addListener("click", () => {
+				
+				console.log(toilet.name);
+	
+				
+				
+				
 				const lang = sessionStorage.getItem("lang") || navigator.language.slice(0, 2);
 				// 마커 위치를 지도 중심으로 이동시키기
 				map.setCenter(marker.getPosition());
