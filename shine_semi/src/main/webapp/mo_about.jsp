@@ -21,7 +21,7 @@ ResourceBundle bundle = ResourceBundle.getBundle("messages", locale);
 body {
     margin: 0;
     padding: 0;
-    font-family: 'Pretendard', sans-serif;
+    font-family: 'Pretendard';
     background-color: #FFFFFF;
     color: #1D1D1F;
 }
@@ -40,14 +40,14 @@ body {
 
 .page-title {
     font-size: 20px;
-    font-weight: 500;
+    font-weight: normal;
     color: #1D1D1F;
     margin-bottom: 8px;
 }
 
 .text-content {
     font-size: 16px;
-    font-weight: 400;
+    font-weight: normal;
     line-height: 150%;
     color: #1D1D1F;
     margin-bottom: 8px;
@@ -55,7 +55,7 @@ body {
 
 .feature-list {
     font-size: 16px;
-    font-weight: 400;
+    font-weight: normal;
     line-height: 150%;
     color: #1D1D1F;
 }
