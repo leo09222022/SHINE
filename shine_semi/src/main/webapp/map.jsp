@@ -141,7 +141,7 @@ window.lang = "<%=lang%>";
 				</div>
 
 				<!-- 화장실 등록 메뉴 아이템 -->
-				<a href="toiletAdd.do" class="menu-item"> <img
+				<a href="toiletAdd.jsp" class="menu-item"> <img
 					src="img/menu_plus.svg" /> <span class="menu-text"><%=bundle.getString("menu.register")%></span>
 					<img src="img/menu_more.svg" />
 				</a>
