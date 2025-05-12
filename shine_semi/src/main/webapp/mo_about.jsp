@@ -18,117 +18,70 @@ ResourceBundle bundle = ResourceBundle.getBundle("messages", locale);
 <title>Insert title here</title>
 <link rel="stylesheet" href="css/mo_style.css" />
 <style>
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Pretendard', sans-serif;
+    background-color: #FFFFFF;
+    color: #1D1D1F;
+}
+
+.content-wrapper {
+    display: flex;
+    flex-direction: column;
+}
+
 .content-container {
-	position: static;
-	left: 20px;
-	top: 20px;
-	width: 280px;
-	height: 29px;
-	opacity: 1;
-	font-family: Pretendard;
-	font-size: 20px;
-	font-weight: normal;
-	line-height: normal;
-	letter-spacing: 0em;
-	/* Text_main */
-	color: #1D1D1F;
-	z-index: 0;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    gap: 8px;
 }
 
 .page-title {
-	position: static;
-	left: 20px;
-	top: 20px;
-	width: 280px;
-	height: 29px;
-	opacity: 1;
-	font-family: Pretendard;
-	font-size: 20px;
-	font-weight: normal;
-	line-height: normal;
-	letter-spacing: 0em;
-	/* Text_main */
-	color: #1D1D1F;
-	z-index: 0;
-}
-
-.section-title { 
-	position: static;
-	left: 0px;
-	top: 946px;
-	width: 320px;
-	height: 437px;
-	opacity: 1;
-	/* Smart layout */
-	display: flex;
-	flex-direction: column;
-	padding: 20px;
-	gap: 8px;
-	align-self: stretch;
-	z-index: 3;
+    font-size: 20px;
+    font-weight: 500;
+    color: #1D1D1F;
+    margin-bottom: 8px;
 }
 
 .text-content {
-	position: static;
-	left: 20px;
-	top: 57px;
-	width: 280px;
-	height: 336px;
-	opacity: 1;
-	font-family: Pretendard;
-	font-size: 16px;
-	font-weight: normal;
-	line-height: 150%;
-	letter-spacing: 0em;
-	/* Text_main */
-	color: #1D1D1F;
-	z-index: 1;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 150%;
+    color: #1D1D1F;
+    margin-bottom: 8px;
 }
 
 .feature-list {
-	position: static;
-	left: 20px;
-	top: 57px;
-	width: 280px;
-	height: 360px;
-	opacity: 1;
-	font-family: Pretendard;
-	font-size: 16px;
-	font-weight: normal;
-	line-height: 150%;
-	letter-spacing: 0em;
-	/* Text_main */
-	color: #1D1D1F;
-	z-index: 1;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 150%;
+    color: #1D1D1F;
 }
 
 .feature-item {
-	margin-bottom: 8px;
-	display: flex;
-	align-items: flex-start;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: flex-start;
 }
 
 .feature-item:before {
-	content: "•";
-	margin-right: 8px;
-}
-
-.contact-section {
-	margin-top: 32px;
-	border-top: 1px solid #EEEEEE;
-	padding-top: 16px;
+    content: "•";
+    margin-right: 8px;
 }
 
 .contact-email {
-	color: #3A81FF;
-	text-decoration: underline;
+    text-decoration: underline;
+    color: inherit;
 }
 </style>
 </head>
 <body>
 	<div class="menu-header">
 		<img class="cursor" src="img/logo_row.svg"
-			onclick="location.href='index.html'"> <img class="cursor"
+			onclick="location.href='index.html'"> 
+		<img class="cursor"
 			src="img/pop__close.svg" onclick="location.href='index.html'" />
 	</div>
 
@@ -145,8 +98,10 @@ ResourceBundle bundle = ResourceBundle.getBundle("messages", locale);
 
 			<div class="text-content">이멀렛은 다양한 화장실 찾기를 넘어, 누구에게나 열려 있는
 				플랫폼이고 접근성 높은 화장실 정보 플랫폼을 지향합니다.</div>
-
-			<div class="section-title">주요 기능 및 서비스</div>
+		</div>
+		
+		<div class="content-container">
+			<div class="page-title">주요 기능 및 서비스</div>
 
 			<div class="text-content">위치 기반 화장실 검색: 현재 위치를 기준으로 주변의 공중화장실을
 				쉽게 찾아 지도를 통해 확인할 수 있습니다.</div>
@@ -162,8 +117,10 @@ ResourceBundle bundle = ResourceBundle.getBundle("messages", locale);
 
 			<div class="text-content">필터/옵션 고급 사용 기능: 화장가기용 화장실 외에도 화장실 검색
 				및 정보 열람이 가능하며, 등록 시에는 더 많은 기능을 누릴 수 있습니다.</div>
-
-			<div class="section-title">공공화장실의 정의</div>
+		</div>
+		
+		<div class="content-container">
+			<div class="page-title">공공화장실의 정의</div>
 
 			<div class="text-content">이멀렛이 제공하는 정보는 다음과 같은 공공 접근이 가능한 화장실을
 				기준으로 합니다:</div>
@@ -179,20 +136,20 @@ ResourceBundle bundle = ResourceBundle.getBundle("messages", locale);
 
 			<div class="text-content">단, 일부 고객만 이용 가능한 제한적 화장실(예: 매장 내 고객
 				전용 화장실)은 가급적 제외하고 있으며, 유의미한 정보일 경우 예외적으로 안내할 수 있습니다.</div>
-
-			<div class="section-title">사용자 참여</div>
+		</div>
+		
+		<div class="content-container">
+			<div class="page-title">사용자 참여</div>
 
 			<div class="text-content">여러분의 참여가 이멀렛을 더욱 정확하고 풍부한 정보 플랫폼으로
 				만듭니다. 새로운 화장실을 제보하거나 잘못된 정보를 발견하셨다면 언제든지 등록 또는 수정 요청해 주세요.</div>
-
-			<div class="contact-section">
-				<div class="text-content">
-					<strong>Contact Us</strong><br> If you have any problems
-					updating the toilets, or wish to send us toilet details or
-					comments, please contact <a href="mailto:shine-emerlet@gmail.com"
-						class="contact-email">shine-emerlet@gmail.com</a>
-				</div>
-			</div>
+		</div>
+		
+		<div class="content-container">
+			<div class="page-title">Contact Us</div>
+			<div class="text-content">If you have any problems updating the
+				toilets, or wish to send us toilet details or comments, please
+				contact <a href="mailto:shine-emerlet@gmail.com" class="contact-email">shine-emerlet@gmail.com</a></div>
 		</div>
 	</div>
 </body>
