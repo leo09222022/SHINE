@@ -114,4 +114,32 @@ public class UserToiletDAO {
             ConnectionProvider.close(conn, pstmt, rs);
         }
     }
+    
+    public int findToiletID(String toiletName) {
+    	int id = 0;
+    	String name = toiletName;
+    	String SQL = "select user_toilet_id from user_toilets where user_name =?";
+    	
+    	try {
+    		Connection conn = ConnectionProvider.getConnection();
+    		PreparedStatement pstmt = conn.prepareStatement(SQL);
+    		pstmt.setString(1, name);
+    		
+    		ResultSet rs = pstmt.executeQuery();
+    		if(rs.next()) {
+    			id = rs.getInt(1);
+    		}
+    		
+    		System.out.println(id);
+    		ConnectionProvider.close(conn, pstmt, rs);
+    		
+    		
+    	}catch (Exception e){
+    		 e.printStackTrace();
+    	}
+    	
+    	
+    	return id;    	
+    }
+    
 }
