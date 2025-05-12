@@ -2,6 +2,22 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ page import="java.util.Locale, java.util.ResourceBundle"%>
+
+<%
+String lang = (String) session.getAttribute("lang");
+if (lang == null)
+	lang = "ko";
+Locale locale = new Locale(lang);
+ResourceBundle bundle = ResourceBundle.getBundle("messages", locale);
+%>
+<%
+String currentLang = (String) session.getAttribute("lang");
+if (currentLang == null)
+	currentLang = "ko";
+%>
+
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -163,7 +179,7 @@ a.reset-link:hover {
 </head>
 <body>
 	<div class="container">
-		<h2>공중화장실 필터링</h2>
+		<h2><%=bundle.getString("menu.filter")%></h2>
 
 		<div class="filter-count">
 			<c:choose>
@@ -180,7 +196,7 @@ a.reset-link:hover {
 			<!-- 남자화장실 -->
 			<div class="filter-option">
 				<div class="filter-icon-text">
-					<img src="img/toggle_man.svg" /> <span>남자화장실</span>
+					<img src="img/toggle_man.svg" /> <span><%=bundle.getString("filter.male")%></span>
 				</div>
 				<label class="switch"> <input type="checkbox"
 					name="hasMaleToilet"
@@ -192,7 +208,7 @@ a.reset-link:hover {
 			<!-- 여자화장실 -->
 			<div class="filter-option">
 				<div class="filter-icon-text">
-					<img src="img/toggle_woman.svg" /> <span>여자화장실</span>
+					<img src="img/toggle_woman.svg" /> <span><%=bundle.getString("filter.female")%></span>
 				</div>
 				<label class="switch"> <input type="checkbox"
 					name="hasFemaleToilet"
@@ -204,7 +220,7 @@ a.reset-link:hover {
 			<!-- 기저귀 교환대 -->
 			<div class="filter-option">
 				<div class="filter-icon-text">
-					<img src="img/toggle_baby.svg" /> <span>기저귀 교환대</span>
+					<img src="img/toggle_baby.svg" /> <span><%=bundle.getString("filter.diaper")%></span>
 				</div>
 				<label class="switch"> <input type="checkbox"
 					name="hasDiaperTable"
@@ -216,7 +232,7 @@ a.reset-link:hover {
 			<!-- 장애인 화장실 -->
 			<div class="filter-option">
 				<div class="filter-icon-text">
-					<img src="img/toggle_dis.svg" /> <span>장애인 이용 가능</span>
+					<img src="img/toggle_dis.svg" /> <span><%=bundle.getString("filter.disabled")%></span>
 				</div>
 				<label class="switch"> <input type="checkbox"
 					name="hasDisabledToilet"
@@ -233,5 +249,29 @@ a.reset-link:hover {
 		<a href="ToiletFilteringServlet?resetFilters=true" class="reset-link">필터
 			초기화</a>
 	</div>
+
+	<!-- 랭귀지 관련 함수 -->
+	<!-- onclick에 세션이벤트까지 같이 하는방식으로 수정해야되는데 귀찮으므로 일단 둠 -->
+	<script>
+function reloadGoogleMapScript(langCode) {
+  const oldScript = document.querySelector('script[src*="maps.googleapis.com"]');
+  if (oldScript) oldScript.remove();
+
+  const newScript = document.createElement("script");
+  newScript.src = `https://maps.googleapis.com/maps/api/js?key=<%=application.getAttribute("google_map_api")%>
+		&callback=initMap&language=${langCode}`;
+			newScript.async = true;
+			document.head.appendChild(newScript);
+		}
+	</script>
+
+
+
+	<!-- 구글맵이 외부 JS보다 나중에 호출되어야함 위치변경 금지 -->
+	<!-- 랭귀지 관련 파라메터 추가함 -->
+	<script async
+		src="https://maps.googleapis.com/maps/api/js?key=${applicationScope.google_map_api}&callback=initMap&language=<%= lang %>"></script>
+
+
 </body>
 </html>

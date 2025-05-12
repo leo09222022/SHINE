@@ -467,7 +467,7 @@ function openCustomPopup(toilet) {
       <div style="display:flex; flex-direction: column; gap: 16px;">
         <div>
           <div style="font-size: 18px; font-weight: 600;">${toilet.translatedName || toilet.name}</div>
-          <div style="font-size: 14px;">청결도 ⭐ ${toilet.cleanliness} &nbsp; 안전성 ⭐ ${toilet.safety}</div>
+          <div style="font-size: 14px;">청결도 ⭐ ${toilet.safety} &nbsp; 안전성 ⭐ ${toilet.safety}</div>
           <div style="font-size: 14px;">${toilet.translatedAddress || toilet.addressRoad}</div>
           <div style="font-size: 14px;">${toilet.openTimeDetail}</div>
         </div>
