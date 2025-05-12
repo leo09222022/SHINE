@@ -8,7 +8,7 @@ public class UserToiletVO {
 	private String userRoadAddress;
 	private String userMaleToilet;
 	private String userFemaleToilet;
-	private String userDisabledToilet;
+	private String userMaleDisabledToilet;
 	private String userHasDiaperTable;
 	private String userDescription;
 	private double userLat;
@@ -16,6 +16,9 @@ public class UserToiletVO {
 	private Date submittedAt;
 	private String status;
 	private String photoUrl;
+	private String userFemaleDisabledToilet;
+	private String userHasEmergencyBell;
+	private String userHasCctv;
 
 	public UserToiletVO() {
 	}
@@ -61,12 +64,12 @@ public class UserToiletVO {
 		this.userFemaleToilet = userFemaleToilet;
 	}
 
-	public String getUserDisabledToilet() {
-		return userDisabledToilet;
+	public String getUserMaleDisabledToilet() {
+		return userMaleDisabledToilet;
 	}
 
-	public void setUserDisabledToilet(String userDisabledToilet) {
-		this.userDisabledToilet = userDisabledToilet;
+	public void setUserMaleDisabledToilet(String userMaleDisabledToilet) {
+		this.userMaleDisabledToilet = userMaleDisabledToilet;
 	}
 
 	public String getUserHasDiaperTable() {
@@ -124,4 +127,13 @@ public class UserToiletVO {
 	public void setPhotoUrl(String photoUrl) {
 		this.photoUrl = photoUrl;
 	}
+	
+	public String getUserFemaleDisabledToilet() { return userFemaleDisabledToilet; }
+	public void setUserFemaleDisabledToilet(String val) { this.userFemaleDisabledToilet = val; }
+
+	public String getUserHasEmergencyBell() { return userHasEmergencyBell; }
+	public void setUserHasEmergencyBell(String val) { this.userHasEmergencyBell = val; }
+
+	public String getUserHasCctv() { return userHasCctv; }
+	public void setUserHasCctv(String val) { this.userHasCctv = val; }
 }

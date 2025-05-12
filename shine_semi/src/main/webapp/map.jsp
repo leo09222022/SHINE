@@ -233,21 +233,19 @@ window.lang = "<%=lang%>";
     	    lat: ${toilet.userLat},
     	    lng: ${toilet.userLng},
     	    addressRoad: "${fn:escapeXml(toilet.userRoadAddress)}",
-    	    maleToilet: "${empty toilet.userMaleToilet ? '' : toilet.userMaleToilet}",
-    	    femaleToilet: "${empty toilet.userFemaleToilet ? '' : toilet.userFemaleToilet}",
-    	    maleDisabledToilet: "${empty toilet.userDisabledToilet ? '' : toilet.userDisabledToilet}",
-    	    femaleDisabledToilet: "",
-    	    hasDiaperTable: "${empty toilet.userHasDiaperTable ? '' : toilet.userHasDiaperTable}",
-    	    description: "${fn:escapeXml(toilet.userDescription)}",
-    	    openTimeDetail: "",
-    	    phoneNumber: "",
-    	    emergencyBellLocation: "",
-    	    hasEmergencyBell: "",
-    	    hasCctv: "",
-    	    diaperTableLocation: ""
+    	    maleToilet: "${toilet.userMaleToilet}",
+    	    femaleToilet: "${toilet.userFemaleToilet}",
+    	    maleDisabledToilet: "${toilet.userMaleDisabledToilet}",
+    	    femaleDisabledToilet: "${toilet.userFemaleDisabledToilet}",
+    	    hasDiaperTable: "${toilet.userHasDiaperTable}",
+    	    hasEmergencyBell: "${toilet.userHasEmergencyBell}",
+    	    hasCctv: "${toilet.userHasCctv}",
+    	    description: "${fn:escapeXml(toilet.userDescription)}"
     	  }<c:if test="${!loop.last}">,</c:if>
     	  </c:forEach>
     	];
+
+
     	  console.log("✅ userToiletData = ", window.userToiletData);
 
     </script>
