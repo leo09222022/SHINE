@@ -66,9 +66,7 @@ public class UserToiletAddOKAction {
 			userToilet.setPhotoUrl("");
 
 			UserToiletDAO userToiletDAO = new UserToiletDAO();
-			int toiletId = userToiletDAO.addUserToilet(userToilet); // 수정된 메서드 (ID 반환)
-
-			System.out.println("toiletId: " + toiletId);
+			int toiletId = userToiletDAO.addUserToilet(userToilet); 
 
 			if (toiletId > 0) {
 				ReviewVO review = new ReviewVO();
