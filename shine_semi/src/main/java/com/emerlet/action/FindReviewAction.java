@@ -8,8 +8,9 @@ import javax.servlet.http.HttpServletResponse;
 import com.emerlet.dao.ReviewDAO;
 import com.emerlet.vo.ReviewVO;
 
-public class FindReviewAction {
-    public String execute(HttpServletRequest request, HttpServletResponse response) {
+public class FindReviewAction  implements EmerletAction {
+    @Override
+    public String pro(HttpServletRequest request, HttpServletResponse response) {
         try {
             Integer toiletId = null;
             Integer userToiletId = null;

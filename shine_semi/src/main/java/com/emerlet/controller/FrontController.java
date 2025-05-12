@@ -78,7 +78,11 @@ public class FrontController extends HttpServlet {
     	if(viewPage.endsWith(".do")) {
     		response.sendRedirect(viewPage);
     	}
-    	else if(viewPage.endsWith(".jsp")) {
+    	else if (viewPage.startsWith("redirect:")) {
+    	    String redirectPath = viewPage.substring("redirect:".length());
+    	    response.sendRedirect(redirectPath);
+    	    return;
+    	}else if(viewPage.endsWith(".jsp")) {
     		request.setAttribute("viewPage", viewPage);
     		RequestDispatcher dispatcher 
     		= request.getRequestDispatcher("index.jsp");

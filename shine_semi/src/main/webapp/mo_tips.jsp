@@ -81,6 +81,7 @@ ResourceBundle bundle = ResourceBundle.getBundle("messages", locale);
 	<div class="content-wrapper">
 		<div class="content-container">
 			<div class="sn-title"><%=bundle.getString("tip.title")%></div>
+			<img src="img/toilet_sign.GIF" />
 			<%
 			for (int i = 1; i <= 10; i++) {
 			%>

@@ -8,8 +8,9 @@ import javax.servlet.http.HttpServletResponse;
 import com.emerlet.dao.ReviewDAO;
 import com.emerlet.vo.ReviewVO;
 
-public class InsertReviewOKAction {
-    public String execute(HttpServletRequest request, HttpServletResponse response) {
+public class InsertReviewOKAction  implements EmerletAction {
+    @Override
+    public String pro(HttpServletRequest request, HttpServletResponse response) {
         try {
             ReviewVO vo = new ReviewVO();
             vo.setCleanliness(Integer.parseInt(request.getParameter("cleanliness")));
@@ -41,7 +42,7 @@ public class InsertReviewOKAction {
 
         } catch (Exception e) {
             e.printStackTrace();
-            return "redirect:index.html";
+            return "redirect:/shine_semi/Emerlet";
         }
     }
 }

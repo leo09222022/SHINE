@@ -32,12 +32,13 @@ public class ReviewDAO {
 				ReviewVO review = new ReviewVO();
 				review.setCleanliness(rs.getInt("cleanliness"));
 				review.setSafety(rs.getInt("safety"));
-				review.setCreatedAt(rs.getTimestamp("createdAt"));
+				review.setCreatedAt(rs.getDate("created_at"));
 				reviews.add(review);
 			}
 			ConnectionProvider.close(conn, pstmt, rs);
 		} catch (Exception e) {
 			System.out.println("리뷰 조회 오류 : " + e.getMessage());
+			e.printStackTrace();
 		}
 
 		return reviews;
@@ -51,7 +52,7 @@ public class ReviewDAO {
 		// finally에서 닫기 위해 try-catch 바깥에 생성
 		Connection conn = null;
 		PreparedStatement pstmt = null;
-
+		System.out.println("insertReview 시작 ");
 		try {
 			conn = ConnectionProvider.getConnection();
 			pstmt = conn.prepareStatement(sql);
@@ -69,9 +70,9 @@ public class ReviewDAO {
 				pstmt.setObject(5, vo.getToiletId());
 			}
 			result = pstmt.executeUpdate();
-
+			System.out.println("insertReview 종료 ");
 		} catch (Exception e) {
-			//System.out.println("리뷰 등록 오류 : " + e.getMessage());
+			System.out.println("리뷰 조회 오류 : " + e.getMessage());
 			e.printStackTrace();
 		} finally {
 			ConnectionProvider.close(conn, pstmt);
@@ -79,37 +80,5 @@ public class ReviewDAO {
 
 		return result;
 	}
+}
 
-//	public boolean addReview(ReviewVO review, boolean isUserToilet) {
-//		String sql = "INSERT INTO reviews (review_id, cleanliness, safety, accessibility, supplies, created_at, "
-//				+ (isUserToilet ? "user_toilet_id" : "toilet_id") + ") "
-//				+ "VALUES (review_id_seq.NEXTVAL, ?, ?, ?, ?, SYSDATE, ?)";
-//
-//		Connection conn = null;
-//		PreparedStatement pstmt = null;
-//
-//		try {
-//			conn = ConnectionProvider.getConnection();
-//			pstmt = conn.prepareStatement(sql);
-//
-//			pstmt.setInt(1, review.getCleanliness());
-//			pstmt.setInt(2, review.getSafety());
-//			pstmt.setInt(3, review.getAccessibility());
-//			pstmt.setString(4, review.getSupplies());
-//
-//			if (isUserToilet) {
-//				pstmt.setInt(5, review.getUserToiletId());
-//			} else {
-//				pstmt.setInt(5, review.getToiletId());
-//			}
-//
-//			int result = pstmt.executeUpdate();
-//			return result > 0;
-//
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//			return false;
-//		} finally {
-//			ConnectionProvider.close(conn, pstmt);
-//		}
-	}

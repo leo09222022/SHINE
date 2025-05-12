@@ -564,7 +564,6 @@ function openCustomPopup(toilet) {
 			  ${window.i18n.review}
 			</div>
 		</div>
-
       </div>
     `;
 	}
