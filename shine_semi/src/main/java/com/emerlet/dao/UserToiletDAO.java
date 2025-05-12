@@ -1,10 +1,43 @@
 package com.emerlet.dao;
 
 import java.sql.*;
+import java.util.ArrayList;
+
 import com.emerlet.db.ConnectionProvider;
 import com.emerlet.vo.UserToiletVO;
 
 public class UserToiletDAO {
+	
+	// 사용자가 등록한 화장실 중 status가 approved로 바뀐 화장실들만 조회하는 메소드 
+	public ArrayList<UserToiletVO> findApprovedToilets() {
+	    ArrayList<UserToiletVO> list = new ArrayList<>();
+	    String sql = "select * from user_toilets where status = 'approved'";
+	    
+	    try (
+	        Connection conn = ConnectionProvider.getConnection();
+	        PreparedStatement pstmt = conn.prepareStatement(sql);
+	        ResultSet rs = pstmt.executeQuery();
+	    ) {
+	        while (rs.next()) {
+	            UserToiletVO vo = new UserToiletVO();
+	            vo.setUserToiletId(rs.getInt("user_toilet_id"));
+	            vo.setUserName(rs.getString("user_name"));
+	            vo.setUserRoadAddress(rs.getString("user_road_address"));
+	            vo.setUserLat(rs.getDouble("user_lat"));
+	            vo.setUserLng(rs.getDouble("user_lng"));
+	            vo.setUserMaleToilet(rs.getString("user_male_toilet"));
+	            vo.setUserFemaleToilet(rs.getString("user_female_toilet"));
+	            vo.setUserDisabledToilet(rs.getString("user_disabled_toilet"));
+	            vo.setUserHasDiaperTable(rs.getString("user_has_diaper_table"));
+	            vo.setUserDescription(rs.getString("user_description"));
+	            list.add(vo);
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	    return list;
+	}
+
 
     // 화장실 추가하고 생성된 ID 반환
     public int addUserToilet(UserToiletVO userToilet) {
