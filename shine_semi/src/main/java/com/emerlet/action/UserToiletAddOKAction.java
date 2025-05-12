@@ -26,22 +26,28 @@ public class UserToiletAddOKAction {
 
 			String maleToilet = request.getParameter("userMaleToilet");
 			String femaleToilet = request.getParameter("userFemaleToilet");
-			String disabledToilet = request.getParameter("userDisabledToilet");
+			String maleDisabledToilet = request.getParameter("userMaleDisabledToilet");
 			String hasDiaperTable = request.getParameter("userHasDiaperTable");
+			String femaleDisabledToilet = request.getParameter("userFemaleDisabledToilet");
+			String hasEmergencyBell = request.getParameter("userHasEmergencyBell");
+			String hasCctv = request.getParameter("userHasCctv");
+
 
 			// "모름" 선택 시 null 설정, 그렇지 않으면 값 그대로 설정
 			userToilet.setUserMaleToilet("U".equals(maleToilet) ? null : maleToilet);
 			userToilet.setUserFemaleToilet("U".equals(femaleToilet) ? null : femaleToilet);
-			userToilet.setUserDisabledToilet("U".equals(disabledToilet) ? null : disabledToilet);
+			userToilet.setUserMaleDisabledToilet("U".equals(maleDisabledToilet) ? null : maleDisabledToilet);
 			userToilet.setUserHasDiaperTable("U".equals(hasDiaperTable) ? null : hasDiaperTable);
-
+			userToilet.setUserFemaleDisabledToilet("U".equals(femaleDisabledToilet) ? null : femaleDisabledToilet);
+			userToilet.setUserHasEmergencyBell("U".equals(hasEmergencyBell) ? null : hasEmergencyBell);
+			userToilet.setUserHasCctv("U".equals(hasCctv) ? null : hasCctv);
 			userToilet.setUserDescription(request.getParameter("userDescription"));
 
 			System.out.println("FormData: name=" + userToilet.getUserName());
 			System.out.println("FormData: address=" + userToilet.getUserRoadAddress());
 			System.out.println("FormData: maleToilet=" + userToilet.getUserMaleToilet());
 			System.out.println("FormData: femaleToilet=" + userToilet.getUserFemaleToilet());
-			System.out.println("FormData: disabledToilet=" + userToilet.getUserDisabledToilet());
+			System.out.println("FormData: disabledToilet=" + userToilet.getUserMaleDisabledToilet());
 			System.out.println("FormData: hasDiaperTable=" + userToilet.getUserHasDiaperTable());
 
 			try {
