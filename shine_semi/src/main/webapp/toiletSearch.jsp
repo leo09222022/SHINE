@@ -21,7 +21,7 @@ ResourceBundle bundle = ResourceBundle.getBundle("messages", locale);
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>화장실 검색</title>
+<title>Emerlet</title>
 <link rel="stylesheet" href="css/style.css" />
 <link
 	href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css"

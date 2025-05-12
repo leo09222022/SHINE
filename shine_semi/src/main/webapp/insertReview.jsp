@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Emerlet</title>
 </head>
 <body>
 <h2>리뷰 작성</h2>
