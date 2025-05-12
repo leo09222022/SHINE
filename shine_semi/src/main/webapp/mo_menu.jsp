@@ -38,7 +38,7 @@ ResourceBundle bundle = ResourceBundle.getBundle("messages", locale);
 			<span><%=bundle.getString("footer.contact")%></span> <img
 				src="img/menu_more.svg">
 		</div>
-		<div class="menu-item" onclick="location.href='mo_menu.html'">
+		<div class="menu-item" onclick="location.href='mo_support.jsp'">
 			<span><%=bundle.getString("footer.support")%></span> <img
 				src="img/menu_more.svg">
 		</div>

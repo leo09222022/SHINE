@@ -64,7 +64,7 @@ ResourceBundle bundle = ResourceBundle.getBundle("messages", locale);
 
 @media ( min-width : 768px) {
 	.menu-header {
-		display: none;
+		display: none !important;
 	}
 }
 </style>

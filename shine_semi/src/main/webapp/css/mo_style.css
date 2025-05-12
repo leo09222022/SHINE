@@ -67,7 +67,6 @@ body {
 .content-wrapper {
 	display: flex;
 	flex-direction: column;
-	gap: 20px;
 }
 
 .content-container {
@@ -146,3 +145,15 @@ body {
 	margin-bottom: 6px; 
 }
 
+.supports-btn{
+width: 100%;
+max-width: 300px;
+height: 36px;
+display: flex;
+flex-direction: row;
+justify-content: center;
+align-items: center;
+padding: 8px 20px;
+border-radius: 4px;
+background: #3A81FF;
+}
