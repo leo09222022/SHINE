@@ -360,13 +360,35 @@ function initMap() {
         selectedMarker = marker;
       }
 
-      // 마커 클릭 시 InfoWindow 표시
-      marker.addListener("click", () => {
-        // 마커 위치를 지도 중심으로 이동시키기
-        map.setCenter(marker.getPosition());
-        // 커스텀 팝업으로 변경
-        openCustomPopup(toilet);
+	  // 마커 클릭 시 InfoWindow 표시
+	       marker.addListener("click", () => {
+	  	const lang = sessionStorage.getItem("lang") || navigator.language.slice(0, 2);
+	         // 마커 위치를 지도 중심으로 이동시키기
+	         map.setCenter(marker.getPosition());
+	         // 커스텀 팝업으로 변경
+	         //openCustomPopup(toilet);
 
+	  	// 한국어일 경우 번역하지 않고 원본 데이터 사용
+	  	if (lang !== "ko") {
+	  	  const ctx = window.location.pathname.split("/")[1]; // 
+	  	  fetch(`/${ctx}/translateOne?name=${encodeURIComponent(toilet.name)}&address=${encodeURIComponent(toilet.addressRoad)}&lang=${lang}`)
+	  	    .then(res => {
+	  	      if (!res.ok) throw new Error("번역 실패");
+	  	      return res.json();
+	  	    })
+	  	    .then(data => {
+	  	      toilet.translatedName = data.name;
+	  	      toilet.translatedAddress = data.address;
+	  	      openCustomPopup(toilet);
+	  	    })
+	  	    .catch(err => {
+	  	      console.error("번역 실패", err);
+	  	      openCustomPopup(toilet); // 번역 실패시 원본으로 fallback
+	  	    });
+	  	} else {
+	  	  // 한국어일 때는 번역 없이 바로 팝업을 열도록 처리
+	  	  openCustomPopup(toilet);
+	  	}
         // 기존팝업 코드 아래
         /* 
 				if (window.currentInfoWindow) window.currentInfoWindow.close();
@@ -425,15 +447,16 @@ function openCustomPopup(toilet) {
   });
   const verifiedMessage = window.i18n.lastVerified.replace("{0}", localizedDate);
 
+
   popup.style.display = "block";
   
   if (window.innerWidth <= 768) {
     content.innerHTML = `
       <div style="display:flex; flex-direction: column; gap: 16px;">
         <div>
-          <div style="font-size: 18px; font-weight: 600;">${toilet.name}</div>
+          <div style="font-size: 18px; font-weight: 600;">${toilet.translatedName || toilet.name}</div>
           <div style="font-size: 14px;">청결도 ⭐ ${toilet.cleanliness} &nbsp; 안전성 ⭐ ${toilet.safety}</div>
-          <div style="font-size: 14px;">${toilet.addressRoad}</div>
+          <div style="font-size: 14px;">${toilet.translatedAddress || toilet.addressRoad}</div>
           <div style="font-size: 14px;">${toilet.openTimeDetail}</div>
         </div>
 
@@ -451,12 +474,10 @@ function openCustomPopup(toilet) {
         <div style="font-size: 12px;">${window.i18n.emergencyBellStatus} : ${toilet.emergencyBellLocation}</div>
         ${renderFacilityRow("cctv", "img/pop_cctv.svg", toilet.hasCctv)}
 
-        <div style="font-size: 12px; color: #999; text-align: center;">
-          이 화장실 정보는 2025년 5월 1일에 마지막으로 확인되었습니다.
-        </div>
-        <div style="font-size: 12px; text-align: center;">
-          <a href="#" style="color: #3a81ff; font-weight: 600;">정보 오류 신고 ></a>
-        </div>
+		<div style="font-size: 14px; color: #919191">${verifiedMessage}</div>
+		<div style="display: flex; gap: 4px; align-items: center">
+			<div style="color: #3a81ff; font-size: 14px">${window.i18n.report}</div>
+		</div>
       </div>
     `;
   }
@@ -466,8 +487,8 @@ function openCustomPopup(toilet) {
 	      <div style="display: flex; gap: 40px">
 	        <div style="width: 280px; display: flex; flex-direction: column; gap: 20px">
 	          <div style="display: flex; flex-direction: column; gap: 8px">
-	            <div style="font-size: 24px; font-weight: 600">${toilet.name}</div>
-	            <div style="font-size: 14px">${toilet.addressRoad}</div>
+	            <div style="font-size: 24px; font-weight: 600">${toilet.translatedName || toilet.name}</div>
+	            <div style="font-size: 14px">${toilet.translatedAddress || toilet.addressRoad}</div>
 	            <div style="font-size: 14px">${toilet.openTimeDetail}</div>
 	          </div>
 	          <div onclick="openKakaoPopUp()" style="cursor: pointer; background: #3a81ff; color: white; padding: 8px; border-radius: 4px; display: flex; gap: 8px; align-items: center; justify-content: center; text-align: center;">
