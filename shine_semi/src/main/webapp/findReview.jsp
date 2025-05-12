@@ -29,25 +29,25 @@
 <% if (list == null || list.isEmpty()) { %>
     <p>등록된 리뷰가 없습니다.</p>
 <% } else { %>
-    <p>▶ 평균 청결도: <%= String.format("%.1f", avgClean) %></p>
-    <p>▶ 평균 안전도: <%= String.format("%.1f", avgSafe) %></p>
-
+    <p>평균 청결도: <%= String.format("%.1f", avgClean) %></p>
+    <p>평균 안전도: <%= String.format("%.1f", avgSafe) %></p>
+<!-- 
     <table border="1">
         <tr>
             <th>청결도</th>
             <th>안전도</th>
-            <th>화장지</th>
             <th>작성일시</th>
         </tr>
         <% for (ReviewVO review : list) { %>
         <tr>
             <td><%= review.getCleanliness() %></td>
             <td><%= review.getSafety() %></td>
-            <td><%= "Y".equalsIgnoreCase(review.getSupplies()) ? "있음" : "없음" %></td>
             <td><%= review.getCreatedAt() %></td>
         </tr>
         <% } %>
     </table>
+    
+     -->
 <% } %>
 </body>
 </html>
