@@ -45,7 +45,7 @@ ResourceBundle bundle = ResourceBundle.getBundle("messages", locale);
 			<span><%=bundle.getString("menu.register")%></span> <img
 				src="img/menu_more.svg">
 		</div>
-		<div class="menu-item" onclick="location.href='mo_menu.html'">
+		<div class="menu-item" onclick="location.href='mo_tips.jsp'">
 			<span><%=bundle.getString("menu.guide")%></span> <img
 				src="img/menu_more.svg">
 		</div>
