@@ -86,6 +86,7 @@ shine_semi/
 ``` 
 ---
 ## 프로젝트 이니셜 셋업 위한 SQL 쿼리문 
+```bash
 CREATE TABLE user_toilets (
     user_toilet_id NUMBER PRIMARY KEY,
     user_name VARCHAR2(100) NOT NULL,
@@ -143,7 +144,7 @@ START WITH 1
 INCREMENT BY 1
 NOCACHE
 NOCYCLE;
-
+```
 ---
 
 ## 🗂 DB 설계
