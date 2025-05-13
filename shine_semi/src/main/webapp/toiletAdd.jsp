@@ -317,7 +317,7 @@ input[type="text"], textarea {
 
 
 			</div>
-			<!--  
+			
 			<div class="form-group">
 				<label class="sub-tit">4. <%=bundle.getString("add.additionalInfo")%></label>
 
@@ -354,7 +354,7 @@ input[type="text"], textarea {
 						</div>
 					</div>
 				</div>
-				-->
+				
 				<div class="form-group">
 
 					<label for="userDescription" class="sub-tit">4. 코멘트</label>
