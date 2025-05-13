@@ -1,6 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page import="java.util.Locale, java.util.ResourceBundle"%>
+<%
+String lang = (String) session.getAttribute("lang");
+if (lang == null)
+	lang = "ko";
+Locale locale = new Locale(lang);
+ResourceBundle bundle = ResourceBundle.getBundle("messages", locale);
+%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -134,7 +142,7 @@ input[type="text"], textarea {
 </head>
 <body>
 	<div class="container">
-		<div class="sn-title">화장실 등록</div>
+		<div class="sn-title"><%=bundle.getString("menu.register")%></div>
 
 		<c:if test="${not empty errorMessage}">
 			<div class="error-message">${errorMessage}</div>
@@ -144,161 +152,164 @@ input[type="text"], textarea {
 
 		<form action="toiletAddOK.do" method="post">
 			<div class="form-group">
-				<label for="userName" class="sub-tit"> 1. 화장실명 *</label> <input
-					type="text" id="userName" name="userName" required>
+				<label for="userName" class="sub-tit"> 1. <%=bundle.getString("add.name")%>
+					*
+				</label> <input type="text" id="userName" name="userName" required>
 			</div>
 
 			<div class="form-group">
-				<label for="userRoadAddress" class="sub-tit"> 2. 주소 (맵 터치시
-					자동입력) *</label> <input type="text" id="userRoadAddress"
-					name="userRoadAddress" required>
+				<label for="userRoadAddress" class="sub-tit"> 2. <%=bundle.getString("add.address")%>
+					*
+				</label> <input type="text" id="userRoadAddress" name="userRoadAddress"
+					required>
 			</div>
 
 			<div class="form-group">
-				<label class="sub-tit"> 3. 상세정보 </label>
+				<label class="sub-tit"> 3. <%=bundle.getString("add.detail")%>
+				</label>
 
 				<div>
 
 					<div class="radio-group">
-						<label>남자화장실이 있나요?</label>
+						<label><%=bundle.getString("popup.maleToilet")%>?</label>
 						<div class="radio-options">
 							<div class="radio-option">
 								<input type="radio" id="userMaleToiletY" name="userMaleToilet"
-									value="Y"> <label for="userMaleToiletY">있음</label>
+									value="Y"> <label for="userMaleToiletY"><%=bundle.getString("add.yes")%></label>
 							</div>
 							<div class="radio-option">
 								<input type="radio" id="userMaleToiletN" name="userMaleToilet"
-									value="N"> <label for="userMaleToiletN">없음</label>
+									value="N"> <label for="userMaleToiletN"><%=bundle.getString("add.no")%></label>
 							</div>
 							<div class="radio-option">
 								<input type="radio" id="userMaleToiletU" name="userMaleToilet"
-									value="U" checked> <label for="userMaleToiletU">모름</label>
+									value="U" checked> <label for="userMaleToiletU"><%=bundle.getString("add.idk")%></label>
 							</div>
 						</div>
 					</div>
 
 					<div class="radio-group">
-						<label>여자화장실이 있나요?</label>
+						<label><%=bundle.getString("popup.femaleToilet")%>?</label>
 						<div class="radio-options">
 							<div class="radio-option">
 								<input type="radio" id="userFemaleToiletY"
 									name="userFemaleToilet" value="Y"> <label
-									for="userFemaleToiletY">있음</label>
+									for="userFemaleToiletY"><%=bundle.getString("add.yes")%></label>
 							</div>
 							<div class="radio-option">
 								<input type="radio" id="userFemaleToiletN"
 									name="userFemaleToilet" value="N"> <label
-									for="userFemaleToiletN">없음</label>
+									for="userFemaleToiletN"><%=bundle.getString("add.no")%></label>
 							</div>
 							<div class="radio-option">
 								<input type="radio" id="userFemaleToiletU"
 									name="userFemaleToilet" value="U" checked> <label
-									for="userFemaleToiletU">모름</label>
+									for="userFemaleToiletU"><%=bundle.getString("add.idk")%></label>
 							</div>
 						</div>
 					</div>
 
 					<div class="radio-group">
-						<label>남자 장애인화장실이 있나요?</label>
+						<label><%=bundle.getString("popup.maleDisabledToilet")%>?</label>
 						<div class="radio-options">
 							<div class="radio-option">
 								<input type="radio" id="userMaleDisabledToiletY"
 									name="userMaleDisabledToilet" value="Y"> <label
-									for="userMaleDisabledToiletY">있음</label>
+									for="userMaleDisabledToiletY"><%=bundle.getString("add.yes")%></label>
 							</div>
 							<div class="radio-option">
 								<input type="radio" id="userMaleDisabledToiletN"
 									name="userMaleDisabledToilet" value="N"> <label
-									for="userMaleDisabledToiletN">없음</label>
+									for="userMaleDisabledToiletN"><%=bundle.getString("add.no")%></label>
 							</div>
 							<div class="radio-option">
 								<input type="radio" id="userMaleDisabledToiletU"
 									name="userMaleDisabledToilet" value="U" checked> <label
-									for="userMaleDisabledToiletU">모름</label>
+									for="userMaleDisabledToiletU"><%=bundle.getString("add.idk")%></label>
 							</div>
 						</div>
 					</div>
 
-
-					<div class="radio-group">
-						<label>기저귀 교환대가 있나요?</label>
-						<div class="radio-options">
-							<div class="radio-option">
-								<input type="radio" id="userHasDiaperTableY"
-									name="userHasDiaperTable" value="Y"> <label
-									for="userHasDiaperTableY">있음</label>
-							</div>
-							<div class="radio-option">
-								<input type="radio" id="userHasDiaperTableN"
-									name="userHasDiaperTable" value="N"> <label
-									for="userHasDiaperTableN">없음</label>
-							</div>
-							<div class="radio-option">
-								<input type="radio" id="userHasDiaperTableU"
-									name="userHasDiaperTable" value="U" checked> <label
-									for="userHasDiaperTableU">모름</label>
-							</div>
-						</div>
-					</div>
 					<!-- 여자 장애인 화장실 -->
 					<div class="radio-group">
-						<label>여자 장애인 화장실이 있나요?</label>
+						<label><%=bundle.getString("popup.femaleDisabledToilet")%>?</label>
 						<div class="radio-options">
 							<div class="radio-option">
 								<input type="radio" id="userFemaleDisabledToiletY"
 									name="userFemaleDisabledToilet" value="Y"> <label
-									for="userFemaleDisabledToiletY">있음</label>
+									for="userFemaleDisabledToiletY"><%=bundle.getString("add.yes")%></label>
 							</div>
 							<div class="radio-option">
 								<input type="radio" id="userFemaleDisabledToiletN"
 									name="userFemaleDisabledToilet" value="N"> <label
-									for="userFemaleDisabledToiletN">없음</label>
+									for="userFemaleDisabledToiletN"><%=bundle.getString("add.no")%></label>
 							</div>
 							<div class="radio-option">
 								<input type="radio" id="userFemaleDisabledToiletU"
 									name="userFemaleDisabledToilet" value="U" checked> <label
-									for="userFemaleDisabledToiletU">모름</label>
+									for="userFemaleDisabledToiletU"><%=bundle.getString("add.idk")%></label>
 							</div>
 						</div>
 					</div>
 
+					<div class="radio-group">
+						<label><%=bundle.getString("popup.diaperTable")%>?</label>
+						<div class="radio-options">
+							<div class="radio-option">
+								<input type="radio" id="userHasDiaperTableY"
+									name="userHasDiaperTable" value="Y"> <label
+									for="userHasDiaperTableY"><%=bundle.getString("add.yes")%></label>
+							</div>
+							<div class="radio-option">
+								<input type="radio" id="userHasDiaperTableN"
+									name="userHasDiaperTable" value="N"> <label
+									for="userHasDiaperTableN"><%=bundle.getString("add.no")%></label>
+							</div>
+							<div class="radio-option">
+								<input type="radio" id="userHasDiaperTableU"
+									name="userHasDiaperTable" value="U" checked> <label
+									for="userHasDiaperTableU"><%=bundle.getString("add.idk")%></label>
+							</div>
+						</div>
+					</div>
+					
 					<!-- 비상벨 -->
 					<div class="radio-group">
-						<label>비상벨이 있나요?</label>
+						<label><%=bundle.getString("popup.emergencyBell")%>?</label>
 						<div class="radio-options">
 							<div class="radio-option">
 								<input type="radio" id="userHasEmergencyBellY"
 									name="userHasEmergencyBell" value="Y"> <label
-									for="userHasEmergencyBellY">있음</label>
+									for="userHasEmergencyBellY"><%=bundle.getString("add.yes")%></label>
 							</div>
 							<div class="radio-option">
 								<input type="radio" id="userHasEmergencyBellN"
 									name="userHasEmergencyBell" value="N"> <label
-									for="userHasEmergencyBellN">없음</label>
+									for="userHasEmergencyBellN"><%=bundle.getString("add.no")%></label>
 							</div>
 							<div class="radio-option">
 								<input type="radio" id="userHasEmergencyBellU"
 									name="userHasEmergencyBell" value="U" checked> <label
-									for="userHasEmergencyBellU">모름</label>
+									for="userHasEmergencyBellU"><%=bundle.getString("add.idk")%></label>
 							</div>
 						</div>
 					</div>
 
 					<!-- CCTV -->
 					<div class="radio-group">
-						<label>CCTV가 있나요?</label>
+						<label><%=bundle.getString("popup.cctv")%>?</label>
 						<div class="radio-options">
 							<div class="radio-option">
 								<input type="radio" id="userHasCctvY" name="userHasCctv"
-									value="Y"> <label for="userHasCctvY">있음</label>
+									value="Y"> <label for="userHasCctvY"><%=bundle.getString("add.yes")%></label>
 							</div>
 							<div class="radio-option">
 								<input type="radio" id="userHasCctvN" name="userHasCctv"
-									value="N"> <label for="userHasCctvN">없음</label>
+									value="N"> <label for="userHasCctvN"><%=bundle.getString("add.no")%></label>
 							</div>
 							<div class="radio-option">
 								<input type="radio" id="userHasCctvU" name="userHasCctv"
-									value="U" checked> <label for="userHasCctvU">모름</label>
+									value="U" checked> <label for="userHasCctvU"><%=bundle.getString("add.idk")%></label>
 							</div>
 						</div>
 					</div>
@@ -308,11 +319,11 @@ input[type="text"], textarea {
 			</div>
 			<!--  
 			<div class="form-group">
-				<label class="sub-tit">4. 추가 정보</label>
+				<label class="sub-tit">4. <%=bundle.getString("add.additionalInfo")%></label>
 
 				<div style="display: flex; flex-direction: row; gap: 20px;">
 					<div>
-						<label>청결도</label>
+						<label><%=bundle.getString("toilet.cleanliness")%></label>
 						<div class="rating">
 							<input type="radio" id="cleanliness5" name="cleanliness"
 								value="5"> <label for="cleanliness5" title="5점"></label>
@@ -328,7 +339,7 @@ input[type="text"], textarea {
 					</div>
 
 					<div>
-						<label>안전성</label>
+						<label><%=bundle.getString("toilet.safety")%></label>
 						<div class="rating">
 							<input type="radio" id="safety5" name="safety" value="5">
 							<label for="safety5" title="5점"></label> <input type="radio"
@@ -345,17 +356,19 @@ input[type="text"], textarea {
 				</div>
 				-->
 				<div class="form-group">
+
 					<label for="userDescription" class="sub-tit">4. 코멘트</label>
+					<label for="userDescription" class="sub-tit">5. <%=bundle.getString("add.comment")%></label>
 					<textarea id="userDescription" name="userDescription" rows="4"
-						placeholder="Add any other useful information about the toilet here"></textarea>
+						placeholder="<%=bundle.getString("add.placeholder")%>"></textarea>
 				</div>
 
 				<!-- Hidden fields for coordinates -->
-				<input type="hidden" id="userLat" name="userLat"> 
-				<input type="hidden" id="userLng" name="userLng">
+				<input type="hidden" id="userLat" name="userLat"> <input
+					type="hidden" id="userLng" name="userLng">
 
 				<div>
-					<button type="submit" class="btn">화장실 등록</button>
+					<button type="submit" class="btn"><%=bundle.getString("report.button")%></button>
 				</div>
 		</form>
 	</div>
