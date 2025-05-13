@@ -25,7 +25,7 @@ String formattedMessage = MessageFormat.format(rawMessage, email);
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Emerlet</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <link rel="stylesheet" href="css/mo_style.css" />
 <style type="text/css">
@@ -46,19 +46,14 @@ String formattedMessage = MessageFormat.format(rawMessage, email);
 	<div class="content-wrapper">
 		<div class="content-container">
 			<div class="sn-title"><%=bundle.getString("footer.contact")%></div>
-			<div class="content-description">
-  <%=formattedMessage%>
+			<div>
+				<div>
+					<%=formattedMessage%>
+				</div>
 
-  <div style="
-    margin-top: 100px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-  ">
-    <img src="img/top_logo.svg" style="transform: scale(1.5);" />
-  </div>
-</div>
-</div>
 
+
+			</div>
+		</div>
+	</div>
 </html>
