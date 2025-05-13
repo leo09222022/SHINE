@@ -1,28 +1,55 @@
+@keyframes slideUp {from { transform:translateY(100%);
+	opacity: 0;
+}
+
+to {
+	transform: translateY(0);
+	opacity: 1;
+}
+
+}
+@keyframes slideDown {from { transform:translateY(0);
+	opacity: 1;
+}
+
+to {
+	transform: translateY(100%);
+	opacity: 0;
+}
+
+}
+
 /* css/style.css */
 @import
 	url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css')
 	;
 
+@import
+	url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP&display=swap')
+	;
+
+@import
+	url('https://cdnjs.cloudflare.com/ajax/libs/pretendard-jp/1.3.9/static/pretendard-jp.css')
+	;
 
 /* CSS 초기화 */
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
 }
 
 a {
-  text-decoration: none;
-  color: inherit;
+	text-decoration: none;
+	color: inherit;
 }
 
 ul, ol {
-  list-style: none;
+	list-style: none;
 }
 
-
 body {
-	font-family: 'Pretendard', sans-serif;
+	font-family: 'Pretendard', 'Pretendard JP', sans-serif;
 }
 
 .main-container {
@@ -76,6 +103,23 @@ body {
 	color: #1D1D1F;
 	width: 100%;
 	font-family: 'Pretendard', sans-serif;
+}
+
+/* 검색결과 */
+.search-results {
+	max-height: calc(100vh - 520px); /* 250결과 영역 높이 제한 */
+	overflow-y: auto; /* 세로 스크롤 적용 */
+	margin-top: 4px;
+}
+
+.search-result-item {
+	padding: 10px;
+	border-bottom: 1px solid #eee;
+	cursor: pointer;
+}
+
+.search-result-item:hover {
+	background-color: #f5f5f5;
 }
 
 /* 메뉴 리스트 */
@@ -162,17 +206,22 @@ input:checked+.slider:before {
 }
 
 /* 하단 푸터 */
-.sidebar-footer {
-	position: fixed;
-	width: 320px;
-	bottom: 0;
-	padding: 40px;
+.side_footer {
+	margin-top: auto;
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+}
+
+.about-section {
 	background-color: #3A81FF;
 	color: white;
+	padding: 40px 20px;
 	display: flex;
 	flex-direction: column;
 	gap: 4px;
 	font-size: 16px;
+	width: 100%;
 }
 
 /* 메인 컨텐츠 */
@@ -180,52 +229,349 @@ input:checked+.slider:before {
 	flex-grow: 1;
 }
 
+#map {
+	position: relative;
+}
+
 .main-header h1 {
 	font-size: 24px;
 	color: #1D1D1F;
 }
 
-
 /* 모달 CSS*/
 .modal-overlay {
-  position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  background-color: rgba(0,0,0,0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.5);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	z-index: 1000;
 }
 
 .modal-content {
-  background: #fff;
-  width: 90%;
-  max-width: 600px;
-  max-height: 90%;
-  overflow-y: auto;
-  border-radius: 8px;
-  padding: 20px;
-  position: relative;
+	background: #fff;
+	width: 90%;
+	max-width: 600px;
+	max-height: 90%;
+	overflow-y: auto;
+	border-radius: 8px;
+	padding: 20px;
+	position: relative;
 }
 
 .modal-close {
-  position: absolute;
-  top: 10px; right: 10px;
-  background: none;
-  border: none;
-  font-size: 20px;
-  cursor: pointer;
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	background: none;
+	border: none;
+	font-size: 20px;
+	cursor: pointer;
 }
 
 #modalBody {
-  background: #fff;
-  width: 90%;
-  max-width: 800px;
-  height: 80vh; /* 뷰포트 높이의 80% */
-  overflow-y: auto; /* 내용이 넘칠 경우 스크롤 */
-  padding: 20px;
-  border-radius: 8px;
-  position: relative;
+	background: #fff;
+	width: 90%;
+	max-width: 800px;
+	height: 80vh; /* 뷰포트 높이의 80% */
+	overflow-y: auto; /* 내용이 넘칠 경우 스크롤 */
+	padding: 20px;
+	border-radius: 8px;
+	position: relative;
 }
 
+#customInfoPopup {
+	display: none;
+	position: absolute;
+	bottom: 20px;
+	left: calc(50% + 160px); /* 사이드바 절반만큼 오른쪽으로 */
+	transform: translateX(-50%);
+	background: white;
+	border-radius: 8px;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+	padding: 20px;
+	z-index: 100;
+	width: 680px;
+	position: absolute;
+}
+
+/* 공통 닫기 버튼*/
+.popup-close-btn {
+	float: right;
+	background: #1D1D1F;
+	color: white;
+	border: none;
+	border-radius: 50px;
+	font-size: 12px;
+	font-weight: 600;
+	font-family: 'Pretendard', sans-serif;
+	padding: 6px 12px;
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	width: auto;
+	max-width: fit-content;
+	margin-left: auto;
+	float: right;
+}
+
+.popup-close-btn:hover {
+	background: #333;
+}
+
+/* 모바일 메인 스타일*/
+.mobile-button-group {
+	padding: 20px;
+	display: inline-flex;
+	justify-content: center;
+	align-items: center;
+	gap: 12px;
+}
+
+/* 아이콘 전용 버튼 (둥근 배경 안에 아이콘만) */
+.icon-button {
+	width: 36px;
+	height: 36px;
+	padding: 8px 20px;
+	background: white;
+	border-radius: 4px;
+	outline: 1px solid #3A81FF;
+	outline-offset: -1px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+/* 텍스트 포함된 버튼 (공통) */
+.text-button {
+	height: 36px;
+	padding: 8px;
+	border-radius: 4px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 4px;
+}
+
+/* 외곽선 버튼 */
+.outline-button {
+	background: white;
+	outline: 1px solid #3A81FF;
+	outline-offset: -1px;
+	color: #3A81FF;
+}
+
+/* 채워진 버튼 */
+.filled-button {
+	background: #3A81FF;
+	color: white;
+}
+
+/* 텍스트 */
+.text {
+	font-size: 16px;
+	font-family: 'Pretendard', sans-serif;
+	font-weight: 600;
+	color: inherit;
+}
+
+/* 기본값: 데스크탑에서는 모바일 메뉴 숨김 */
+.mobile-nav {
+	display: none;
+}
+
+/* 랭귀시 설정 팝업*/
+.lang-popup {
+	display: none;
+	position: fixed;
+	bottom: 0px;
+	width: 100%;
+	z-index: 9999;
+	pointer-events: all;
+}
+
+.lang-popup-body {
+	background: white;
+	width: 100%;
+	border-radius: 12px 12px 0 0;
+	padding: 20px;
+	box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.2);
+	animation: slideUp 0.3s ease-out forwards;
+	margin: 0 auto;
+}
+
+.lang-options {
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+	justify-content: center;
+	align-items: center;
+}
+
+.lang-options button {
+	/* Child objects in a smart layout frame */
+	width: 80%;
+	max-width: 300px;
+	height: 36px;
+	/* Smart layout */
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	padding: 8px;
+	border-radius: 100px;
+	background: #FFFFFF;
+	box-sizing: border-box;
+	border: 1px solid #3A81FF;
+	font-weight: 500;
+	color: #3A81FF;
+}
+
+/* 언어 선택 버튼*/
+.lang-selector {
+	display: flex;
+	gap: 10px;
+	padding: 20px;
+	width: 320px;
+}
+
+.lang-btn {
+	flex: 1;
+	text-align: center;
+	padding: 10px 0;
+	border-radius: 100px;
+	font-size: 16px;
+	color: #3a81ff;
+	background-color: white;
+	border: 1px solid #3a81ff;
+	text-decoration: none;
+	height: 36px;
+	line-height: 36px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.lang-btn.active {
+	background-color: #3a81ff;
+	color: white;
+	border: none;
+}
+
+.cursor-pointer {
+	cursor: pointer;
+}
+
+/* 모바일 메뉴 컴포넌트 */
+.mobile-menu {
+	display: none; /* 기본은 숨김 */
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: rgba(0, 0, 0, 0.4); /* 반투명 배경 */
+	z-index: 9998;
+	justify-content: flex-start;
+	align-items: flex-start;
+}
+
+.mobile-menu.show {
+	display: flex;
+	animation: fadeIn 0.3s ease-out forwards;
+}
+
+@keyframes fadeIn {from { opacity:0;
+	transform: translateY(-10%);
+}
+
+to {
+	opacity: 1;
+	transform: translateY(0);
+}
+
+}
+
+/* 모바일 환경 */
+@media ( max-width : 768px) {
+	#map {
+		margin-top: 48px;
+	}
+	.sidebar {
+		display: none;
+	}
+	.mobile-nav {
+		position: absolute; /* 또는 fixed */
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100vh; /* 원하는 높이 */
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		align-items: stretch;
+		z-index: 1000;
+		pointer-events: none;
+	}
+	.mobile-nav .clickable {
+		pointer-events: auto;
+		cursor: pointer;
+	}
+	.mo-center-wrapper {
+		display: flex;
+		justify-content: center;
+	}
+	.mo-top {
+		width: 100%;
+		height: 48px;
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		align-items: center;
+		padding: 12px 20px;
+		background-color: white;
+	}
+	#customInfoPopup {
+		position: fixed !important;
+		bottom: 0;
+		width: 100%;
+		left: 50%;
+		transform: translateX(-50%);
+		max-height: 50vh;
+		overflow-y: auto;
+		background: white;
+		border-radius: 16px 16px 0 0;
+		box-shadow: 0 -2px 12px rgba(0, 0, 0, 0.15);
+		padding: 20px;
+		z-index: 9999;
+		display: none;
+		margin-left: auto;
+	}
+	.mo-close-btn {
+		margin-left: auto;
+	}
+
+	/* 상단 바 (드래그바처럼 보이게) */
+	.popup-dragbar {
+		width: 60px;
+		height: 5px;
+		background: #ccc;
+		border-radius: 5px;
+		margin: 8px auto;
+	}
+	#popupContent {
+		pointer-events: auto;
+	}
+	.search-box {
+		margin: 60px 20px 20px 20px;
+		width: 70%;
+		min-width: 300px;
+		padding: 8px 16px;
+		box-shadow: 0px 4px 10px 0px rgba(0, 0, 0, 0.3);
+	}
+}

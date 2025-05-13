@@ -159,7 +159,7 @@ public class ToiletDAO {
     public ArrayList<ToiletVO> findAll() {
 	    ArrayList<ToiletVO> toilets = new ArrayList<>();
 
-	    String sql = "SELECT name, address_road, address_lot, " +
+	    String sql = "SELECT toilet_id, name, address_road, address_lot, " +
 	               "male_toilet, male_urinal, male_disabled_toilet, male_disabled_urinal, " +
 	               "male_child_toilet, male_child_urinal, " +
 	               "female_toilet, female_disabled_toilet, female_child_toilet, " +
@@ -175,6 +175,7 @@ public class ToiletDAO {
 
 	        while (rs.next()) {
 	            ToiletVO toilet = new ToiletVO();
+	            toilet.setToiletId(rs.getInt("toilet_id"));
 	            toilet.setName(rs.getString("name"));
 	            toilet.setAddressRoad(rs.getString("address_road"));
 	            toilet.setAddressLot(rs.getString("address_lot"));
@@ -267,6 +268,52 @@ public class ToiletDAO {
         
         return toilets;
     }
+    
+    
+    public ToiletVO findByID(int id) {
+        ToiletVO vo = new ToiletVO();
+        String SQL = "SELECT * FROM toilets WHERE toilet_id = ?";
+
+        try {
+            Connection conn = ConnectionProvider.getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(SQL);
+            pstmt.setInt(1, id);
+
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                vo.setToiletId(rs.getInt("toilet_id"));
+                vo.setName(rs.getString("name"));
+                vo.setAddressRoad(rs.getString("address_road"));
+                vo.setAddressLot(rs.getString("address_lot"));
+                vo.setLat(rs.getDouble("lat"));
+                vo.setLng(rs.getDouble("lng"));
+                vo.setMaleToilet(rs.getInt("male_toilet"));
+                vo.setMaleUrinal(rs.getInt("male_urinal"));
+                vo.setMaleDisabledToilet(rs.getInt("male_disabled_toilet"));
+                vo.setMaleDisabledUrinal(rs.getInt("male_disabled_urinal"));
+                vo.setMaleChildToilet(rs.getInt("male_child_toilet"));
+                vo.setMaleChildUrinal(rs.getInt("male_child_urinal"));
+                vo.setFemaleToilet(rs.getInt("female_toilet"));
+                vo.setFemaleDisabledToilet(rs.getInt("female_disabled_toilet"));
+                vo.setFemaleChildToilet(rs.getInt("female_child_toilet"));
+                vo.setPhoneNumber(rs.getString("phone_number"));
+                vo.setOpenTimeDetail(rs.getString("open_time_detail"));
+                vo.setHasEmergencyBell(rs.getInt("has_emergency_bell"));
+                vo.setEmergencyBellLocation(rs.getString("emergency_bell_location"));
+                vo.setHasCctv(rs.getInt("has_cctv"));
+                vo.setHasDiaperTable(rs.getInt("has_diaper_table"));
+                vo.setDiaperTableLocation(rs.getString("diaper_table_location"));
+                vo.setDataReferenceDate(rs.getDate("data_reference_date")); // java.sql.Date → java.util.Date 자동 형변환 가능
+            }
+
+            ConnectionProvider.close(conn, pstmt, rs);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return vo;
+    }
+
 }
 
 

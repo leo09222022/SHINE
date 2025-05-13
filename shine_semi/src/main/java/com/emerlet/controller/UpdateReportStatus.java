@@ -56,7 +56,7 @@ public class UpdateReportStatus extends HttpServlet {
 		UserToiletVO user = new UserToiletVO();
 		user.setUserMaleToilet(male_toilet);
 		user.setUserFemaleToilet(female_toilet);
-		user.setUserDisabledToilet(disabled_toilet);
+		user.setUserMaleDisabledToilet(disabled_toilet);
 		user.setUserHasDiaperTable(has_diaper_table);
 		user.setUserDescription(description);
 		user.setPhotoUrl(photo_url);

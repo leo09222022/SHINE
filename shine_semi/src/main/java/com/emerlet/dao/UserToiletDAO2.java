@@ -152,7 +152,7 @@ public class UserToiletDAO2 {
 				result.setUserRoadAddress(rs.getString(3));
 				result.setUserMaleToilet(rs.getString(4));
 				result.setUserFemaleToilet(rs.getString(5));
-				result.setUserDisabledToilet(rs.getString(6));
+				result.setUserMaleDisabledToilet(rs.getString(6));
 				result.setUserHasDiaperTable(rs.getString(7));
 				result.setUserDescription(rs.getString(8));
 				result.setUserLat(rs.getDouble(9));
@@ -204,10 +204,10 @@ public class UserToiletDAO2 {
                 pstmt.setString(4, userToilet.getUserFemaleToilet());
             }
 
-            if (userToilet.getUserDisabledToilet() == null) {
+            if (userToilet.getUserMaleDisabledToilet() == null) {
                 pstmt.setNull(5, Types.CHAR);
             } else {
-                pstmt.setString(5, userToilet.getUserDisabledToilet());
+                pstmt.setString(5, userToilet.getUserMaleDisabledToilet());
             }
 
             if (userToilet.getUserHasDiaperTable() == null) {
@@ -224,7 +224,7 @@ public class UserToiletDAO2 {
             System.out.println("SQL 실행: " + sql);
             System.out.println("파라미터: name=" + userToilet.getUserName() + ", maleToilet="
                     + userToilet.getUserMaleToilet() + ", femaleToilet=" + userToilet.getUserFemaleToilet()
-                    + ", disabledToilet=" + userToilet.getUserDisabledToilet() + ", hasDiaperTable="
+                    + ", disabledToilet=" + userToilet.getUserMaleDisabledToilet() + ", hasDiaperTable="
                     + userToilet.getUserHasDiaperTable());
 
             int result = pstmt.executeUpdate();
