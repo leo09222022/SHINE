@@ -80,20 +80,26 @@ shine_semi/
 │   └── main/
 │       ├── java/                          # 자바 코드 보관 폴더 
 │       │   └── com/emerlet/               # emerlet 클래스 폴더 
-│       │       ├── action/                # Action 클래스
+│       │       ├── action/                # 주요 비즈니스 로직 액션 클래스
 │       │       ├── controller/            # Servlet 중심 컨트롤러
-│       │       ├── dao/                   # DB 접근 DAO
-│       │       ├── db/                    # DB 초기화 및 연결 설정
+│       │       ├── dao/                   # DAO 클래스 - ReviewDAO, ToiletDAO 등
+│       │       ├── db/                    # DB 연결 설정 및 CSV->DB 유틸
 │       │       ├── listener/              # Context 설정 Listener
-│       │       └── vo/                    # Value Object (VO)
+│       │       └── vo/                    # VO 클래스 - ToiletVO, ReviewVO 등
 │       └── webapp/
 │           ├── ani/                       # 화면 로딩 애니메이션
 │           ├── css/                       # CSS 스타일 
 │           ├── img/                       # 아이콘, 마커 이미지 등
 │           ├── js/                        # JavaScript (mapScript.js 등)
 │           ├── WEB-INF/                  # JSP 보안 경로
-│           └── *.jsp, *.html             # JSP 및 HTML 페이지 담당 코드 
-├── 공중화장실.csv                         # 공공데이터 기반 원천 자료
+│           │   ├── classes/
+│           │   │   ├── messages_ko.properties        # 한국어 지원 프로퍼티 파일 
+│           │   │   ├── messages_en.properties        # 영어 지원 프로퍼티 파일 
+│           │   │   ├── messages_ja.properties        # 일본어 지원 프로퍼티 파일 
+│           │   ├── *.properties        # Action 실행을 위한 프로퍼티 파일들
+│           │   ├── lib/
+│           └── *.jsp, *.html           # JSP 및 HTML 페이지 담당 코드 
+├── 공중화장실.csv          # 공공데이터 기반 원천 자료
 
 ``` 
 ---
@@ -134,7 +140,7 @@ shine_semi/
   > 다국어페이지는 처음 작성해 보았는데, 작업량이 많아서 힘들었지만 완성된 화면을 보고 굉장히 만족스러웠습니다. 팀원분들 모두 감사합니다. 
 
 - 💡 **임연수 (백엔드, 공통 개발 )**
-  > 수업에서 배운 내용을 활용해보며 부족한 점은 팀원들의 도움으로 채워나갈 수 있어 감사했습니다.
+  > 중간에 많이 헤매다가도 기능이 하나씩 구현되면 뿌듯했습니다. 무료 번역 API들로 이것저것 시도해보면서 많은 경험을 얻었던 것 같습니다. 팀원분들 모두 고생하셨습니다!!
 
 - 💡 **성시진 (백엔드, 공통 개발)**
   > 수업에서 배운 내용을 활용해보며 부족한 점은 팀원들의 도움으로 채워나갈 수 있어 감사했습니다.
