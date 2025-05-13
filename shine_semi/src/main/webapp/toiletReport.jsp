@@ -8,9 +8,6 @@
 String toiletIDParam = request.getParameter("toiletID");
 String userToiletIDParam = request.getParameter("userToiletID");
 
-System.out.println("🔥 전달된 toiletIDParam = " + request.getParameter("toiletID"));
-System.out.println("🔥 전달된 userToiletIDParam = " + request.getParameter("userToiletID"));
-
 String toiletType = null;
 int toiletRefId = -1;
 String toiletName = null;
@@ -38,7 +35,6 @@ if (toiletIDParam != null) {
 	diaperValue = vo.getHasDiaperTable() > 0 ? "Y" : "N";
 	cctvValue = vo.getHasCctv() > 0 ? "Y" : "N";
 	bellValue = vo.getHasEmergencyBell() > 0 ? "Y" : "N";
-
 } else if (userToiletIDParam != null) {
 	toiletRefId = Integer.parseInt(userToiletIDParam);
 	UserToiletVO vo = new com.emerlet.dao.UserToiletDAO().findByID(toiletRefId);
@@ -62,101 +58,136 @@ if (toiletIDParam != null) {
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<title>화장실 정보 신고</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Emerlet</title>
+<link rel="stylesheet" href="css/mo_style.css">
+<style>
+.container {
+	max-width: 800px;
+	margin: 0 auto;
+	background-color: white;
+	padding: 20px;
+	border-radius: 5px;
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
+	margin-bottom: 20px;
+}
+
+label {
+	font-family: Pretendard;
+	font-size: 16px;
+	font-weight: 500;
+	color: #1D1D1F;
+}
+
+.radio-options {
+	display: flex;
+	gap: 20px;
+	margin-top: 6px;
+}
+
+.radio-option {
+	display: flex;
+	align-items: center;
+}
+
+.radio-option label {
+	margin-left: 5px;
+}
+
+textarea {
+	width: 100%;
+	padding: 8px;
+	border: 1px solid #ddd;
+	border-radius: 4px;
+	font-family: Pretendard;
+}
+
+.btn {
+	width: 100%;
+	height: 40px;
+	background-color: #3A81FF;
+	color: white;
+	border: none;
+	border-radius: 4px;
+	font-size: 16px;
+	cursor: pointer;
+}
+
+.btn:hover {
+	background-color: #2a65c8;
+}
+</style>
 </head>
 <body>
-	<h2>화장실 정보 신고</h2>
+	<div class="container">
+	
+	<div style="display:flex; flex-direction: row-reverse; gap:4px; cursor:pointer;" onclick="location.href='index.html'">
+	<div style="display:flex; justify-content:center; aligns-item:center;">돌아가기</div>
+	<img src="img/back_page.svg"/>
+	</div>
+	
+		<div class="sn-title">화장실 정보 신고</div>
 
-	<form action="toiletReportOK.jsp" method="post">
-		<input type="hidden" name="toiletType" value="<%=toiletType%>">
-		<input type="hidden" name="toiletRefId" value="<%=toiletRefId%>">
+		<hr style="margin-bottom: 20px">
 
-		<p>
-			화장실명:
-			<%=toiletName%></p>
-		<p>
-			주소:
-			<%=toiletAddress%></p>
+		<form action="toiletReportOK.jsp" method="post">
+			<input type="hidden" name="toiletType" value="<%=toiletType%>">
+			<input type="hidden" name="toiletRefId" value="<%=toiletRefId%>">
 
-		<p>
-			남자화장실: <input type="radio" name="reportMaleToilet" value="Y"
-				<%="Y".equals(maleToiletValue) ? "checked" : ""%>> 있음 <input
-				type="radio" name="reportMaleToilet" value="N"
-				<%="N".equals(maleToiletValue) ? "checked" : ""%>> 없음 <input
-				type="radio" name="reportMaleToilet" value="U"
-				<%=!"Y".equals(maleToiletValue) && !"N".equals(maleToiletValue) ? "checked" : ""%>>
-			모름
-		</p>
+			<div class="form-group">
+				<label>화장실명</label>
+				<div><%=toiletName%></div>
+			</div>
 
-		<p>
-			여자화장실: <input type="radio" name="reportFemaleToilet" value="Y"
-				<%="Y".equals(femaleToiletValue) ? "checked" : ""%>> 있음 <input
-				type="radio" name="reportFemaleToilet" value="N"
-				<%="N".equals(femaleToiletValue) ? "checked" : ""%>> 없음 <input
-				type="radio" name="reportFemaleToilet" value="U"
-				<%=!"Y".equals(femaleToiletValue) && !"N".equals(femaleToiletValue) ? "checked" : ""%>>
-			모름
-		</p>
+			<div class="form-group">
+				<label>주소</label>
+				<div><%=toiletAddress%></div>
+			</div>
+			<hr style="margin-bottom: 20px">
+			<%
+			String[][] fields = { { "reportMaleToilet", "남자화장실", maleToiletValue },
+					{ "reportFemaleToilet", "여자화장실", femaleToiletValue },
+					{ "reportMaleDisabledToilet", "남자 장애인화장실", maleDisabledToiletValue },
+					{ "reportFemaleDisabledToilet", "여자 장애인화장실", femaleDisabledToiletValue },
+					{ "reportHasDiaperTable", "기저귀 교환대", diaperValue }, { "reportHasCctv", "CCTV", cctvValue },
+					{ "reportHasEmergencyBell", "비상벨", bellValue } };
 
-		<p>
-			남자 장애인화장실: <input type="radio" name="reportMaleDisabledToilet"
-				value="Y"
-				<%="Y".equals(maleDisabledToiletValue) ? "checked" : ""%>>
-			있음 <input type="radio" name="reportMaleDisabledToilet" value="N"
-				<%="N".equals(maleDisabledToiletValue) ? "checked" : ""%>>
-			없음 <input type="radio" name="reportMaleDisabledToilet" value="U"
-				<%=!"Y".equals(maleDisabledToiletValue) && !"N".equals(maleDisabledToiletValue) ? "checked" : ""%>>
-			모름
-		</p>
+			for (String[] field : fields) {
+			%>
+			<div class="form-group">
+				<label><%=field[1]%></label>
+				<div class="radio-options">
+					<div class="radio-option">
+						<input type="radio" name="<%=field[0]%>" value="Y"
+							<%="Y".equals(field[2]) ? "checked" : ""%>> <label>있음</label>
+					</div>
+					<div class="radio-option">
+						<input type="radio" name="<%=field[0]%>" value="N"
+							<%="N".equals(field[2]) ? "checked" : ""%>> <label>없음</label>
+					</div>
+					<div class="radio-option">
+						<input type="radio" name="<%=field[0]%>" value="U"
+							<%=!"Y".equals(field[2]) && !"N".equals(field[2]) ? "checked" : ""%>>
+						<label>모름</label>
+					</div>
+				</div>
+			</div>
+			<%
+			}
+			%>
 
-		<p>
-			여자 장애인화장실: <input type="radio" name="reportFemaleDisabledToilet"
-				value="Y"
-				<%="Y".equals(femaleDisabledToiletValue) ? "checked" : ""%>>
-			있음 <input type="radio" name="reportFemaleDisabledToilet" value="N"
-				<%="N".equals(femaleDisabledToiletValue) ? "checked" : ""%>>
-			없음 <input type="radio" name="reportFemaleDisabledToilet" value="U"
-				<%=!"Y".equals(femaleDisabledToiletValue) && !"N".equals(femaleDisabledToiletValue) ? "checked" : ""%>>
-			모름
-		</p>
+			<div class="form-group">
+				<label>설명 (오류 내용 등)</label>
+				<textarea name="reportDescription" rows="5"></textarea>
+			</div>
 
-		<p>
-			기저귀 교환대: <input type="radio" name="reportHasDiaperTable" value="Y"
-				<%="Y".equals(diaperValue) ? "checked" : ""%>> 있음 <input
-				type="radio" name="reportHasDiaperTable" value="N"
-				<%="N".equals(diaperValue) ? "checked" : ""%>> 없음 <input
-				type="radio" name="reportHasDiaperTable" value="U"
-				<%=!"Y".equals(diaperValue) && !"N".equals(diaperValue) ? "checked" : ""%>>
-			모름
-		</p>
-
-		<p>
-			CCTV: <input type="radio" name="reportHasCctv" value="Y"
-				<%="Y".equals(cctvValue) ? "checked" : ""%>> 있음 <input
-				type="radio" name="reportHasCctv" value="N"
-				<%="N".equals(cctvValue) ? "checked" : ""%>> 없음 <input
-				type="radio" name="reportHasCctv" value="U"
-				<%=!"Y".equals(cctvValue) && !"N".equals(cctvValue) ? "checked" : ""%>>
-			모름
-		</p>
-
-		<p>
-			비상벨: <input type="radio" name="reportHasEmergencyBell" value="Y"
-				<%="Y".equals(bellValue) ? "checked" : ""%>> 있음 <input
-				type="radio" name="reportHasEmergencyBell" value="N"
-				<%="N".equals(bellValue) ? "checked" : ""%>> 없음 <input
-				type="radio" name="reportHasEmergencyBell" value="U"
-				<%=!"Y".equals(bellValue) && !"N".equals(bellValue) ? "checked" : ""%>>
-			모름
-		</p>
-
-
-		<p>
-			설명 (오류 내용 등):<br>
-			<textarea name="reportDescription" rows="5" cols="50"></textarea>
-		</p>
-
-		<button type="submit">신고 제출</button>
-	</form>
+			<div class="form-group">
+				<button type="submit" class="btn">신고 제출</button>
+			</div>
+		</form>
+	</div>
 </body>
 </html>
