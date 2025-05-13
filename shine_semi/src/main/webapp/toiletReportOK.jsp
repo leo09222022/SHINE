@@ -32,6 +32,6 @@ int result = new UnifiedToiletReportDAO().insertReport(vo);
 <body>
 	<h2>📢 신고 처리 결과</h2>
 	<p><%=result > 0 ? "신고가 정상적으로 접수되었습니다!" : "신고 처리에 실패했습니다."%></p>
-	<a href="index.jsp">홈으로</a>
+	<a href="index.html">홈으로</a>
 </body>
 </html>
