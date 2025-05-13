@@ -131,6 +131,40 @@ public class UserToiletDAO {
     } 
  
     
+    public UserToiletVO findByID(int id) {
+        UserToiletVO vo = null;
+        String sql = "SELECT * FROM user_toilets WHERE user_toilet_id = ?";
+
+        try {
+            Connection conn = ConnectionProvider.getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, id);
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                vo = new UserToiletVO();
+                vo.setUserToiletId(rs.getInt("user_toilet_id"));
+                vo.setUserName(rs.getString("user_name"));
+                vo.setUserRoadAddress(rs.getString("user_road_address"));
+                vo.setUserLat(rs.getDouble("user_lat"));
+                vo.setUserLng(rs.getDouble("user_lng"));
+                vo.setUserMaleToilet(rs.getString("user_male_toilet"));
+                vo.setUserFemaleToilet(rs.getString("user_female_toilet"));
+                vo.setUserMaleDisabledToilet(rs.getString("user_male_disabled_toilet"));
+                vo.setUserFemaleDisabledToilet(rs.getString("user_female_disabled_toilet"));
+                vo.setUserHasDiaperTable(rs.getString("user_has_diaper_table"));
+                vo.setUserHasCctv(rs.getString("user_has_cctv"));
+                vo.setUserHasEmergencyBell(rs.getString("user_has_emergency_bell"));
+                vo.setUserDescription(rs.getString("user_description"));
+            }
+
+            ConnectionProvider.close(conn, pstmt, rs);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return vo;
+    }
     
     
 }
