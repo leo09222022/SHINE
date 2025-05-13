@@ -212,7 +212,9 @@ window.lang = "<%=lang%>";
       window.toiletData = [
         <c:forEach var="toilet" items="${toilets}" varStatus="status">
         {
-        toiletId: ${toilet.toiletId},	
+	        // 클릭시 toiletID 추가
+        	toiletId: ${toilet.toiletId},
+        	
           name: "${fn:escapeXml(toilet.name)}",
           lat: ${toilet.lat},
           lng: ${toilet.lng},
@@ -237,6 +239,9 @@ window.lang = "<%=lang%>";
       window.userToiletData = [
     	  <c:forEach var="toilet" items="${userToilets}" varStatus="loop">
     	  {
+    		// 클릭시 toiletID 추가
+          	toiletId: ${toilet.toiletId},
+          	
     	    name: "${fn:escapeXml(toilet.userName)}",
     	    lat: ${toilet.userLat},
     	    lng: ${toilet.userLng},

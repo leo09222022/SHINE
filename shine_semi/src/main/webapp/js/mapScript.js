@@ -478,6 +478,7 @@ function initMap() {
 				});
 				window.userToiletMarkers.push({ marker, data: toilet });
 				marker.addListener("click", () => {
+					selectedToiletID = encodeURIComponent(toilet.toiletId);
 					const lang = sessionStorage.getItem("lang") || navigator.language.slice(0, 2);
 					map.setCenter(marker.getPosition());
 					if (lang !== "ko") {
