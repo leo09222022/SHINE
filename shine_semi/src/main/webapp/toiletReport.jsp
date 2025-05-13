@@ -3,6 +3,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page import="java.util.Locale, java.util.ResourceBundle"%>
+<%
+String lang = (String) session.getAttribute("lang");
+if (lang == null)
+	lang = "ko";
+Locale locale = new Locale(lang);
+ResourceBundle bundle = ResourceBundle.getBundle("messages", locale);
+%>
 
 <%
 String toiletIDParam = request.getParameter("toiletID");
@@ -125,11 +133,11 @@ textarea {
 	<div class="container">
 	
 	<div style="display:flex; flex-direction: row-reverse; gap:4px; cursor:pointer;" onclick="location.href='index.html'">
-	<div style="display:flex; justify-content:center; aligns-item:center;">돌아가기</div>
+	<div style="display:flex; justify-content:center; aligns-item:center;"><%=bundle.getString("filter.backToMap")%></div>
 	<img src="img/back_page.svg"/>
 	</div>
 	
-		<div class="sn-title">화장실 정보 신고</div>
+		<div class="sn-title"><%=bundle.getString("info.updateRequest")%></div>
 
 		<hr style="margin-bottom: 20px">
 
@@ -138,22 +146,22 @@ textarea {
 			<input type="hidden" name="toiletRefId" value="<%=toiletRefId%>">
 
 			<div class="form-group">
-				<label>화장실명</label>
+				<label><%=bundle.getString("add.name")%></label>
 				<div><%=toiletName%></div>
 			</div>
 
 			<div class="form-group">
-				<label>주소</label>
+				<label><%=bundle.getString("info.address")%></label>
 				<div><%=toiletAddress%></div>
 			</div>
 			<hr style="margin-bottom: 20px">
 			<%
-			String[][] fields = { { "reportMaleToilet", "남자화장실", maleToiletValue },
-					{ "reportFemaleToilet", "여자화장실", femaleToiletValue },
-					{ "reportMaleDisabledToilet", "남자 장애인화장실", maleDisabledToiletValue },
-					{ "reportFemaleDisabledToilet", "여자 장애인화장실", femaleDisabledToiletValue },
-					{ "reportHasDiaperTable", "기저귀 교환대", diaperValue }, { "reportHasCctv", "CCTV", cctvValue },
-					{ "reportHasEmergencyBell", "비상벨", bellValue } };
+			String[][] fields = { { "reportMaleToilet", bundle.getString("popup.maleToilet"), maleToiletValue },
+					{ "reportFemaleToilet", bundle.getString("popup.femaleToilet"), femaleToiletValue },
+					{ "reportMaleDisabledToilet", bundle.getString("popup.maleDisabledToilet"), maleDisabledToiletValue },
+					{ "reportFemaleDisabledToilet", bundle.getString("popup.femaleDisabledToilet"), femaleDisabledToiletValue },
+					{ "reportHasDiaperTable", bundle.getString("popup.diaperTable"), diaperValue }, { "reportHasCctv", bundle.getString("popup.cctv"), cctvValue },
+					{ "reportHasEmergencyBell", bundle.getString("popup.emergencyBell"), bellValue } };
 
 			for (String[] field : fields) {
 			%>
@@ -162,16 +170,16 @@ textarea {
 				<div class="radio-options">
 					<div class="radio-option">
 						<input type="radio" name="<%=field[0]%>" value="Y"
-							<%="Y".equals(field[2]) ? "checked" : ""%>> <label>있음</label>
+							<%="Y".equals(field[2]) ? "checked" : ""%>> <label><%=bundle.getString("add.yes")%></label>
 					</div>
 					<div class="radio-option">
 						<input type="radio" name="<%=field[0]%>" value="N"
-							<%="N".equals(field[2]) ? "checked" : ""%>> <label>없음</label>
+							<%="N".equals(field[2]) ? "checked" : ""%>> <label><%=bundle.getString("add.no")%></label>
 					</div>
 					<div class="radio-option">
 						<input type="radio" name="<%=field[0]%>" value="U"
 							<%=!"Y".equals(field[2]) && !"N".equals(field[2]) ? "checked" : ""%>>
-						<label>모름</label>
+						<label><%=bundle.getString("add.idk")%></label>
 					</div>
 				</div>
 			</div>
@@ -180,12 +188,12 @@ textarea {
 			%>
 
 			<div class="form-group">
-				<label>설명 (오류 내용 등)</label>
+				<label><%=bundle.getString("info.description")%></label>
 				<textarea name="reportDescription" rows="5"></textarea>
 			</div>
 
 			<div class="form-group">
-				<button type="submit" class="btn">신고 제출</button>
+				<button type="submit" class="btn"><%=bundle.getString("review.submit")%></button>
 			</div>
 		</form>
 	</div>

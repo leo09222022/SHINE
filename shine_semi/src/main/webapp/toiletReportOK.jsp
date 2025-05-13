@@ -2,6 +2,14 @@
 	pageEncoding="UTF-8"%>
 <%@ page import="com.emerlet.dao.UnifiedToiletReportDAO"%>
 <%@ page import="com.emerlet.vo.UnifiedToiletReportVO"%>
+<%@ page import="java.util.Locale, java.util.ResourceBundle"%>
+<%
+String lang = (String) session.getAttribute("lang");
+if (lang == null)
+	lang = "ko";
+Locale locale = new Locale(lang);
+ResourceBundle bundle = ResourceBundle.getBundle("messages", locale);
+%>
 <%
 request.setCharacterEncoding("UTF-8");
 
@@ -93,11 +101,11 @@ p {
 		<div class="success-icon <%=isSuccess ? "success" : "fail"%>">
 			<%=isSuccess ? "✓" : "✖"%>
 		</div>
-		<h2><%=isSuccess ? "신고가 접수되었습니다" : "신고에 실패했습니다"%></h2>
+		<h2><%=isSuccess ? bundle.getString("info.success") : bundle.getString("info.failure")%></h2>
 		<p>
-			<%=isSuccess ? "제보해주셔서 감사합니다. 빠른 시일 내에 확인하겠습니다!" : "죄송합니다. 오류가 발생했습니다. 다시 시도해주세요."%>
+			<%=isSuccess ? bundle.getString("info.successMessage") : bundle.getString("info.failureMessage")%>
 		</p>
-		<a href="index.html" class="btn">지도로 돌아가기</a>
+		<a href="index.html" class="btn"><%=bundle.getString("filter.backToMap")%></a>
 	</div>
 </body>
 </html>
