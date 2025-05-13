@@ -480,7 +480,8 @@ function initMap() {
 				window.userToiletMarkers.push({ marker, data: toilet });
 				marker.addListener("click", () => {
 					// usertoiletID 조회
-					userSelectedToiletID = encodeURIComponent(toilet.userToiletId);
+					 userSelectedToiletID = encodeURIComponent(toilet.userToiletId);
+					 
 					console.log("선택된 화장실 NAME:", toilet.name);
 					console.log(toilet);
 					
