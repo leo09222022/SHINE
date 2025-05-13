@@ -303,7 +303,7 @@ public class ToiletDAO {
                 vo.setHasCctv(rs.getInt("has_cctv"));
                 vo.setHasDiaperTable(rs.getInt("has_diaper_table"));
                 vo.setDiaperTableLocation(rs.getString("diaper_table_location"));
-                vo.setDataReferenceDate(rs.getDate("data_ref")); // java.sql.Date → java.util.Date 자동 형변환 가능
+                vo.setDataReferenceDate(rs.getDate("DATA_REFERENCE_DATE")); // java.sql.Date → java.util.Date 자동 형변환 가능
             }
 
             ConnectionProvider.close(conn, pstmt, rs);

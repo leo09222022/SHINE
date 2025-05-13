@@ -8,6 +8,9 @@
 String toiletIDParam = request.getParameter("toiletID");
 String userToiletIDParam = request.getParameter("userToiletID");
 
+System.out.println("🔥 전달된 toiletIDParam = " + request.getParameter("toiletID"));
+System.out.println("🔥 전달된 userToiletIDParam = " + request.getParameter("userToiletID"));
+
 String toiletType = null;
 int toiletRefId = -1;
 String toiletName = null;
