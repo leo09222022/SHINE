@@ -7,6 +7,7 @@ window.userToiletMarkers = [];
 window.currentInfoWindow = null;
 let selectedMarker = null;
 let selectedToiletID ="";
+let userSelectedToiletID ="";
 //날짜 출력용 텍스트
 const lastVerifiedDate = new Date("2025-05-01");
 const localizedDate = lastVerifiedDate.toLocaleDateString(window.lang || "ko", {
@@ -478,7 +479,11 @@ function initMap() {
 				});
 				window.userToiletMarkers.push({ marker, data: toilet });
 				marker.addListener("click", () => {
-					selectedToiletID = encodeURIComponent(toilet.toiletId);
+					// usertoiletID 조회
+					userSelectedToiletID = encodeURIComponent(toilet.userToiletId);
+					console.log("선택된 화장실 NAME:", toilet.name);
+					console.log(toilet);
+					
 					const lang = sessionStorage.getItem("lang") || navigator.language.slice(0, 2);
 					map.setCenter(marker.getPosition());
 					if (lang !== "ko") {
