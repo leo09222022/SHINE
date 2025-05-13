@@ -42,7 +42,7 @@ public class AdminReportDetail extends HttpServlet {
 		ReportsToiletVO vo1 = dao1.findById(id);
 		request.setAttribute("vo1", vo1);
 		
-		UserToiletVO vo2 = dao2.findById(toilet_id);
+		UserToiletVO vo2 = dao2.findByID(toilet_id);
 		request.setAttribute("vo2", vo2);
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/admin_report_detail.jsp");
