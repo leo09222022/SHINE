@@ -9,7 +9,7 @@ Locale locale = new Locale(lang);
 ResourceBundle bundle = ResourceBundle.getBundle("messages", locale);
 %>
 <%
-int toiletId = Integer.parseInt(request.getParameter("toiletId"));
+int userToiletId = Integer.parseInt(request.getParameter("userToiletId"));
   String cleanliness = request.getParameter("cleanliness");
   String safety = request.getParameter("safety");
   
@@ -22,7 +22,7 @@ int toiletId = Integer.parseInt(request.getParameter("toiletId"));
   	PreparedStatement pstmt = conn.prepareStatement(sql);
   	pstmt.setString(1, cleanliness);
   	pstmt.setString(2, safety);
-  	pstmt.setInt(3, toiletId);
+  	pstmt.setInt(3, userToiletId);
   	
   	result = pstmt.executeUpdate();
 

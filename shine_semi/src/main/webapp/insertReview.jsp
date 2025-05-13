@@ -53,6 +53,8 @@ window.onload = function() {
 	<h2><%=bundle.getString("toilet.review")%></h2>
 	<form action="insertReviewOK.jsp" method="post">
 		<input type="hidden" name="toiletId" value="${vo.toiletId}">
+		<p><strong><%=vo.getName()%></strong></p>
+		<p><%=vo.getAddressRoad()%></p>
 		<p><%=bundle.getString("toilet.cleanliness")%>:</p>
 		<%
 		for (int i = 1; i <= 5; i++) {

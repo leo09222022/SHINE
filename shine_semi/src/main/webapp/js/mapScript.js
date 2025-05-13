@@ -3,11 +3,12 @@ let map;
 let userLocation = null;
 let userMarker = null;
 window.markers = [];
-window.userToiletMarkers = []; 
+window.userToiletMarkers = [];
 window.currentInfoWindow = null;
 let selectedMarker = null;
-let selectedToiletID ="";
-let userSelectedToiletID ="";
+let selectedToiletID = "";
+let userSelectedToiletID = "";
+
 //날짜 출력용 텍스트
 const lastVerifiedDate = new Date("2025-05-01");
 const localizedDate = lastVerifiedDate.toLocaleDateString(window.lang || "ko", {
@@ -383,10 +384,10 @@ function initMap() {
 				console.log("선택된 화장실 NAME:", toilet.name);
 				console.log("선택된 화장실 ID:", toilet.toiletId);
 				console.log("선택된 화장실*:", toilet);
-				 
-				 // toilet.name 값을 다음 페이지에 쿼리 파라미터로 전달
-				 selectedToiletID = encodeURIComponent(toilet.toiletId);
-				
+
+				// toilet.name 값을 다음 페이지에 쿼리 파라미터로 전달
+				selectedToiletID = encodeURIComponent(toilet.toiletId);
+
 				const lang = sessionStorage.getItem("lang") || navigator.language.slice(0, 2);
 				// 마커 위치를 지도 중심으로 이동시키기
 				map.setCenter(marker.getPosition());
@@ -447,65 +448,65 @@ function initMap() {
 			});
 		}
 	});
-	
+
 	userToilets.forEach((toilet) => {
-			if (toilet.lat !== 0 && toilet.lng !== 0) {
-				const canvas = document.createElement("canvas");
-				canvas.width = 40;
-				canvas.height = 40;
-				const ctx = canvas.getContext("2d");
+		if (toilet.lat !== 0 && toilet.lng !== 0) {
+			const canvas = document.createElement("canvas");
+			canvas.width = 40;
+			canvas.height = 40;
+			const ctx = canvas.getContext("2d");
 
-				// 배경 원
-				ctx.beginPath();
-				ctx.arc(20, 20, 18, 0, 2 * Math.PI);
-				ctx.fillStyle = "#ff3b30"; // 빨간색
-				ctx.fill();
+			// 배경 원
+			ctx.beginPath();
+			ctx.arc(20, 20, 18, 0, 2 * Math.PI);
+			ctx.fillStyle = "#ff3b30"; // 빨간색
+			ctx.fill();
 
-				// 중앙 흰색 점
-				ctx.beginPath();
-				ctx.arc(20, 20, 5, 0, 2 * Math.PI);
-				ctx.fillStyle = "white";
-				ctx.fill();
+			// 중앙 흰색 점
+			ctx.beginPath();
+			ctx.arc(20, 20, 5, 0, 2 * Math.PI);
+			ctx.fillStyle = "white";
+			ctx.fill();
 
-				const marker = new google.maps.Marker({
-					position: { lat: toilet.lat, lng: toilet.lng },
-					map: map,
-					title: toilet.name,
-					icon: {
-						url: "img/custom_map-marker.svg",
-						scaledSize: new google.maps.Size(40, 40),
-						anchor: new google.maps.Point(20, 40),
-					},
-				});
-				window.userToiletMarkers.push({ marker, data: toilet });
-				marker.addListener("click", () => {
-					// usertoiletID 조회
-					 userSelectedToiletID = encodeURIComponent(toilet.userToiletId);
-					 
-					console.log("선택된 화장실 NAME:", toilet.name);
-					console.log(toilet);
-					
-					const lang = sessionStorage.getItem("lang") || navigator.language.slice(0, 2);
-					map.setCenter(marker.getPosition());
-					if (lang !== "ko") {
-						const ctx = window.location.pathname.split("/")[1];
-						fetch(`/${ctx}/translateOne?name=${encodeURIComponent(toilet.name)}&address=${encodeURIComponent(toilet.addressRoad)}&lang=${lang}`)
-							.then(res => res.json())
-							.then(data => {
-								toilet.translatedName = data.name;
-								toilet.translatedAddress = data.address;
-								openCustomPopup(toilet);
-							})
-							.catch(err => {
-								console.error("번역 실패", err);
-								openCustomPopup(toilet);
-							});
-					} else {
-						openCustomPopup(toilet);
-					}
-				});
-			}
-		});
+			const marker = new google.maps.Marker({
+				position: { lat: toilet.lat, lng: toilet.lng },
+				map: map,
+				title: toilet.name,
+				icon: {
+					url: "img/custom_map-marker.svg",
+					scaledSize: new google.maps.Size(40, 40),
+					anchor: new google.maps.Point(20, 40),
+				},
+			});
+			window.userToiletMarkers.push({ marker, data: toilet });
+			marker.addListener("click", () => {
+				// usertoiletID 조회
+				userSelectedToiletID = encodeURIComponent(toilet.userToiletId);
+
+				console.log("유져 선택된 화장실 NAME:", toilet.name);
+				console.log(toilet);
+
+				const lang = sessionStorage.getItem("lang") || navigator.language.slice(0, 2);
+				map.setCenter(marker.getPosition());
+				if (lang !== "ko") {
+					const ctx = window.location.pathname.split("/")[1];
+					fetch(`/${ctx}/translateOne?name=${encodeURIComponent(toilet.name)}&address=${encodeURIComponent(toilet.addressRoad)}&lang=${lang}`)
+						.then(res => res.json())
+						.then(data => {
+							toilet.translatedName = data.name;
+							toilet.translatedAddress = data.address;
+							openCustomPopup(toilet);
+						})
+						.catch(err => {
+							console.error("번역 실패", err);
+							openCustomPopup(toilet);
+						});
+				} else {
+					openCustomPopup(toilet);
+				}
+			});
+		}
+	});
 
 
 	// 선택된 마커가 있으면 자동 클릭
@@ -519,8 +520,30 @@ function initMap() {
 	window.mapReady = true;
 }
 
-
+/*
 function openCustomPopup(toilet) {
+	// 화장실 신고 통합용
+	let reportButtonHTML = "";
+	// 화장실 신고 통합용 버튼
+	if (toilet.toiletId !== undefined) {
+		// 퍼블릭 화장실
+		reportButtonHTML = `<div style="color: #3a81ff; font-size: 14px; cursor: pointer;" onclick="location.href='toiletReport.jsp?toiletID=${toilet.toiletId}'">${window.i18n.report}</div>`;
+	} else if (toilet.userToiletId !== undefined) {
+		// 유저 등록 화장실
+		reportButtonHTML = `<div style="color: #3a81ff; font-size: 14px; cursor: pointer;" onclick="location.href='toiletReport.jsp?userToiletID=${toilet.userToiletId}'">${window.i18n.report}</div>`;
+	}
+	
+	let reviewButtonHTML = "";
+		// 화장실 리뷰 등록 통합용 버튼
+		if (toilet.toiletId !== undefined) {
+			// 퍼블릭 화장실
+			reviewButtonHTML = `<div style="color: #3a81ff; font-size: 14px; cursor: pointer;" onclick="location.href='insertReview.jsp?toiletID=${toilet.toiletId}'">${window.i18n.insert}</div>`;
+		} else if (toilet.userToiletId !== undefined) {
+			// 유저 등록 화장실
+			reviewButtonHTML = `<div style="color: #3a81ff; font-size: 14px; cursor: pointer;" onclick="location.href='insertReviewUserToilet.jsp?userToiletID=${toilet.userToiletId}'">${window.i18n.insert}</div>`;
+		}
+
+
 	const popup = document.getElementById("customInfoPopup");
 	const content = document.getElementById("popupContent");
 
@@ -563,10 +586,8 @@ function openCustomPopup(toilet) {
 		
 		<div style="display: flex; flex-direction:column; gap: 4px; align-items: center">
 		<div style="font-size: 14px; color: #919191">${verifiedMessage}</div>
-			<div style="color: #3a81ff; font-size: 14px; cursor: pointer;" onclick="location.href='toiletReport.jsp?toiletID=' + selectedToiletID">${window.i18n.report}</div>
-			<div style="color: #3a81ff; font-size: 14px; cursor: pointer;" onclick="location.href='insertReview.jsp?toiletID=' + selectedToiletID">
-			  ${window.i18n.review}
-			</div>
+			${reportButtonHTML}
+			${reviewButtonHTML}
 		</div>
       </div>
     `;
@@ -588,10 +609,8 @@ function openCustomPopup(toilet) {
 	 	  
 	          <div style="display: flex; flex-direction:column; gap: 4px;">
 			  <div style="font-size: 14px; color: #919191">${verifiedMessage}</div>
-	            <div style="color: #3a81ff; font-size: 14px; cursor: pointer;" onclick="location.href='toiletReport.jsp?toiletID=' + selectedToiletID">${window.i18n.report}</div>
-				<div style="color: #3a81ff; font-size: 14px; cursor: pointer;" onclick="location.href='insertReview.jsp?toiletID=' + selectedToiletID">
-				  	  ${window.i18n.review}
-				  	</div>
+	            ${reportButtonHTML}
+				${reviewButtonHTML}
 	          </div>
 	
 	        </div>
@@ -613,29 +632,51 @@ function openCustomPopup(toilet) {
 	}
 
 }
-
+*/
 function openCustomPopup(toilet) {
 	const isUser = toilet.userToiletId !== undefined;
 	const idParam = isUser ? toilet.userToiletId : toilet.toiletId;
 	const url = "getReview.jsp?toiletId=" + idParam + "&isUser=" + (isUser ? "Y" : "N");
 
 	fetch(url)
-	  .then(res => res.json())
-	  .then(data => {
-	    toilet.cleanliness = data.cleanliness || 0;
-	    toilet.safety = data.safety || 0;
-	    renderPopupContent(toilet); // ⬅️ 렌더링은 여기서!
-	  })
-	  .catch(err => {
-	    console.warn("평점 정보 조회 실패:", err);
-	    toilet.cleanliness = 0;
-	    toilet.safety = 0;
-	    renderPopupContent(toilet); // fallback으로도 호출
-	  });
+		.then(res => res.json())
+		.then(data => {
+			toilet.cleanliness = data.cleanliness || 0;
+			toilet.safety = data.safety || 0;
+			renderPopupContent(toilet); // ⬅️ 렌더링은 여기서!
+		})
+		.catch(err => {
+			console.warn("평점 정보 조회 실패:", err);
+			toilet.cleanliness = 0;
+			toilet.safety = 0;
+			renderPopupContent(toilet); // fallback으로도 호출
+		});
 }
 
 
 function renderPopupContent(toilet) {
+	// 화장실 신고 통합용
+	let reportButtonHTML = "";
+	// 화장실 신고 통합용 버튼
+	if (toilet.toiletId !== undefined) {
+		// 퍼블릭 화장실
+		reportButtonHTML = `<div style="color: #3a81ff; font-size: 14px; cursor: pointer;" onclick="location.href='toiletReport.jsp?toiletID=${toilet.toiletId}'">${window.i18n.report}</div>`;
+	} else if (toilet.userToiletId !== undefined) {
+		// 유저 등록 화장실
+		reportButtonHTML = `<div style="color: #3a81ff; font-size: 14px; cursor: pointer;" onclick="location.href='toiletReport.jsp?userToiletID=${toilet.userToiletId}'">${window.i18n.report}</div>`;
+	}
+
+	let reviewButtonHTML = "";
+			// 화장실 리뷰 등록 통합용 버튼
+			if (toilet.toiletId !== undefined) {
+				// 퍼블릭 화장실
+				reviewButtonHTML = `<div style="color: #3a81ff; font-size: 14px; cursor: pointer;" onclick="location.href='insertReview.jsp?toiletID=${toilet.toiletId}'">${window.i18n.review}</div>`;
+			} else if (toilet.userToiletId !== undefined) {
+				// 유저 등록 화장실
+				reviewButtonHTML = `<div style="color: #3a81ff; font-size: 14px; cursor: pointer;" onclick="location.href='insertReviewUserToilet.jsp?userToiletID=${toilet.userToiletId}'">${window.i18n.review}</div>`;
+			}
+			
+			
 	const popup = document.getElementById("customInfoPopup");
 	const content = document.getElementById("popupContent");
 	if (!popup || !content) return;
@@ -677,11 +718,8 @@ function renderPopupContent(toilet) {
 
 			<div style="display: flex; flex-direction:column; gap: 4px; align-items: center">
 			  <div style="font-size: 14px; color: #919191">${verifiedMessage}</div>
-			  <div style="color: #3a81ff; font-size: 14px">${window.i18n.report}</div>
-			  <div style="color: #3a81ff; font-size: 14px; cursor: pointer;" onclick="location.href='insertReview.jsp?toiletID=' + selectedToiletID">
-				${window.i18n.review}
-			  </div>
-			</div>
+			  ${reportButtonHTML}
+			  ${reviewButtonHTML}
 		  </div>
 		`;
 	}
@@ -703,10 +741,8 @@ function renderPopupContent(toilet) {
 
 				<div style="display: flex; flex-direction:column; gap: 4px;">
 				  <div style="font-size: 14px; color: #919191">${verifiedMessage}</div>
-				  <div style="color: #3a81ff; font-size: 14px; cursor: pointer;" onclick="location.href='toiletReport.jsp?toiletID=' + selectedToiletID">${window.i18n.report}</div>
-				  <div style="color: #3a81ff; font-size: 14px; cursor: pointer;" onclick="location.href='insertReview.jsp?toiletID=' + selectedToiletID">
-					${window.i18n.review}
-				  </div>
+				  ${reportButtonHTML}
+				   ${reviewButtonHTML}
 				</div>
 			  </div>
 
