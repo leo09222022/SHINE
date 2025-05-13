@@ -1,5 +1,5 @@
-<%@page import="com.emerlet.dao.ToiletDAO"%>
-<%@page import="com.emerlet.vo.ToiletVO"%>
+<%@page import="com.emerlet.vo.UserToiletVO"%>
+<%@page import="com.emerlet.dao.UserToiletDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -12,9 +12,10 @@ Locale locale = new Locale(lang);
 ResourceBundle bundle = ResourceBundle.getBundle("messages", locale);
 %>
 <%
-    int toiletID = Integer.parseInt(request.getParameter("toiletID"));
-	ToiletDAO dao = new ToiletDAO();
-	ToiletVO vo = dao.findByID(toiletID);
+int toiletID = Integer.parseInt(request.getParameter("userToiletID"));
+
+	UserToiletDAO dao = new UserToiletDAO();
+	UserToiletVO vo = dao.findByID(toiletID);
 	request.setAttribute("vo", vo);
     
 %>
@@ -51,10 +52,10 @@ window.onload = function() {
 </head>
 <body>
 	<h2><%=bundle.getString("toilet.review")%></h2>
-	<form action="insertReviewOK.jsp" method="post">
-		<input type="hidden" name="toiletId" value="${vo.toiletId}">
-		<p><strong><%=vo.getName()%></strong></p>
-		<p><%=vo.getAddressRoad()%></p>
+	<p><strong><%=vo.getUserName()%></strong></p>
+	<p><%=vo.getUserRoadAddress()%></p>
+	<form action="insertReviewUserToiletOK.jsp" method="post">
+		<input type="hidden" name="userToiletId" value="${vo.userToiletId}">
 		<p><%=bundle.getString("toilet.cleanliness")%>:</p>
 		<%
 		for (int i = 1; i <= 5; i++) {
