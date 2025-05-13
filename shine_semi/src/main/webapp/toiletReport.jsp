@@ -76,7 +76,6 @@ if (toiletIDParam != null) {
 	background-color: white;
 	padding: 20px;
 	border-radius: 5px;
-	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .form-group {
@@ -133,8 +132,8 @@ textarea {
 	<div class="container">
 	
 	<div style="display:flex; flex-direction: row-reverse; gap:4px; cursor:pointer;" onclick="location.href='index.html'">
-	<div style="display:flex; justify-content:center; aligns-item:center;"><%=bundle.getString("filter.backToMap")%></div>
 	<img src="img/back_page.svg"/>
+	<div style="display:flex; justify-content:center; aligns-item:center;"><%=bundle.getString("filter.backToMap")%></div>
 	</div>
 	
 		<div class="sn-title"><%=bundle.getString("info.updateRequest")%></div>
