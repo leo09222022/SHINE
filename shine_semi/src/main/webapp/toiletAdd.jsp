@@ -142,6 +142,12 @@ input[type="text"], textarea {
 </head>
 <body>
 	<div class="container">
+	
+	<div style="display:flex; flex-direction: row-reverse; gap:4px; cursor:pointer;" onclick="location.href='index.html'">
+	<div style="display:flex; justify-content:center; aligns-item:center;">돌아가기</div>
+	<img src="img/back_page.svg"/>
+	</div>
+	
 		<div class="sn-title"><%=bundle.getString("menu.register")%></div>
 
 		<c:if test="${not empty errorMessage}">
