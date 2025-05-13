@@ -9,6 +9,7 @@ public class UserToiletVO {
 	private String userMaleToilet;
 	private String userFemaleToilet;
 	private String userMaleDisabledToilet;
+	private String userFemaleDisabledToilet;
 	private String userHasDiaperTable;
 	private String userDescription;
 	private double userLat;
@@ -16,7 +17,6 @@ public class UserToiletVO {
 	private Date submittedAt;
 	private String status;
 	private String photoUrl;
-	private String userFemaleDisabledToilet;
 	private String userHasEmergencyBell;
 	private String userHasCctv;
 
