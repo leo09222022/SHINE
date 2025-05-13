@@ -518,16 +518,7 @@ function initMap() {
 	window.mapReady = true;
 }
 
-// 리뷰 등록 모달 ??????????????????????????????????????????????????????????????
-function onReviewButtonClick(toiletId) {
-  fetch(`insertReview.jsp?toiletId=${toiletId}`)
-    .then(response => response.text())
-    .then(html => {
-      document.getElementById("modalBody").innerHTML = html;
-      document.getElementById("modalOverlay").style.display = "flex";
-    })
-    .catch(error => console.error('리뷰 작성 모달 로딩 실패:', error));
-}
+
 
 function openCustomPopup(toilet) {
 	const popup = document.getElementById("customInfoPopup");
@@ -572,10 +563,8 @@ function openCustomPopup(toilet) {
 		
 		<div style="display: flex; flex-direction:column; gap: 4px; align-items: center">
 		<div style="font-size: 14px; color: #919191">${verifiedMessage}</div>
-			<div style="color: #3a81ff; font-size: 14px">${window.i18n.report}</div>
-			<div 
-			  onclick="onReviewButtonClick()" 
-			  style="background: none; border: none; padding: 0; color: #3a81ff; font-size: 14px; cursor: pointer;">
+			<div style="color: #3a81ff; font-size: 14px; cursor: pointer;" onclick="location.href='toiletReport.jsp?toiletID=' + selectedToiletID">${window.i18n.report}</div>
+			<div style="color: #3a81ff; font-size: 14px; cursor: pointer;" onclick="location.href='insertReview.jsp?toiletID=' + selectedToiletID">
 			  ${window.i18n.review}
 			</div>
 		</div>
@@ -600,9 +589,7 @@ function openCustomPopup(toilet) {
 	          <div style="display: flex; flex-direction:column; gap: 4px;">
 			  <div style="font-size: 14px; color: #919191">${verifiedMessage}</div>
 	            <div style="color: #3a81ff; font-size: 14px; cursor: pointer;" onclick="location.href='toiletReport.jsp?toiletID=' + selectedToiletID">${window.i18n.report}</div>
-				<div 
-				  	  onclick="onReviewButtonClick()" 
-				  	  style="background: none; border: none; padding: 0; color: #3a81ff; font-size: 14px; cursor: pointer;">
+				<div style="color: #3a81ff; font-size: 14px; cursor: pointer;" onclick="location.href='insertReview.jsp?toiletID=' + selectedToiletID">
 				  	  ${window.i18n.review}
 				  	</div>
 	          </div>
