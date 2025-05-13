@@ -7,33 +7,69 @@ import com.emerlet.db.ConnectionProvider;
 import com.emerlet.vo.ReportsToiletVO;
 import com.emerlet.vo.UserToiletVO;
 
-public class UserToiletDAO {
+public class UserToiletDAO2 {
 	
-	public void updateData(int id, UserToiletVO vo) {
+	public void updateData(int id, ReportsToiletVO vo) {
 		
 		System.out.println("updateDataㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ");
 		System.out.println("vo:"+vo);
-		System.out.println("id:"+id);
 		
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		String sql;
 		try {
 			conn = ConnectionProvider.getConnection();
-			sql = "update reports_toilet set "
-					+ "user_male_toilet=?, " 
-					+ "user_female_toilet=?, "
-					+ "user_disabled_toilet=?, "
-					+ "user_has_diaper_table=?, "
-					+ "user_description=?, "
-					+ "photo_url=? where "
-					+ "user_toilet_id=?";
+			sql = "update reports_toilet set user_male_toilet=?, user_female_toilet=?, user_disabled_toilet=?, user_has_diaper_table=?, user_description=?, photo_url=? where user_toilet_id=?";
+			if(vo.getReportMaleToilet() != null) {
+				sql = "update user_toilets set user_male_toilet=? where id=?";
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, vo.getReportMaleToilet());
+				pstmt.setInt(2, id);
+				pstmt.executeUpdate();
+			}
 			
-//			pstmt = conn.prepareStatement(sql);
-//			
-//			pstmt.setInt(1, id);
-//			pstmt.executeUpdate();
-		
+			if(vo.getReportFemaleToilet() != null) {
+				sql = "update user_toilets set user_female_toilet=? where id=?";
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, vo.getReportFemaleToilet());
+				pstmt.setInt(2, id);
+				pstmt.executeUpdate();
+			}
+			
+			if(vo.getReportDisabledToilet() != null) {
+				sql = "update user_toilets set user_disabled_toilet=? where id=?";
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, vo.getReportDisabledToilet());
+				pstmt.setInt(2, id);
+				pstmt.executeUpdate();
+			}
+			
+			if(vo.getReportHasDiaperTable() != null) {
+				sql = "update user_toilets set user_has_diaper_table=? where id=?";
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, vo.getReportHasDiaperTable());
+				pstmt.setInt(2, id);
+				pstmt.executeUpdate();
+			}
+			
+			if(vo.getReportDescription() != null) {
+				sql = "update user_toilets set user_description=? where id=?";
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, vo.getReportDescription());
+				pstmt.setInt(2, id);
+				pstmt.executeUpdate();
+			}
+			if(vo.getReportPhotoError() == "O") {
+				sql = "update user_toilets set photo_url=null where id=?";
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setInt(1, id);
+				pstmt.executeUpdate();
+				
+				sql = "update reports_toilet set report_photo_error='X' where user_toilet_id=?";
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setInt(1, id);
+				pstmt.executeUpdate();
+			}
 		}catch (Exception e) {
 			e.printStackTrace();
 		}finally {

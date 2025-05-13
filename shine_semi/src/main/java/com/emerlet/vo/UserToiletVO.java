@@ -17,6 +17,15 @@ public class UserToiletVO {
 	private String status;
 	private String photoUrl;
 
+
+
+	@Override
+	public String toString() {
+		return "UserToiletVO [userMaleToilet=" + userMaleToilet + ", userFemaleToilet=" + userFemaleToilet
+				+ ", userDisabledToilet=" + userDisabledToilet + ", userHasDiaperTable=" + userHasDiaperTable
+				+ ", userDescription=" + userDescription + ", photoUrl=" + photoUrl + "]";
+	}
+
 	public UserToiletVO() {
 	}
 

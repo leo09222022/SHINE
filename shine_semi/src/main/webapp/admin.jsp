@@ -6,6 +6,7 @@
 <%@page import="java.sql.Connection"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -96,9 +97,92 @@
     .item:last-child {
       border-bottom: none;
     }
+    
+    .section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    
+    .button-group {
+      display: flex;
+      gap: 8px;
+    }
   </style>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script>
+  	$(function(){
+  		function loadRequest(status){
+  			$("#request_list").empty();
+  			$.get("AdminAddRequest?status="+status,function(arr){
+  	  			console.log(arr);
+  	  			$.each(arr,function(i, item){
+  	  				let div = $("<div></div>").addClass("item");
+  	  				let a = $("<a></a>").html("["+item.submittedAt+"] "+item.userRoadAddress+" ("+status+")");
+  	  				$(a).attr("href","AdminToiletDetail?id="+item.userToiletId+"&status="+status);
+  	  				$(div).append(a);
+  	  				$("#request_list").append(div);
+  	  			})
+  	  		});
+  		}
+  		
+  		function loadReport(status){
+  			$("#report_list").empty();
+  			$.get("AdminReport?status="+status,function(arr){
+  	  			console.log(arr);
+  	  			$.each(arr,function(i, item){
+  	  				let div = $("<div></div>").addClass("item");
+  	  				let a = $("<a></a>").html("["+item.reportedAt+"] "+item.toiletName+" ("+status+")");
+  	  				$(a).attr("href","AdminReportDetail?id="+item.reportId+"&toilet_id="+item.userToiletId+"&status="+status);
+  	  				$(div).append(a);
+  	  				$("#report_list").append(div);
+  	  			})
+  	  		});
+  		}
+  		
+  		$(".button_request").click(function(){
+  			let status = $(this).attr("status");
+  			//info = $(this).attr("info");
+  			loadRequest(status);
+  			
+  		});
+  		
+  		$(".button_report").click(function(){
+  			let status = $(this).attr("status");
+  			//info = $(this).attr("info");
+  			loadReport(status);
+  			
+  		});
+  		
+  		loadRequest("승인대기");
+  		loadReport("신규");
+  		
+  		
+  	});
+  </script>
 </head>
 <body>
+	<c:if test="${add=='승인완료' }">
+		<script type="text/javascript">
+			alert("승인되었습니다.");
+		</script>
+	</c:if>
+	<c:if test="${add=='정보반영' }">
+		<script type="text/javascript">
+			alert("수정 정보가 반영되었습니다.");
+		</script>
+	</c:if>
+	<c:if test="${add=='보류' }">
+		<script type="text/javascript">
+			alert("보류되었습니다.");
+		</script>
+	</c:if>
+	<c:if test="${add=='반려' }">
+		<script type="text/javascript">
+			alert("반려되었습니다.");
+		</script>
+	</c:if>
+
 
   <header>
     <h1>관리자 페이지</h1>
@@ -107,56 +191,29 @@
 	
   <main>
     <div class="section">
-      <h2>등록 요청</h2>
-      <div class="content-scroll">
-        <%
-		try {
-			String sql = "select user_toilet_id, user_road_address, submitted_at "
-					+ "from user_toilets where status=0 order by submitted_at";
-			Connection conn = ConnectionProvider.getConnection();
-			Statement stmt = conn.createStatement();
-			ResultSet rs = stmt.executeQuery(sql);
-			while(rs.next()){
-				int id = rs.getInt(1);
-				String addr = rs.getString(2);
-				Date submitted = rs.getDate(3);
-				%>
-				<div class="item"><a href="admin_toilet_detail.jsp?id=<%= id %>">[<%= submitted %>] <%= addr %> (승인 대기 중)</a></div>
-				<%
-			}
-			ConnectionProvider.close(conn, stmt, rs);
-		}catch (Exception e) {
-			System.out.println("예외발생:"+e.getMessage());
-		}
-		%>
+      <div class="section-header">
+        <h2>화장실 등록 요청</h2>
+        <div class="button-group">
+        <button class="button_request" status="승인대기">승인대기</button>
+        <button class="button_request" status="승인완료">승인완료</button>
+        <button class="button_request" status="반려">반려</button>
+        </div>
+      </div>
+      <div class="content-scroll" id="request_list">       
       </div>
     </div>
 
     <div class="section">
-      <h2>신고 내역</h2>
-      <div class="content-scroll">
-        <%
-		try {
-			String sql = "select user_toilet_id, user_road_address, reported_at "
-					+ "from user_toilets, user_toilet_reports "
-					+ "where user_toilet_reports.status=1 and user_toilets.user_toilet_id=user_toilet_reports.user_toilet_id "
-					+ "order by reported_at";
-			Connection conn = ConnectionProvider.getConnection();
-			Statement stmt = conn.createStatement();
-			ResultSet rs = stmt.executeQuery(sql);
-			while(rs.next()){
-				int id = rs.getInt(1);
-				String addr = rs.getString(2);
-				Date reported = rs.getDate(3);
-				%>
-				<div class="item"><a href="admin_report_detail.jsp?id=<%= id %>"><%= addr %></a></div>
-				<%
-			}
-			ConnectionProvider.close(conn, stmt, rs);
-		}catch (Exception e) {
-			System.out.println("예외발생:"+e.getMessage());
-		}
-		%>
+      <div class="section-header">
+        <h2>정보 오류 신고 내역</h2>
+        <div class="button-group">
+        <button class="button_report" status="신규">신규</button>
+        <button class="button_report" status="정보반영">정보반영</button>
+        <button class="button_report" status="보류">보류</button>
+        <button class="button_report" status="반려">반려</button>
+        </div>
+      </div>
+      <div class="content-scroll" id="report_list">
       </div>
     </div>
   </main>
