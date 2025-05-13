@@ -363,7 +363,6 @@ input[type="text"], textarea {
 				
 				<div class="form-group">
 
-					<label for="userDescription" class="sub-tit">4. 코멘트</label>
 					<label for="userDescription" class="sub-tit">5. <%=bundle.getString("add.comment")%></label>
 					<textarea id="userDescription" name="userDescription" rows="4"
 						placeholder="<%=bundle.getString("add.placeholder")%>"></textarea>

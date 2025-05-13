@@ -17,7 +17,15 @@ public class UserToiletAddOKAction {
 
 		System.out.println("UserToiletAddOKAction.execute() called");
 
+		  // 사용자의 언어 설정 가져오기 
+        String lang = request.getParameter("lang"); 
+        if (lang == null || lang.isEmpty()) {
+            lang = "ko"; // 기본 언어 
+        }
+
+        
 		try {
+            
 			request.setCharacterEncoding("UTF-8");
 
 			UserToiletVO userToilet = new UserToiletVO();
@@ -60,7 +68,7 @@ public class UserToiletAddOKAction {
 					userToilet.setUserLat(Double.parseDouble(userLatStr));
 					userToilet.setUserLng(Double.parseDouble(userLngStr));
 				} else {
-					request.setAttribute("errorMessage", "위도와 경도 정보가 없습니다. 지도에서 위치를 선택해주세요.");
+					request.setAttribute("message", "4");
 					return "toiletAdd.jsp";
 				}
 			} catch (NumberFormatException e) {
@@ -88,16 +96,16 @@ public class UserToiletAddOKAction {
 
 				System.out.println("리뷰 저장 결과: " + reviewResult);
 
-				request.setAttribute("message", "화장실 등록이 성공적으로 요청되었습니다. 관리자 검토 후 지도에 표시됩니다.");
+				request.setAttribute("message", "1");
 				return "toiletAddOK.jsp";
 			} else {
-				request.setAttribute("errorMessage", "화장실 등록 중 오류가 발생했습니다. 다시 시도해주세요.");
+				request.setAttribute("message", "2");
 				return "toiletAdd.jsp";
 			}
 		} catch (Exception e) {
 			System.out.println("예외 발생: " + e.getMessage());
 			e.printStackTrace();
-			request.setAttribute("errorMessage", "시스템 오류가 발생했습니다: " + e.getMessage());
+			request.setAttribute("message", String.format("3", e.getMessage()));
 			return "toiletAdd.jsp";
 		}
 	}

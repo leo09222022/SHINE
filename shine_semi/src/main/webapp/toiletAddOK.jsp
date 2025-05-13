@@ -1,6 +1,29 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page import="java.util.Locale, java.util.ResourceBundle"%>
+<%
+String lang = (String) session.getAttribute("lang");
+if (lang == null) lang = "ko";
+Locale locale = new Locale(lang);
+ResourceBundle bundle = ResourceBundle.getBundle("messages", locale);
+
+String messageCode = (String) request.getAttribute("message"); // 예: "1"
+
+String msgText = "";
+	if ("1".equals(messageCode)) {
+		msgText = bundle.getString("add.success");
+	} else if ("2".equals(messageCode)) {
+		msgText = bundle.getString("add.error");
+	} else if ("3".equals(messageCode)) {
+		msgText = bundle.getString("add.systemError");
+	} else if ("4".equals(messageCode)) {
+		msgText = bundle.getString("add.locationError");
+	} else {
+		msgText = bundle.getString("add.error");
+	}
+	request.setAttribute("msgText", msgText);
+%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -58,11 +81,11 @@ p {
 <body>
 	<div class="container">
 		<div class="success-icon">✓</div>
-		<h2>화장실 등록 요청 완료</h2>
+		<h2><%=bundle.getString("add.complete")%></h2>
 
-		<p>${message}</p>
+		<p>${msgText}</p>
 
-		<a href="index.html" class="btn">지도로 돌아가기</a>
+		<a href="index.html" class="btn"><%=bundle.getString("filter.backToMap")%></a>
 	</div>
 </body>
 </html>
