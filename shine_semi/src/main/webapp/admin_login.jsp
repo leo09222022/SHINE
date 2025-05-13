@@ -85,6 +85,7 @@
 </head>
 <body>
   <div class="login-container">
+  	<img src="./img/top_logo.svg"><br><br>
     <h2>관리자 로그인</h2>
     
     <form method="post" action="AdminLogin">
