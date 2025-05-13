@@ -520,7 +520,7 @@ function initMap() {
 	window.mapReady = true;
 }
 
-
+/*
 function openCustomPopup(toilet) {
 	// 화장실 신고 통합용
 	let reportButtonHTML = "";
@@ -532,6 +532,16 @@ function openCustomPopup(toilet) {
 		// 유저 등록 화장실
 		reportButtonHTML = `<div style="color: #3a81ff; font-size: 14px; cursor: pointer;" onclick="location.href='toiletReport.jsp?userToiletID=${toilet.userToiletId}'">${window.i18n.report}</div>`;
 	}
+	
+	let reviewButtonHTML = "";
+		// 화장실 리뷰 등록 통합용 버튼
+		if (toilet.toiletId !== undefined) {
+			// 퍼블릭 화장실
+			reviewButtonHTML = `<div style="color: #3a81ff; font-size: 14px; cursor: pointer;" onclick="location.href='insertReview.jsp?toiletID=${toilet.toiletId}'">${window.i18n.insert}</div>`;
+		} else if (toilet.userToiletId !== undefined) {
+			// 유저 등록 화장실
+			reviewButtonHTML = `<div style="color: #3a81ff; font-size: 14px; cursor: pointer;" onclick="location.href='insertReviewUserToilet.jsp?userToiletID=${toilet.userToiletId}'">${window.i18n.insert}</div>`;
+		}
 
 
 	const popup = document.getElementById("customInfoPopup");
@@ -577,11 +587,7 @@ function openCustomPopup(toilet) {
 		<div style="display: flex; flex-direction:column; gap: 4px; align-items: center">
 		<div style="font-size: 14px; color: #919191">${verifiedMessage}</div>
 			${reportButtonHTML}
-			<div 
-			  onclick="onReviewButtonClick()" 
-			  style="background: none; border: none; padding: 0; color: #3a81ff; font-size: 14px; cursor: pointer;">
-			  ${window.i18n.review}
-			</div>
+			${reviewButtonHTML}
 		</div>
       </div>
     `;
@@ -604,11 +610,7 @@ function openCustomPopup(toilet) {
 	          <div style="display: flex; flex-direction:column; gap: 4px;">
 			  <div style="font-size: 14px; color: #919191">${verifiedMessage}</div>
 	            ${reportButtonHTML}
-				<div 
-				  	  onclick="onReviewButtonClick()" 
-				  	  style="background: none; border: none; padding: 0; color: #3a81ff; font-size: 14px; cursor: pointer;">
-				  	  ${window.i18n.review}
-				  	</div>
+				${reviewButtonHTML}
 	          </div>
 	
 	        </div>
@@ -630,7 +632,7 @@ function openCustomPopup(toilet) {
 	}
 
 }
-
+*/
 function openCustomPopup(toilet) {
 	const isUser = toilet.userToiletId !== undefined;
 	const idParam = isUser ? toilet.userToiletId : toilet.toiletId;
@@ -664,6 +666,17 @@ function renderPopupContent(toilet) {
 		reportButtonHTML = `<div style="color: #3a81ff; font-size: 14px; cursor: pointer;" onclick="location.href='toiletReport.jsp?userToiletID=${toilet.userToiletId}'">${window.i18n.report}</div>`;
 	}
 
+	let reviewButtonHTML = "";
+			// 화장실 리뷰 등록 통합용 버튼
+			if (toilet.toiletId !== undefined) {
+				// 퍼블릭 화장실
+				reviewButtonHTML = `<div style="color: #3a81ff; font-size: 14px; cursor: pointer;" onclick="location.href='insertReview.jsp?toiletID=${toilet.toiletId}'">${window.i18n.review}</div>`;
+			} else if (toilet.userToiletId !== undefined) {
+				// 유저 등록 화장실
+				reviewButtonHTML = `<div style="color: #3a81ff; font-size: 14px; cursor: pointer;" onclick="location.href='insertReviewUserToilet.jsp?userToiletID=${toilet.userToiletId}'">${window.i18n.review}</div>`;
+			}
+			
+			
 	const popup = document.getElementById("customInfoPopup");
 	const content = document.getElementById("popupContent");
 	if (!popup || !content) return;
@@ -706,9 +719,7 @@ function renderPopupContent(toilet) {
 			<div style="display: flex; flex-direction:column; gap: 4px; align-items: center">
 			  <div style="font-size: 14px; color: #919191">${verifiedMessage}</div>
 			  ${reportButtonHTML}
-			  <div style="color: #3a81ff; font-size: 14px; cursor: pointer;" onclick="location.href='insertReview.jsp?toiletID=' + selectedToiletID">
-			  ${window.i18n.review}
-			</div>
+			  ${reviewButtonHTML}
 		  </div>
 		`;
 	}
@@ -731,9 +742,7 @@ function renderPopupContent(toilet) {
 				<div style="display: flex; flex-direction:column; gap: 4px;">
 				  <div style="font-size: 14px; color: #919191">${verifiedMessage}</div>
 				  ${reportButtonHTML}
-				  <div style="color: #3a81ff; font-size: 14px; cursor: pointer;" onclick="location.href='insertReview.jsp?toiletID=' + selectedToiletID">
-					${window.i18n.review}
-				  </div>
+				   ${reviewButtonHTML}
 				</div>
 			  </div>
 
