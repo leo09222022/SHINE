@@ -80,5 +80,41 @@ public class ReviewDAO {
 
 		return result;
 	}
+	
+	public ReviewVO getAvgScoreByToiletId(int toiletId, boolean isUserToilet) {
+	    ReviewVO vo = new ReviewVO();
+
+	    String sql;
+	    if (isUserToilet) {
+	        sql = "SELECT " +
+	              "CAST(ROUND(AVG(cleanliness), 0) AS NUMBER) AS avg_cleanliness, " +
+	              "CAST(ROUND(AVG(safety), 0) AS NUMBER) AS avg_safety " +
+	              "FROM reviews WHERE user_toilet_id = ?";
+	    } else {
+	        sql = "SELECT " +
+	              "CAST(ROUND(AVG(cleanliness), 0) AS NUMBER) AS avg_cleanliness, " +
+	              "CAST(ROUND(AVG(safety), 0) AS NUMBER) AS avg_safety " +
+	              "FROM reviews WHERE toilet_id = ?";
+	    }
+
+	    try (
+	        Connection conn = ConnectionProvider.getConnection();
+	        PreparedStatement pstmt = conn.prepareStatement(sql)
+	    ) {
+	        pstmt.setInt(1, toiletId);
+	        ResultSet rs = pstmt.executeQuery();
+
+	        if (rs.next()) {
+	            vo.setCleanliness(rs.getInt("avg_cleanliness"));
+	            vo.setSafety(rs.getInt("avg_safety"));
+	        }
+	    } catch (Exception e) {
+	        System.out.println("평균 리뷰 조회 중 오류 발생: " + e.getMessage());
+	    }
+
+	    return vo;
+	}
+
+
 }
 

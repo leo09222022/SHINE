@@ -239,7 +239,8 @@ window.lang = "<%=lang%>";
     	  <c:forEach var="toilet" items="${userToilets}" varStatus="loop">
     	  {           
     		// 클릭시 toiletID 추가
-          	
+          	 userToiletId: ${toilet.userToiletId},
+    		
     	    name: "${fn:escapeXml(toilet.userName)}",
     	    lat: ${toilet.userLat},
     	    lng: ${toilet.userLng},

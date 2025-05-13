@@ -480,7 +480,8 @@ function initMap() {
 				window.userToiletMarkers.push({ marker, data: toilet });
 				marker.addListener("click", () => {
 					// usertoiletID 조회
-					userSelectedToiletID = encodeURIComponent(toilet.userToiletId);
+					 userSelectedToiletID = encodeURIComponent(toilet.userToiletId);
+					 
 					console.log("선택된 화장실 NAME:", toilet.name);
 					console.log(toilet);
 					
@@ -517,7 +518,6 @@ function initMap() {
 	// 맵 초기화 완료 체크 >> 검색어 출력용
 	window.mapReady = true;
 }
-
 
 
 function openCustomPopup(toilet) {
@@ -613,6 +613,120 @@ function openCustomPopup(toilet) {
 	}
 
 }
+
+function openCustomPopup(toilet) {
+	const isUser = toilet.userToiletId !== undefined;
+	const idParam = isUser ? toilet.userToiletId : toilet.toiletId;
+	const url = "getReview.jsp?toiletId=" + idParam + "&isUser=" + (isUser ? "Y" : "N");
+
+	fetch(url)
+	  .then(res => res.json())
+	  .then(data => {
+	    toilet.cleanliness = data.cleanliness || 0;
+	    toilet.safety = data.safety || 0;
+	    renderPopupContent(toilet); // ⬅️ 렌더링은 여기서!
+	  })
+	  .catch(err => {
+	    console.warn("평점 정보 조회 실패:", err);
+	    toilet.cleanliness = 0;
+	    toilet.safety = 0;
+	    renderPopupContent(toilet); // fallback으로도 호출
+	  });
+}
+
+
+function renderPopupContent(toilet) {
+	const popup = document.getElementById("customInfoPopup");
+	const content = document.getElementById("popupContent");
+	if (!popup || !content) return;
+
+	const lastVerifiedDate = new Date("2025-05-01");
+	const localizedDate = lastVerifiedDate.toLocaleDateString(window.lang || "ko", {
+		year: "numeric",
+		month: "long",
+		day: "numeric"
+	});
+	const verifiedMessage = window.i18n.lastVerified.replace("{0}", localizedDate);
+
+	popup.style.display = "block";
+
+	// 모바일
+	if (window.innerWidth <= 768) {
+		content.innerHTML = `
+		  <div style="display:flex; flex-direction: column; gap: 16px;">
+			<div>
+			  <div style="font-size: 18px; font-weight: 600;">${toilet.translatedName || toilet.name}</div>
+			  <div style="font-size: 14px;">${window.i18n.cleanliness} ⭐ ${toilet.cleanliness} &nbsp; ${window.i18n.safety} ⭐ ${toilet.safety}</div>
+			  <div style="font-size: 14px;">${toilet.translatedAddress || toilet.addressRoad}</div>
+			  ${window.i18n.openTime} : ${toilet.openTimeDetail ? toilet.openTimeDetail : window.i18n.unknown}
+			</div>
+
+			<button onclick="openKakaoPopUp()" style="background: #3a81ff; color: white; border: none; border-radius: 8px; padding: 10px 0; font-size: 16px; display: flex; gap: 8px; align-items: center; justify-content: center;">
+			  <img src="img/pop_directions.svg" alt=""><span>${window.i18n.guide}</span>
+			</button>
+
+			${renderFacilityRow("maleToilet", "img/pop_man.svg", toilet.maleToilet)}
+			${renderFacilityRow("maleDisabledToilet", "img/pop__accessible.svg", toilet.maleDisabledToilet)}
+			${renderFacilityRow("femaleToilet", "img/pop_woman.svg", toilet.femaleToilet)}
+			${renderFacilityRow("femaleDisabledToilet", "img/pop__accessible.svg", toilet.femaleDisabledToilet)}
+			${renderFacilityRow("diaperTable", "img/pop_baby.svg", toilet.hasDiaperTable)}
+			<div style="font-size: 12px;">${window.i18n.diaperLocation} : ${toilet.diaperTableLocation}</div>
+			${renderFacilityRow("emergencyBell", "img/pop_bell.svg", toilet.hasEmergencyBell)}
+			<div style="font-size: 12px;">${window.i18n.emergencyBellStatus} : ${toilet.emergencyBellLocation}</div>
+			${renderFacilityRow("cctv", "img/pop_cctv.svg", toilet.hasCctv)}
+
+			<div style="display: flex; flex-direction:column; gap: 4px; align-items: center">
+			  <div style="font-size: 14px; color: #919191">${verifiedMessage}</div>
+			  <div style="color: #3a81ff; font-size: 14px">${window.i18n.report}</div>
+			  <div style="color: #3a81ff; font-size: 14px; cursor: pointer;" onclick="location.href='insertReview.jsp?toiletID=' + selectedToiletID">
+				${window.i18n.review}
+			  </div>
+			</div>
+		  </div>
+		`;
+	}
+	else {
+		// PC 뷰용 템플릿
+		content.innerHTML = `
+		  <div style="padding: 20px; background: white; border-radius: 4px; flex-direction: column; justify-content: flex-start; align-items: flex-end; display: inline-flex;">
+			<div style="display: flex; gap: 40px">
+			  <div style="width: 280px; display: flex; flex-direction: column; gap: 20px">
+				<div style="display: flex; flex-direction: column; gap: 8px">
+				  <div style="font-size: 24px; font-weight: 600">${toilet.translatedName || toilet.name}</div>
+				  <div style="font-size: 14px;">${window.i18n.cleanliness} ⭐ ${toilet.cleanliness} &nbsp; ${window.i18n.safety} ⭐ ${toilet.safety}</div>
+				  <div style="font-size: 14px">${toilet.translatedAddress || toilet.addressRoad}</div>
+				  ${window.i18n.openTime} : ${toilet.openTimeDetail ? toilet.openTimeDetail : window.i18n.unknown}
+				</div>
+				<div onclick="openKakaoPopUp()" style="cursor: pointer; background: #3a81ff; color: white; padding: 8px; border-radius: 4px; display: flex; gap: 8px; align-items: center;">
+				  <img src="img/pop_directions.svg" alt=""><span>${window.i18n.guide}</span>
+				</div>
+
+				<div style="display: flex; flex-direction:column; gap: 4px;">
+				  <div style="font-size: 14px; color: #919191">${verifiedMessage}</div>
+				  <div style="color: #3a81ff; font-size: 14px; cursor: pointer;" onclick="location.href='toiletReport.jsp?toiletID=' + selectedToiletID">${window.i18n.report}</div>
+				  <div style="color: #3a81ff; font-size: 14px; cursor: pointer;" onclick="location.href='insertReview.jsp?toiletID=' + selectedToiletID">
+					${window.i18n.review}
+				  </div>
+				</div>
+			  </div>
+
+			  <div style="width: 280px; display: flex; flex-direction: column; gap: 8px">
+				${renderFacilityRow("maleToilet", "img/pop_man.svg", toilet.maleToilet)}
+				${renderFacilityRow("maleDisabledToilet", "img/pop__accessible.svg", toilet.maleDisabledToilet)}
+				${renderFacilityRow("femaleToilet", "img/pop_woman.svg", toilet.femaleToilet)}
+				${renderFacilityRow("femaleDisabledToilet", "img/pop__accessible.svg", toilet.femaleDisabledToilet)}
+				${renderFacilityRow("diaperTable", "img/pop_baby.svg", toilet.hasDiaperTable)}
+				<div style="font-size: 12px;">${window.i18n.diaperLocation} : ${toilet.diaperTableLocation}</div>
+				${renderFacilityRow("emergencyBell", "img/pop_bell.svg", toilet.hasEmergencyBell)}
+				<div style="font-size: 12px;">${window.i18n.emergencyBellStatus} : ${toilet.emergencyBellLocation}</div>
+				${renderFacilityRow("cctv", "img/pop_cctv.svg", toilet.hasCctv)}
+			  </div>
+			</div>
+		  </div>
+		`;
+	}
+}
+
 
 function renderFacilityRow(labelKey, iconPath, value) {
 	let iconStatus = "img/pop_question.svg";
