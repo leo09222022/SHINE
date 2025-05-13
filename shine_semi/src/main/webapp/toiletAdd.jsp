@@ -306,7 +306,7 @@ input[type="text"], textarea {
 
 
 			</div>
-
+			<!--  
 			<div class="form-group">
 				<label class="sub-tit">4. 추가 정보</label>
 
@@ -343,9 +343,9 @@ input[type="text"], textarea {
 						</div>
 					</div>
 				</div>
-
+				-->
 				<div class="form-group">
-					<label for="userDescription" class="sub-tit">5. 코멘트</label>
+					<label for="userDescription" class="sub-tit">4. 코멘트</label>
 					<textarea id="userDescription" name="userDescription" rows="4"
 						placeholder="Add any other useful information about the toilet here"></textarea>
 				</div>
