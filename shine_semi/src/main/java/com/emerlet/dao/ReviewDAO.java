@@ -86,14 +86,10 @@ public class ReviewDAO {
 
 	    String sql;
 	    if (isUserToilet) {
-	        sql = "SELECT " +
-	              "CAST(ROUND(AVG(cleanliness), 0) AS NUMBER) AS avg_cleanliness, " +
-	              "CAST(ROUND(AVG(safety), 0) AS NUMBER) AS avg_safety " +
+	        sql = "SELECT SUM(cleanliness) AS sum_cleanliness, SUM(safety) AS sum_safety, COUNT(*) AS review_count " +
 	              "FROM reviews WHERE user_toilet_id = ?";
 	    } else {
-	        sql = "SELECT " +
-	              "CAST(ROUND(AVG(cleanliness), 0) AS NUMBER) AS avg_cleanliness, " +
-	              "CAST(ROUND(AVG(safety), 0) AS NUMBER) AS avg_safety " +
+	        sql = "SELECT SUM(cleanliness) AS sum_cleanliness, SUM(safety) AS sum_safety, COUNT(*) AS review_count " +
 	              "FROM reviews WHERE toilet_id = ?";
 	    }
 
@@ -105,8 +101,21 @@ public class ReviewDAO {
 	        ResultSet rs = pstmt.executeQuery();
 
 	        if (rs.next()) {
-	            vo.setCleanliness(rs.getInt("avg_cleanliness"));
-	            vo.setSafety(rs.getInt("avg_safety"));
+	            int sumCleanliness = rs.getInt("sum_cleanliness");
+	            int sumSafety = rs.getInt("sum_safety");
+	            int reviewCount = rs.getInt("review_count");
+
+	            if (reviewCount > 0) {
+	                // 평균을 소수점 첫째 자리까지 구한 후, 정수로 *10 해서 VO에 저장
+	                double avgCleanliness = (double) sumCleanliness / reviewCount;
+	                double avgSafety = (double) sumSafety / reviewCount;
+
+	                vo.setCleanliness((int) Math.round(avgCleanliness * 10)); // 4.2 -> 42
+	                vo.setSafety((int) Math.round(avgSafety * 10));
+	            } else {
+	                vo.setCleanliness(0);
+	                vo.setSafety(0);
+	            }
 	        }
 	    } catch (Exception e) {
 	        System.out.println("평균 리뷰 조회 중 오류 발생: " + e.getMessage());
@@ -114,6 +123,7 @@ public class ReviewDAO {
 
 	    return vo;
 	}
+
 
 
 }

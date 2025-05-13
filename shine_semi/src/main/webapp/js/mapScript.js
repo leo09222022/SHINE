@@ -697,7 +697,10 @@ function renderPopupContent(toilet) {
 		  <div style="display:flex; flex-direction: column; gap: 16px;">
 			<div>
 			  <div style="font-size: 18px; font-weight: 600;">${toilet.translatedName || toilet.name}</div>
-			  <div style="font-size: 14px;">${window.i18n.cleanliness} ⭐ ${toilet.cleanliness} &nbsp; ${window.i18n.safety} ⭐ ${toilet.safety}</div>
+			  <div style="font-size: 14px;">
+			    ${window.i18n.cleanliness} ⭐ ${(toilet.cleanliness / 10).toFixed(1)} &nbsp;
+			    ${window.i18n.safety} ⭐ ${(toilet.safety / 10).toFixed(1)}
+			  </div>
 			  <div style="font-size: 14px;">${toilet.translatedAddress || toilet.addressRoad}</div>
 			  ${window.i18n.openTime} : ${toilet.openTimeDetail ? toilet.openTimeDetail : window.i18n.unknown}
 			</div>
@@ -731,7 +734,10 @@ function renderPopupContent(toilet) {
 			  <div style="width: 280px; display: flex; flex-direction: column; gap: 20px">
 				<div style="display: flex; flex-direction: column; gap: 8px">
 				  <div style="font-size: 24px; font-weight: 600">${toilet.translatedName || toilet.name}</div>
-				  <div style="font-size: 14px;">${window.i18n.cleanliness} ⭐ ${toilet.cleanliness} &nbsp; ${window.i18n.safety} ⭐ ${toilet.safety}</div>
+				  <div style="font-size: 14px;">
+				  	${window.i18n.cleanliness} ⭐ ${(toilet.cleanliness / 10).toFixed(1)} &nbsp;
+				  	${window.i18n.safety} ⭐ ${(toilet.safety / 10).toFixed(1)}
+				  </div>
 				  <div style="font-size: 14px">${toilet.translatedAddress || toilet.addressRoad}</div>
 				  ${window.i18n.openTime} : ${toilet.openTimeDetail ? toilet.openTimeDetail : window.i18n.unknown}
 				</div>
