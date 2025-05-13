@@ -77,8 +77,8 @@ public class UserToiletAddOKAction {
 			if (toiletId > 0) {
 				ReviewVO review = new ReviewVO();
 
-				//review.setCleanliness(Integer.parseInt(request.getParameter("cleanliness")));
-				//review.setSafety(Integer.parseInt(request.getParameter("safety")));
+				review.setCleanliness(Integer.parseInt(request.getParameter("cleanliness")));
+				review.setSafety(Integer.parseInt(request.getParameter("safety")));
 				review.setUserToiletId(toiletId);
 				review.setCreatedAt(new java.util.Date());
 
