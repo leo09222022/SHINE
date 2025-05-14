@@ -414,16 +414,19 @@ function initMap() {
 				// 한국어일 경우 번역하지 않고 원본 데이터 사용
 				if (lang !== "ko") {
 					const ctx = window.location.pathname.split("/")[1]; // 
-					fetch(`/${ctx}/translateOne?name=${encodeURIComponent(toilet.name)}&address=${encodeURIComponent(toilet.addressRoad)}&lang=${lang}`)
-						.then(res => {
-							if (!res.ok) throw new Error("번역 실패");
-							return res.json();
-						})
-						.then(data => {
-							toilet.translatedName = data.name;
-							toilet.translatedAddress = data.address;
-							openCustomPopup(toilet);
-						})
+					fetch(`/${ctx}/translateOne?name=${encodeURIComponent(toilet.name)}&address=${encodeURIComponent(toilet.addressRoad)}&emergencyBellStatus=${encodeURIComponent(toilet.emergencyBellLocation)}&diaperLocation=${encodeURIComponent(toilet.diaperTableLocation)}&lang=${lang}`)
+											.then(res => {
+												if (!res.ok) throw new Error("번역 실패");
+												return res.json();
+											})
+											.then(data => {
+												toilet.translatedName = data.name;
+												toilet.translatedAddress = data.address;
+												toilet.translatedBell = data.emergencyBellLocation;
+												toilet.translatedDiaper = data.diaperTableLocation;
+												openCustomPopup(toilet);
+											})
+
 						.catch(err => {
 							console.error("번역 실패", err);
 							openCustomPopup(toilet); // 번역 실패시 원본으로 fallback
@@ -507,13 +510,16 @@ function initMap() {
 				map.setCenter(marker.getPosition());
 				if (lang !== "ko") {
 					const ctx = window.location.pathname.split("/")[1];
-					fetch(`/${ctx}/translateOne?name=${encodeURIComponent(toilet.name)}&address=${encodeURIComponent(toilet.addressRoad)}&lang=${lang}`)
-						.then(res => res.json())
-						.then(data => {
-							toilet.translatedName = data.name;
-							toilet.translatedAddress = data.address;
-							openCustomPopup(toilet);
-						})
+					fetch(`/${ctx}/translateOne?name=${encodeURIComponent(toilet.name)}&address=${encodeURIComponent(toilet.addressRoad)}&emergencyBellLocation=${encodeURIComponent(toilet.emergencyBellLocation)}&diaperTableLocation=${encodeURIComponent(toilet.diaperTableLocation)}&lang=${lang}`)
+											.then(res => res.json())
+											.then(data => {
+												toilet.translatedName = data.name;
+												toilet.translatedAddress = data.address;
+												toilet.translatedBell = data.emergencyBellLocation;
+												toilet.translatedDiaper = data.diaperTableLocation;
+												openCustomPopup(toilet);
+											})
+
 						.catch(err => {
 							console.error("번역 실패", err);
 							openCustomPopup(toilet);
@@ -731,9 +737,9 @@ function renderPopupContent(toilet) {
 			${renderFacilityRow("femaleToilet", "img/pop_woman.svg", toilet.femaleToilet)}
 			${renderFacilityRow("femaleDisabledToilet", "img/pop__accessible.svg", toilet.femaleDisabledToilet)}
 			${renderFacilityRow("diaperTable", "img/pop_baby.svg", toilet.hasDiaperTable)}
-			<div style="font-size: 12px;">${window.i18n.diaperLocation} : ${toilet.diaperTableLocation}</div>
+			<div style="font-size: 12px;">${window.i18n.diaperLocation} : ${toilet.translatedDiaper || toilet.diaperTableLocation}</div>
 			${renderFacilityRow("emergencyBell", "img/pop_bell.svg", toilet.hasEmergencyBell)}
-			<div style="font-size: 12px;">${window.i18n.emergencyBellStatus} : ${toilet.emergencyBellLocation}</div>
+			<div style="font-size: 12px;">${window.i18n.emergencyBellStatus} :  ${toilet.translatedBell || toilet.emergencyBellLocation}</div>
 			${renderFacilityRow("cctv", "img/pop_cctv.svg", toilet.hasCctv)}
 
 			<div style="display: flex; flex-direction:column; gap: 4px; align-items: center">
@@ -775,9 +781,9 @@ function renderPopupContent(toilet) {
 				${renderFacilityRow("femaleToilet", "img/pop_woman.svg", toilet.femaleToilet)}
 				${renderFacilityRow("femaleDisabledToilet", "img/pop__accessible.svg", toilet.femaleDisabledToilet)}
 				${renderFacilityRow("diaperTable", "img/pop_baby.svg", toilet.hasDiaperTable)}
-				<div style="font-size: 12px;">${window.i18n.diaperLocation} : ${toilet.diaperTableLocation}</div>
+				<div style="font-size: 12px;">${window.i18n.diaperLocation} : ${toilet.translatedDiaper || toilet.diaperTableLocation}</div>
 				${renderFacilityRow("emergencyBell", "img/pop_bell.svg", toilet.hasEmergencyBell)}
-				<div style="font-size: 12px;">${window.i18n.emergencyBellStatus} : ${toilet.emergencyBellLocation}</div>
+				<div style="font-size: 12px;">${window.i18n.emergencyBellStatus} :  ${toilet.translatedBell || toilet.emergencyBellLocation}</div>
 				${renderFacilityRow("cctv", "img/pop_cctv.svg", toilet.hasCctv)}
 			  </div>
 			</div>
