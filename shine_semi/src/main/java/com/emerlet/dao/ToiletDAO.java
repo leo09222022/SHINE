@@ -93,7 +93,7 @@ public class ToiletDAO {
 
 	                pstmt.executeUpdate();
 	            } catch (Exception e) {
-	                System.err.println("[CSV 오류] 라인 " + lineNum + ": " + e.getMessage());
+	                System.err.println("데이터 삽입 중: " + lineNum + ": " + e.getMessage());
 	            }
 	        }
 
