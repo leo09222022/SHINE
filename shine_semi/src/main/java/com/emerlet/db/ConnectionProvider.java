@@ -53,5 +53,26 @@ public class ConnectionProvider {
 		}
 		
 	}
+	
+	
+	
+	// DB 이니셜 셋팅
+    public static Connection getConnection(String user, String pwd) throws Exception {
+    	Connection conn = null; 
+		try {
+			String driver = "oracle.jdbc.driver.OracleDriver";
+			String url = "jdbc:oracle:thin:@localhost:1521:XE";
+			String username = user;
+			String password = pwd;
+			
+			Class.forName(driver); 
+			conn = DriverManager.getConnection(url, username, password); 
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return conn; 
+    }
+
+	
 }
 
