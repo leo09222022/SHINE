@@ -32,6 +32,9 @@ public class EmerletListener implements ServletContextListener {
      */
     public void contextInitialized(ServletContextEvent sce)  { 
     	Init.init();
+    	String csvPath = sce.getServletContext().getRealPath("공중화장실.csv");
+    	Init.insertToiletDataFromCSV(csvPath);
+
     }
 	
 }

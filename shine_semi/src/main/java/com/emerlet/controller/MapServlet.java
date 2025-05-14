@@ -59,8 +59,8 @@ public class MapServlet extends HttpServlet {
 	    }
 
 	    // CSV 경로 설정 (웹서버 루트 기준)
-	    String csvPath = getServletContext().getRealPath("공중화장실.csv");
-	    toiletDAO.setupDB(csvPath);
+	   // String csvPath = getServletContext().getRealPath("공중화장실.csv");
+	   // toiletDAO.setupDB(csvPath);
 
 	    // 세션에서 필터링된 화장실 목록 확인
 	    HttpSession session = request.getSession();
