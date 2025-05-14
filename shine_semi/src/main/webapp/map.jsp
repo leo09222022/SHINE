@@ -36,6 +36,22 @@ request.setAttribute("userToilets", userToilets);
 <link rel="stylesheet" href="css/oldStyle.css" />
 
 <script>
+  function updateVh() {
+    let vh = window.innerHeight * 0.01;
+    document.documentElement.style.setProperty('--vh', `${vh}px`);
+  }
+  window.addEventListener('resize', updateVh);
+  updateVh(); // 초기 실행
+</script>
+
+<style type="text/css">
+.main-container {
+  /* --vh 가 1vh 대신 실제 뷰포트의 1% 높이(px) */
+  height: calc(var(--vh) * 100);
+}
+</style>
+
+<script>
 // 페이지 모달용 스크립트...킹쩔수 없음
   const popupCloseText = "<%=bundle.getString("popup.close")%>";
 </script>
