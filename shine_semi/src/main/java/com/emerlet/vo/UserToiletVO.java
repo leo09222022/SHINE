@@ -8,8 +8,7 @@ public class UserToiletVO {
 	private String userRoadAddress;
 	private String userMaleToilet;
 	private String userFemaleToilet;
-	private String userMaleDisabledToilet;
-	private String userFemaleDisabledToilet;
+	private String userDisabledToilet;
 	private String userHasDiaperTable;
 	private String userDescription;
 	private double userLat;
@@ -17,15 +16,13 @@ public class UserToiletVO {
 	private Date submittedAt;
 	private String status;
 	private String photoUrl;
-	private String userHasEmergencyBell;
-	private String userHasCctv;
 
 
 
 	@Override
 	public String toString() {
 		return "UserToiletVO [userMaleToilet=" + userMaleToilet + ", userFemaleToilet=" + userFemaleToilet
-				+ ", userDisabledToilet=" + userMaleDisabledToilet + ", userHasDiaperTable=" + userHasDiaperTable
+				+ ", userDisabledToilet=" + userDisabledToilet + ", userHasDiaperTable=" + userHasDiaperTable
 				+ ", userDescription=" + userDescription + ", photoUrl=" + photoUrl + "]";
 	}
 
@@ -73,12 +70,12 @@ public class UserToiletVO {
 		this.userFemaleToilet = userFemaleToilet;
 	}
 
-	public String getUserMaleDisabledToilet() {
-		return userMaleDisabledToilet;
+	public String getUserDisabledToilet() {
+		return userDisabledToilet;
 	}
 
-	public void setUserMaleDisabledToilet(String userMaleDisabledToilet) {
-		this.userMaleDisabledToilet = userMaleDisabledToilet;
+	public void setUserDisabledToilet(String userDisabledToilet) {
+		this.userDisabledToilet = userDisabledToilet;
 	}
 
 	public String getUserHasDiaperTable() {
@@ -136,13 +133,4 @@ public class UserToiletVO {
 	public void setPhotoUrl(String photoUrl) {
 		this.photoUrl = photoUrl;
 	}
-	
-	public String getUserFemaleDisabledToilet() { return userFemaleDisabledToilet; }
-	public void setUserFemaleDisabledToilet(String val) { this.userFemaleDisabledToilet = val; }
-
-	public String getUserHasEmergencyBell() { return userHasEmergencyBell; }
-	public void setUserHasEmergencyBell(String val) { this.userHasEmergencyBell = val; }
-
-	public String getUserHasCctv() { return userHasCctv; }
-	public void setUserHasCctv(String val) { this.userHasCctv = val; }
 }

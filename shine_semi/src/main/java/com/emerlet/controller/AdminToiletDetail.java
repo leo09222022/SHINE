@@ -35,7 +35,7 @@ public class AdminToiletDetail extends HttpServlet {
 		int id = Integer.parseInt(request.getParameter("id"));
 		UserToiletDAO dao =	new UserToiletDAO();
 		
-		UserToiletVO vo = dao.findByID(id);
+		UserToiletVO vo = dao.findById(id);
 		request.setAttribute("vo", vo);
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/admin_toilet_detail.jsp");
 	    dispatcher.forward(request, response);

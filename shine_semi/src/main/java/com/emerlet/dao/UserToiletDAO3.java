@@ -7,13 +7,9 @@ import com.emerlet.db.ConnectionProvider;
 import com.emerlet.vo.ReportsToiletVO;
 import com.emerlet.vo.UserToiletVO;
 
-public class UserToiletDAO {
+public class UserToiletDAO3 {
 	
 	public void updateData(int id, UserToiletVO vo) {
-		
-		System.out.println("updateDataㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ");
-		System.out.println("vo:"+vo);
-		System.out.println("id:"+id);
 		
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -65,7 +61,7 @@ public class UserToiletDAO {
 	*/
 	public ArrayList<UserToiletVO> findByStatus(String status){
 		//String sql = "select user_toilet_id, user_road_address, to_char(submitted_at,'yyyy-mm-dd') from user_toilets where status=? order by user_toilet_id";
-		String sql = "select user_toilet_id, user_road_address, submitted_at from user_toilets where status=? order by user_toilet_id";
+		String sql = "select * from user_toilets where status=? order by user_toilet_id";
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -80,9 +76,21 @@ public class UserToiletDAO {
 	        while(rs.next()) {
 	            UserToiletVO vo = new UserToiletVO();
 	            vo.setUserToiletId(rs.getInt(1));
-	            vo.setUserRoadAddress(rs.getString(2));
-	            vo.setSubmittedAt(rs.getDate(3));
-	            //utv.setSubmittedAt_str(rs.getString(3));
+	            vo.setUserName(rs.getString(2));
+	            vo.setUserRoadAddress(rs.getString(3));
+	            vo.setUserMaleToilet(rs.getString(4));
+	            vo.setUserFemaleToilet(rs.getString(5));
+	            vo.setUserMaleDisabledToilet(rs.getString(6));
+	            vo.setUserFemaleDisabledToilet(rs.getString(7));
+	            vo.setUserHasDiaperTable(rs.getString(8));
+	            vo.setUserHasEmergencyBell(rs.getString(9));
+	            vo.setUserHasCctv(rs.getString(10));
+	            vo.setUserDescription(rs.getString(11));
+	            vo.setUserLat(0);
+	            vo.setUserLng(0);
+	            vo.setSubmittedAt(null);
+	            vo.setStatus(status);
+	            vo.setPhotoUrl(sql);
 	            result.add(vo);
 	        }    
 	            
@@ -96,9 +104,7 @@ public class UserToiletDAO {
 	}
 		
 	public UserToiletVO findById(int id) {
-		String sql = "select user_toilet_id, user_name, user_road_address, user_male_toilet, user_female_toilet, "
-				+ " user_disabled_toilet, user_has_diaper_table, user_description, user_lat, user_lng, submitted_at, "
-				+ " status, photo_url, user_edit_request from user_toilets where user_toilet_id=?";
+		String sql = "select * from user_toilets where user_toilet_id=?";
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;

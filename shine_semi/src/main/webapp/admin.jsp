@@ -11,7 +11,7 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
-  <title>관리자 페이지</title>
+  <title>Emerlet 관리자 페이지</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="css/mo_style.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
@@ -163,7 +163,7 @@
 
     function logout() {
       alert("로그아웃 되었습니다.");
-      window.location.href = "index_admin.html";
+      window.location.href = "admin_login.jsp";
     }
   </script>
 </head>
@@ -182,7 +182,7 @@
   </c:if>
 
   <header>
-    <h1>관리자 페이지</h1>
+    <h1>Emerlet 관리자 페이지</h1>
     <button class="logout-btn" onclick="logout()">로그아웃</button>
   </header>
 
