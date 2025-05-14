@@ -104,11 +104,11 @@ main {
 
 .content-scroll {
 	flex-grow: 1;
-	max-height: 400px;
 	overflow-y: auto;
 	border-top: 1px solid #eee;
 	padding-top: 10px;
 }
+
 
 .item {
 	padding: 10px 0;
