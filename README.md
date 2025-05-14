@@ -167,8 +167,10 @@ NOCYCLE;
 > **관리자 화면**  
 : 사용자가 등록 요청한 화장실 정보 관리 화면 
 >
-
-[사진 첨부 예정]
+> 
+<img width="1057" alt="Screenshot 2025-05-14 at 9 13 20 AM" src="https://github.com/user-attachments/assets/c1cb8b51-de73-4461-a278-e44dd1d11ad5" />
+<img width="757" alt="Screenshot 2025-05-14 at 9 13 52 AM" src="https://github.com/user-attachments/assets/a3a826b4-b575-4695-bfa4-b8eeb8f78b67" />
+<img width="939" alt="Screenshot 2025-05-14 at 9 14 02 AM" src="https://github.com/user-attachments/assets/179393d4-eaf1-429c-99d1-a67aee2e9b37" />
 
 ---
 
