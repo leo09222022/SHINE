@@ -233,60 +233,59 @@ document.addEventListener("DOMContentLoaded", function() {
 	});
 });
 
-// 페이지 로딩 시 위치 권한 확인
-document.addEventListener("DOMContentLoaded", () => {
-	if (navigator.geolocation) {
-		navigator.permissions.query({ name: "geolocation" }).then((result) => {
-			if (result.state === "prompt") {
-				navigator.geolocation.getCurrentPosition(
-					() => console.log("위치 권한 허용됨"),
-					(error) => console.warn("위치 접근 실패", error.message)
-				);
-			} else if (result.state === "denied") {
-				alert(
-					"위치 권한이 차단되어 있습니다.\n브라우저 설정에서 허용해주세요."
-				);
-			}
-		});
-	}
-});
-
-// 사용자 현재 위치 가져오기 함수
 function getCurrentUserLocation(callback) {
-	if (navigator.geolocation) {
-		navigator.geolocation.getCurrentPosition(
-			(position) => {
-				userLocation = {
-					lat: position.coords.latitude,
-					lng: position.coords.longitude,
-				};
-
-				if (!userMarker) {
-					userMarker = new google.maps.Marker({
-						position: userLocation,
-						map: map,
-						title: "내 위치",
-						icon: {
-							path: google.maps.SymbolPath.CIRCLE,
-							scale: 8,
-							fillColor: "#4285F4",
-							fillOpacity: 1,
-							strokeColor: "#ffffff",
-							strokeWeight: 2,
-						},
-					});
-				} else {
-					userMarker.setPosition(userLocation);
-				}
-
-				if (callback) callback(userLocation);
-			},
-			() => alert("위치 정보를 불러올 수 없습니다.")
-		);
-	} else {
-		alert("이 브라우저는 위치 정보를 지원하지 않습니다.");
-	}
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        userLocation = {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude,
+        };
+        setUserMarker(userLocation);
+        if (callback) callback(userLocation);
+      },
+      (error) => {
+        if (!sessionStorage.getItem("locationDeniedOnce")) {
+          sessionStorage.setItem("locationDeniedOnce", "true");
+        }
+        userLocation = { lat: 37.569701, lng: 126.984475 }; // 디폴트 위치
+        setUserMarker(userLocation);
+        if (callback) callback(userLocation);
+      }
+    );
+  } else {
+    // 브라우저가 지원하지 않는 경우도 포함
+    if (!sessionStorage.getItem("locationDeniedOnce")) {
+      sessionStorage.setItem("locationDeniedOnce", "true");
+    }
+    userLocation = { lat: 37.569701, lng: 126.984475 };
+    setUserMarker(userLocation);
+    if (callback) callback(userLocation);
+  }
 }
+
+
+// userMarker 찍는 함수 분리
+function setUserMarker(location) {
+  if (!userMarker) {
+    userMarker = new google.maps.Marker({
+      position: location,
+      map: map,
+      title: "내 위치",
+      icon: {
+        path: google.maps.SymbolPath.CIRCLE,
+        scale: 8,
+        fillColor: "#4285F4",
+        fillOpacity: 1,
+        strokeColor: "#ffffff",
+        strokeWeight: 2,
+      },
+    });
+  } else {
+    userMarker.setPosition(location);
+  }
+}
+
 
 // 내 위치로 지도를 이동
 function centerMapToUser() {
@@ -325,8 +324,11 @@ function initMap() {
 
 	// 초기 위치가 없으면 사용자 위치로 이동
 	if (!selectLat || !selectLng) {
-		getCurrentUserLocation((loc) => map.setCenter(loc));
+	  getCurrentUserLocation((loc) => {
+	    if (map && loc) map.setCenter(loc);
+	  });
 	}
+
 
 	// 서버에서 전달받은 화장실 목록 JSTL 반복문으로 JS 배열로 변환???????????????
 	const toilets = window.toiletData || [];
@@ -412,16 +414,19 @@ function initMap() {
 				// 한국어일 경우 번역하지 않고 원본 데이터 사용
 				if (lang !== "ko") {
 					const ctx = window.location.pathname.split("/")[1]; // 
-					fetch(`/${ctx}/translateOne?name=${encodeURIComponent(toilet.name)}&address=${encodeURIComponent(toilet.addressRoad)}&lang=${lang}`)
-						.then(res => {
-							if (!res.ok) throw new Error("번역 실패");
-							return res.json();
-						})
-						.then(data => {
-							toilet.translatedName = data.name;
-							toilet.translatedAddress = data.address;
-							openCustomPopup(toilet);
-						})
+					fetch(`/${ctx}/translateOne?name=${encodeURIComponent(toilet.name)}&address=${encodeURIComponent(toilet.addressRoad)}&emergencyBellStatus=${encodeURIComponent(toilet.emergencyBellLocation)}&diaperLocation=${encodeURIComponent(toilet.diaperTableLocation)}&lang=${lang}`)
+											.then(res => {
+												if (!res.ok) throw new Error("번역 실패");
+												return res.json();
+											})
+											.then(data => {
+												toilet.translatedName = data.name;
+												toilet.translatedAddress = data.address;
+												toilet.translatedBell = data.emergencyBellLocation;
+												toilet.translatedDiaper = data.diaperTableLocation;
+												openCustomPopup(toilet);
+											})
+
 						.catch(err => {
 							console.error("번역 실패", err);
 							openCustomPopup(toilet); // 번역 실패시 원본으로 fallback
@@ -505,13 +510,16 @@ function initMap() {
 				map.setCenter(marker.getPosition());
 				if (lang !== "ko") {
 					const ctx = window.location.pathname.split("/")[1];
-					fetch(`/${ctx}/translateOne?name=${encodeURIComponent(toilet.name)}&address=${encodeURIComponent(toilet.addressRoad)}&lang=${lang}`)
-						.then(res => res.json())
-						.then(data => {
-							toilet.translatedName = data.name;
-							toilet.translatedAddress = data.address;
-							openCustomPopup(toilet);
-						})
+					fetch(`/${ctx}/translateOne?name=${encodeURIComponent(toilet.name)}&address=${encodeURIComponent(toilet.addressRoad)}&emergencyBellLocation=${encodeURIComponent(toilet.emergencyBellLocation)}&diaperTableLocation=${encodeURIComponent(toilet.diaperTableLocation)}&lang=${lang}`)
+											.then(res => res.json())
+											.then(data => {
+												toilet.translatedName = data.name;
+												toilet.translatedAddress = data.address;
+												toilet.translatedBell = data.emergencyBellLocation;
+												toilet.translatedDiaper = data.diaperTableLocation;
+												openCustomPopup(toilet);
+											})
+
 						.catch(err => {
 							console.error("번역 실패", err);
 							openCustomPopup(toilet);
@@ -729,9 +737,9 @@ function renderPopupContent(toilet) {
 			${renderFacilityRow("femaleToilet", "img/pop_woman.svg", toilet.femaleToilet)}
 			${renderFacilityRow("femaleDisabledToilet", "img/pop__accessible.svg", toilet.femaleDisabledToilet)}
 			${renderFacilityRow("diaperTable", "img/pop_baby.svg", toilet.hasDiaperTable)}
-			<div style="font-size: 12px;">${window.i18n.diaperLocation} : ${toilet.diaperTableLocation}</div>
+			<div style="font-size: 12px;">${window.i18n.diaperLocation} : ${toilet.translatedDiaper || toilet.diaperTableLocation}</div>
 			${renderFacilityRow("emergencyBell", "img/pop_bell.svg", toilet.hasEmergencyBell)}
-			<div style="font-size: 12px;">${window.i18n.emergencyBellStatus} : ${toilet.emergencyBellLocation}</div>
+			<div style="font-size: 12px;">${window.i18n.emergencyBellStatus} :  ${toilet.translatedBell || toilet.emergencyBellLocation}</div>
 			${renderFacilityRow("cctv", "img/pop_cctv.svg", toilet.hasCctv)}
 
 			<div style="display: flex; flex-direction:column; gap: 4px; align-items: center">
@@ -773,9 +781,9 @@ function renderPopupContent(toilet) {
 				${renderFacilityRow("femaleToilet", "img/pop_woman.svg", toilet.femaleToilet)}
 				${renderFacilityRow("femaleDisabledToilet", "img/pop__accessible.svg", toilet.femaleDisabledToilet)}
 				${renderFacilityRow("diaperTable", "img/pop_baby.svg", toilet.hasDiaperTable)}
-				<div style="font-size: 12px;">${window.i18n.diaperLocation} : ${toilet.diaperTableLocation}</div>
+				<div style="font-size: 12px;">${window.i18n.diaperLocation} : ${toilet.translatedDiaper || toilet.diaperTableLocation}</div>
 				${renderFacilityRow("emergencyBell", "img/pop_bell.svg", toilet.hasEmergencyBell)}
-				<div style="font-size: 12px;">${window.i18n.emergencyBellStatus} : ${toilet.emergencyBellLocation}</div>
+				<div style="font-size: 12px;">${window.i18n.emergencyBellStatus} :  ${toilet.translatedBell || toilet.emergencyBellLocation}</div>
 				${renderFacilityRow("cctv", "img/pop_cctv.svg", toilet.hasCctv)}
 			  </div>
 			</div>
@@ -919,4 +927,3 @@ function closeCustomPopup() {
 		isDragging = false;
 	});
 })();
-

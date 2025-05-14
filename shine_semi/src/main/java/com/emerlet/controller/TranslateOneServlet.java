@@ -32,17 +32,24 @@ public class TranslateOneServlet extends HttpServlet {
         String name = req.getParameter("name");
         String address = req.getParameter("address");
         String lang = req.getParameter("lang");
+        String emergencyBellLocation = req.getParameter("emergencyBellStatus");
+        String diaperTableLocation = req.getParameter("diaperLocation");
 
         if (lang == null || !(lang.equals("en") || lang.equals("ja"))) lang = "en";
 
         try {
+        	
             String translatedName = GCPTranslate.translate(name, lang, apiKey);
             String translatedAddress = GCPTranslate.translate(address, lang, apiKey);
-
+            String translatedBell = (emergencyBellLocation == null || emergencyBellLocation.isEmpty()) ? "" : GCPTranslate.translate(emergencyBellLocation, lang, apiKey);
+            String translatedDiaper = (diaperTableLocation == null || diaperTableLocation.isEmpty()) ? "" : GCPTranslate.translate(diaperTableLocation, lang, apiKey);
+            
             resp.setContentType("application/json;charset=UTF-8");
-            resp.getWriter().printf("{\"name\":\"%s\", \"address\":\"%s\"}",
+            resp.getWriter().printf("{\"name\":\"%s\", \"address\":\"%s\", \"emergencyBellLocation\":\"%s\", \"diaperTableLocation\":\"%s\"}",
                 translatedName.replace("\"", "\\\""),
-                translatedAddress.replace("\"", "\\\"")
+                translatedAddress.replace("\"", "\\\""),
+                translatedBell.replace("\"", "\\\""),
+                translatedDiaper.replace("\"", "\\\"")
             );
         } catch (Exception e) {
             e.printStackTrace();
