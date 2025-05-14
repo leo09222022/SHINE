@@ -218,7 +218,6 @@ document.addEventListener("DOMContentLoaded", function() {
 	});
 });
 
-// 사용자 현재 위치 구하는 함수 
 function getCurrentUserLocation(callback) {
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(
@@ -231,9 +230,7 @@ function getCurrentUserLocation(callback) {
         if (callback) callback(userLocation);
       },
       (error) => {
-        // 위치 권한 차단 → 세션에 메시지 띄운 적 있는지 확인
         if (!sessionStorage.getItem("locationDeniedOnce")) {
-          alert("위치 권한이 허용되지 않아 임시 위치로 설정합니다.");
           sessionStorage.setItem("locationDeniedOnce", "true");
         }
         userLocation = { lat: 37.569701, lng: 126.984475 }; // 디폴트 위치
@@ -244,7 +241,6 @@ function getCurrentUserLocation(callback) {
   } else {
     // 브라우저가 지원하지 않는 경우도 포함
     if (!sessionStorage.getItem("locationDeniedOnce")) {
-      alert("위치 정보를 사용할 수 없어 임시 위치로 설정합니다.");
       sessionStorage.setItem("locationDeniedOnce", "true");
     }
     userLocation = { lat: 37.569701, lng: 126.984475 };
@@ -313,8 +309,11 @@ function initMap() {
 
 	// 초기 위치가 없으면 사용자 위치로 이동
 	if (!selectLat || !selectLng) {
-		getCurrentUserLocation((loc) => map.setCenter(loc));
+	  getCurrentUserLocation((loc) => {
+	    if (map && loc) map.setCenter(loc);
+	  });
 	}
+
 
 	// 서버에서 전달받은 화장실 목록 JSTL 반복문으로 JS 배열로 변환???????????????
 	const toilets = window.toiletData || [];
