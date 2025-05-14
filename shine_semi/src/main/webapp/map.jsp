@@ -102,55 +102,59 @@ window.lang = "<%=lang%>";
 
 			<!-- 메뉴 영역 -->
 			<nav class="menu-list">
-				<!-- 필터 메뉴 -->
-				<div class="menu-item" id="filterToggle">
-					<img src="img/menu_filter.svg" alt="필터 아이콘" /> <span
-						class="menu-text"><%=bundle.getString("menu.filter")%></span> <img
-						src="img/menu_more.svg" alt="화살표" />
-				</div>
 
-				<!-- 토글될 필터 목록 -->
 
-				<div id="filterOptions">
-					<!-- 남자화장실 -->
-					<div class="filter-option">
-						<div class="filter-icon-text">
-							<img src="img/toggle_man.svg" /> <span><%=bundle.getString("filter.male")%></span>
-						</div>
-						<label class="switch"> <input type="checkbox"
-							name="hasMaleToilet" /> <span class="slider"></span>
-						</label>
+				<div style="display:flex; flex-direction:column;">
+					<!-- 필터 메뉴 -->
+					<div class="menu-item" id="filterToggle">
+						<img src="img/menu_filter.svg" alt="필터 아이콘" /> <span
+							class="menu-text"><%=bundle.getString("menu.filter")%></span> <img
+							src="img/menu_more.svg" alt="화살표" />
 					</div>
 
-					<!-- 여자화장실 -->
-					<div class="filter-option">
-						<div class="filter-icon-text">
-							<img src="img/toggle_woman.svg" /> <span><%=bundle.getString("filter.female")%></span>
+					<!-- 토글될 필터 목록 -->
+					<div id="filterOptions">
+						<!-- 남자화장실 -->
+						<div class="filter-option">
+							<div class="filter-icon-text">
+								<img src="img/toggle_man.svg" /> <span><%=bundle.getString("filter.male")%></span>
+							</div>
+							<label class="switch"> <input type="checkbox"
+								name="hasMaleToilet" /> <span class="slider"></span>
+							</label>
 						</div>
-						<label class="switch"> <input type="checkbox"
-							name="hasFemaleToilet" /> <span class="slider"></span>
-						</label>
+
+						<!-- 여자화장실 -->
+						<div class="filter-option">
+							<div class="filter-icon-text">
+								<img src="img/toggle_woman.svg" /> <span><%=bundle.getString("filter.female")%></span>
+							</div>
+							<label class="switch"> <input type="checkbox"
+								name="hasFemaleToilet" /> <span class="slider"></span>
+							</label>
+						</div>
+
+						<!-- 기저귀 교환대 -->
+						<div class="filter-option">
+							<div class="filter-icon-text">
+								<img src="img/toggle_baby.svg" /> <span><%=bundle.getString("filter.diaper")%></span>
+							</div>
+							<label class="switch"> <input type="checkbox"
+								name="hasDiaperTable" /> <span class="slider"></span>
+							</label>
+						</div>
+
+						<!-- 장애인 이용 가능 -->
+						<div class="filter-option">
+							<div class="filter-icon-text">
+								<img src="img/toggle_dis.svg" /> <span><%=bundle.getString("filter.disabled")%></span>
+							</div>
+							<label class="switch"> <input type="checkbox"
+								name="hasDisabledToilet" /> <span class="slider"></span>
+							</label>
+						</div>
 					</div>
 
-					<!-- 기저귀 교환대 -->
-					<div class="filter-option">
-						<div class="filter-icon-text">
-							<img src="img/toggle_baby.svg" /> <span><%=bundle.getString("filter.diaper")%></span>
-						</div>
-						<label class="switch"> <input type="checkbox"
-							name="hasDiaperTable" /> <span class="slider"></span>
-						</label>
-					</div>
-
-					<!-- 장애인 이용 가능 -->
-					<div class="filter-option">
-						<div class="filter-icon-text">
-							<img src="img/toggle_dis.svg" /> <span><%=bundle.getString("filter.disabled")%></span>
-						</div>
-						<label class="switch"> <input type="checkbox"
-							name="hasDisabledToilet" /> <span class="slider"></span>
-						</label>
-					</div>
 				</div>
 
 				<!-- 화장실 등록 메뉴 아이템 -->

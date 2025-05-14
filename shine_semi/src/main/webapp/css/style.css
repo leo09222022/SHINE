@@ -143,6 +143,15 @@ body {
 }
 
 /* 필터 스타일링 */
+#filterOptions {
+	max-height: calc(100vh - 540px); /* 원하는 높이로 조절 */
+	overflow-y: auto;
+	margin-top: 8px;
+	padding-right: 6px; /* 스크롤바가 겹치지 않도록 */
+}
+
+
+
 .filter-icon-text {
 	display: flex;
 	flex-direction: row;
