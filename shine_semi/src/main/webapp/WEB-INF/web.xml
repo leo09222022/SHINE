@@ -9,19 +9,19 @@
 		<servlet-name>MapServlet</servlet-name> <!-- 서블릿의 이름 -->
 		<servlet-class>com.emerlet.controller.MapServlet</servlet-class> <!-- 서블릿 클래스의 경로 -->
 	</servlet>
-	
+
 	<!-- 화장실 필터링 서블릿 등록 -->
 	<servlet>
 		<servlet-name>ToiletFilteringServlet</servlet-name>
 		<servlet-class>com.emerlet.controller.ToiletFilteringServlet</servlet-class>
 	</servlet>
-	
+
 	<!-- 화장실 추가 서블릿 등록 -->
 	<servlet>
 		<servlet-name>UserToiletServlet</servlet-name>
 		<servlet-class>com.emerlet.controller.UserToiletServlet</servlet-class>
 	</servlet>
-	
+
 	<!-- 화장실 검색 서블릿 등록 -->
 	<servlet>
 		<servlet-name>ToiletSearchServlet</servlet-name>
@@ -33,19 +33,19 @@
 		<servlet-name>MapServlet</servlet-name> <!-- 등록한 서블릿 이름과 매핑 -->
 		<url-pattern>/map</url-pattern> <!-- URL 경로 (브라우저에서 접근할 URL) -->
 	</servlet-mapping>
-	
-	<!-- 화장실 필터링 서블릿 매핑  -->
+
+	<!-- 화장실 필터링 서블릿 매핑 -->
 	<servlet-mapping>
 		<servlet-name>ToiletFilteringServlet</servlet-name>
 		<url-pattern>/toiletFiltering.do</url-pattern>
 	</servlet-mapping>
-	
+
 	<!-- 화장실 추가 서블릿 매핑 -->
 	<servlet-mapping>
 		<servlet-name>UserToiletServlet</servlet-name>
 		<url-pattern>/toiletAddOK.do</url-pattern>
 	</servlet-mapping>
-	
+
 	<!-- 화장실 검색 서블릿 매핑 -->
 	<servlet-mapping>
 		<servlet-name>ToiletSearchServlet</servlet-name>
@@ -55,5 +55,25 @@
 	<listener>
 		<listener-class>com.emerlet.listener.ConfigListener</listener-class>
 	</listener>
+
+	<!-- 인코딩용 -->
+	<filter>
+		<filter-name>EncodingFilter</filter-name>
+		<filter-class>org.apache.catalina.filters.SetCharacterEncodingFilter</filter-class>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>
+		<init-param>
+			<param-name>ignore</param-name>
+			<param-value>false</param-value>
+		</init-param>
+	</filter>
+
+	<filter-mapping>
+		<filter-name>EncodingFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
 
 </web-app>
