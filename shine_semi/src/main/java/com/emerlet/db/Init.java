@@ -55,9 +55,11 @@ public class Init {
 				"    user_lat NUMBER(9,6),\n" +
 				"    user_lng NUMBER(9,6),\n" +
 				"    submitted_at DATE NOT NULL,\n" +
-				"    status VARCHAR2(20) NOT NULL CONSTRAINT chk_status CHECK (status IN ('pending', 'approved', 'rejected')),\n" +
-				"    photo_url VARCHAR2(255)\n" +
+				"    status VARCHAR2(20) NOT NULL,\n" +  // ✔️ 여기 수정됨
+				"    photo_url VARCHAR2(255),\n" +
+				"    CONSTRAINT chk_status CHECK (status IN ('pending', 'approved', 'rejected'))\n" +
 				")",
+
 
 				"CREATE SEQUENCE user_toilet_id_seq START WITH 1 INCREMENT BY 1 NOCACHE NOCYCLE",
 
