@@ -205,6 +205,9 @@ function getCheckIcon(val) {
 }
 
 
+
+
+
 // 필터 토글
 document.addEventListener("DOMContentLoaded", function() {
 	const toggle = document.getElementById("filterToggle");
@@ -215,6 +218,18 @@ document.addEventListener("DOMContentLoaded", function() {
 	toggle.addEventListener("click", function() {
 		const isVisible = options.style.display === "block";
 		options.style.display = isVisible ? "none" : "block";
+		
+		// 🔽 검색창 초기화
+			const searchInput = document.querySelector(".search-input");
+			const resultsDiv = document.getElementById("searchResults");
+			if (searchInput) {
+				searchInput.value = "";
+				searchInput.blur();  // 모바일 키보드 내려가게
+			}
+			if (resultsDiv) {
+				resultsDiv.innerHTML = "";
+			}
+		
 	});
 });
 
@@ -906,4 +921,3 @@ function closeCustomPopup() {
 		isDragging = false;
 	});
 })();
-
