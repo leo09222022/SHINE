@@ -205,6 +205,9 @@ function getCheckIcon(val) {
 }
 
 
+
+
+
 // 필터 토글
 document.addEventListener("DOMContentLoaded", function() {
 	const toggle = document.getElementById("filterToggle");
@@ -215,66 +218,75 @@ document.addEventListener("DOMContentLoaded", function() {
 	toggle.addEventListener("click", function() {
 		const isVisible = options.style.display === "block";
 		options.style.display = isVisible ? "none" : "block";
+		
+		// 🔽 검색창 초기화
+			const searchInput = document.querySelector(".search-input");
+			const resultsDiv = document.getElementById("searchResults");
+			if (searchInput) {
+				searchInput.value = "";
+				searchInput.blur();  // 모바일 키보드 내려가게
+			}
+			if (resultsDiv) {
+				resultsDiv.innerHTML = "";
+			}
+		
 	});
 });
 
-// 사용자 현재 위치 구하는 함수 
+// 페이지 로딩 시 위치 권한 확인
+document.addEventListener("DOMContentLoaded", () => {
+	if (navigator.geolocation) {
+		navigator.permissions.query({ name: "geolocation" }).then((result) => {
+			if (result.state === "prompt") {
+				navigator.geolocation.getCurrentPosition(
+					() => console.log("위치 권한 허용됨"),
+					(error) => console.warn("위치 접근 실패", error.message)
+				);
+			} else if (result.state === "denied") {
+				alert(
+					"위치 권한이 차단되어 있습니다.\n브라우저 설정에서 허용해주세요."
+				);
+			}
+		});
+	}
+});
+
+// 사용자 현재 위치 가져오기 함수
 function getCurrentUserLocation(callback) {
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        userLocation = {
-          lat: position.coords.latitude,
-          lng: position.coords.longitude,
-        };
-        setUserMarker(userLocation);
-        if (callback) callback(userLocation);
-      },
-      (error) => {
-        // 위치 권한 차단 → 세션에 메시지 띄운 적 있는지 확인
-        if (!sessionStorage.getItem("locationDeniedOnce")) {
-          alert("위치 권한이 허용되지 않아 임시 위치로 설정합니다.");
-          sessionStorage.setItem("locationDeniedOnce", "true");
-        }
-        userLocation = { lat: 37.569701, lng: 126.984475 }; // 디폴트 위치
-        setUserMarker(userLocation);
-        if (callback) callback(userLocation);
-      }
-    );
-  } else {
-    // 브라우저가 지원하지 않는 경우도 포함
-    if (!sessionStorage.getItem("locationDeniedOnce")) {
-      alert("위치 정보를 사용할 수 없어 임시 위치로 설정합니다.");
-      sessionStorage.setItem("locationDeniedOnce", "true");
-    }
-    userLocation = { lat: 37.569701, lng: 126.984475 };
-    setUserMarker(userLocation);
-    if (callback) callback(userLocation);
-  }
+	if (navigator.geolocation) {
+		navigator.geolocation.getCurrentPosition(
+			(position) => {
+				userLocation = {
+					lat: position.coords.latitude,
+					lng: position.coords.longitude,
+				};
+
+				if (!userMarker) {
+					userMarker = new google.maps.Marker({
+						position: userLocation,
+						map: map,
+						title: "내 위치",
+						icon: {
+							path: google.maps.SymbolPath.CIRCLE,
+							scale: 8,
+							fillColor: "#4285F4",
+							fillOpacity: 1,
+							strokeColor: "#ffffff",
+							strokeWeight: 2,
+						},
+					});
+				} else {
+					userMarker.setPosition(userLocation);
+				}
+
+				if (callback) callback(userLocation);
+			},
+			() => alert("위치 정보를 불러올 수 없습니다.")
+		);
+	} else {
+		alert("이 브라우저는 위치 정보를 지원하지 않습니다.");
+	}
 }
-
-
-// userMarker 찍는 함수 분리
-function setUserMarker(location) {
-  if (!userMarker) {
-    userMarker = new google.maps.Marker({
-      position: location,
-      map: map,
-      title: "내 위치",
-      icon: {
-        path: google.maps.SymbolPath.CIRCLE,
-        scale: 8,
-        fillColor: "#4285F4",
-        fillOpacity: 1,
-        strokeColor: "#ffffff",
-        strokeWeight: 2,
-      },
-    });
-  } else {
-    userMarker.setPosition(location);
-  }
-}
-
 
 // 내 위치로 지도를 이동
 function centerMapToUser() {
@@ -907,4 +919,3 @@ function closeCustomPopup() {
 		isDragging = false;
 	});
 })();
-
