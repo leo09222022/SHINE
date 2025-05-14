@@ -9,11 +9,11 @@
 
 | 이름   | 역할               | GitHub 링크                           |
 |--------|------------------|----------------------------------------|
-| 엄지원 | 팀장, 백앤드 개발     |  [umg1](https://github.com/umg1) |
-| 홍지완 | 프론트엔드, 공통 개발 | [jiewan02](https://github.com/jiewan02) |
-| 남세나 | 프로트엔드, 공통 개발 | [SenaNam](https://github.com/SenaNam) |
-| 임연수 | 백엔드 개발, 공통 개발 | [leo09222022](https://github.com/leo09222022) |
-| 성시진 | 백엔드 개발, 공통 개발 | [SijinSeong](https://github.com/SijinSeong) |
+| 엄지원 | 팀장, 화장실 검색 기능, 마커 출력 필터링 기능, 기능 테스트 + QA 진행 | [umg1](https://github.com/umg1) |
+| 홍지완 | 지도API 구현, 공공데이터 마이그레이션, 마커 및 상세 정보 표시 | [jiewan02](https://github.com/jiewan02) |
+| 남세나 | 다국어 처리 구조 설계, 반응형 웹사이트 구현, 정보 오류 신고 기능 | [SenaNam](https://github.com/SenaNam) |
+| 임연수 | 화장실명, 주소 번역 API 구현, 화장실 리뷰 작성 기능 구현, 페이지 다국어 처리 | [leo09222022](https://github.com/leo09222022) |
+| 성시진 | 어드민 페이지 구현, 유저 등록 화장실 승인/반려 처리 기능, 정보 오류 신고 승인/반려 정보 반영 처리 기능 | [SijinSeong](https://github.com/SijinSeong) |
 
 ---
 ## :calendar: 프로젝트 기간
