@@ -1,33 +1,40 @@
 # SHINE
-> KOSTA FULL-STACK 개발 웹 애플리케이션 실무 과정 - 2차 프로젝트  
+> KOSTA FULL-STACK 개발 웹 애플리케이션 실무 과정 - 2차 프로젝트 (KOSTA FULL-STACK Web Application - 2nd Group Project)  
 > 프로젝트 GitHub 링크: https://github.com/leo09222022/SHINE
 
 
 ---
 ## 팀원 소개 - SHINE
-공통 역할 : 기획 / 반응형 웹 디자인 / 데이터베이스 설계 / UI, UX 설계 
+공통 역할 (Shared duties) : 기획 / 반응형 웹 디자인 / 데이터베이스 설계 / UI, UX 설계 
 
-| 이름   | 역할                                                     | GitHub 링크                           |
+| 이름(Name)   | 역할(Roles)                                                     | GitHub 링크(Github Link)                           |
 |--------|-------------------------------------------------------|----------------------------------------|
 | 엄지원 | 사용자 화장실 등록 기능, 화장실 검색 기능,  마커 출력 필터링 기능, 기능 테스트 + QA 진행 | [umg1](https://github.com/umg1) |
-| 홍지완 | 지도API 구현, 공공데이터 마이그레이션, 마커 및 화장실 상세 정보 표시, 사용자 별점 리뷰 시스템 개선 | [jiewan02](https://github.com/jiewan02) |
+| Jiewan Hong | Implemented Google Maps API, Public Data Migration, Public Toilet details and markers display, User Review System | [jiewan02](https://github.com/jiewan02) |
 | 남세나 | 다국어 처리 구조 설계, 반응형 웹사이트 구현, 정보 오류 신고 기능 | [SenaNam](https://github.com/SenaNam) |
 | 임연수 | 화장실명, 주소 번역 API 구현, 화장실 리뷰 작성 기능 구현, 페이지 다국어 처리 | [leo09222022](https://github.com/leo09222022) |
 | 성시진 | 어드민 페이지 구현, 유저 등록 화장실 승인/반려 처리 기능, 정보 오류 신고 승인/반려 정보 반영 처리 기능 | [SijinSeong](https://github.com/SijinSeong) |
 
 ---
-## :calendar: 프로젝트 기간
+## :calendar: 프로젝트 기간 (Project Duration) 
 - **2025.04.18 ~ 2025.05.14** (총 4주)
 
 ---
-## 📌 프로젝트 개요
+## 📌 프로젝트 개요 (Project Introduction)
 사용자가 가장 간단하고 빠른 방식으로 구글맵 기반 지도를 켜서 가까운 공중화장실을 찾을 수 있도록 만들어진 웹 애플리케이션 프로그램입니다.
 사용자의 현재 위치를 기본으로 주변 화장실을 지도에 마커로 표시하고, 상세 정보와 리뷰를 제공해 청감도, 편의시설 등을 미리 확인할 수 있습니다.
 사용자는 리뷰 기록 및 화장실 등록 기능을 통해 서비스 개선에 참여할 수 있고, 관리자는 포함되는 모든 화장실 정보와 리뷰를 관리하여 서비스 품질을 유지합니다.
 영어·일본어 등의 다국어 지원 서비스 및 반응형 디자인을 적용해 외국인 사용자의 접근성을 강화하였습니다.
+Web application program designed to allow users to find a nearby public bathroom by turning on Google Maps-based maps in the simplest
+and fastest way possible. Based on the user's current location, the users can mark the surrounding toilets by creating 'markers' on the map, 
+and provide detailed information and their personal reviews to check the cleanliness and overall experiences in advance. 
+Users can actively participate in service improvement through leaving personal reviews and registering toilets in the system, and administrators
+can maintain service quality by managing and handling toilet information and user reviews. 
+Multilingual services such as English and Japanese are provided in addition to Korean, and responsive designs have been applied to strengthen 
+the accessibility of the application to foreign users. 
 
 ---
-## 🛠️ 사용 기술 스택
+## 🛠️ 사용 기술 스택 (Applied technologies) 
 ### Backend
 - Java 21 (Module system 기반 설정)
 - Oracle DB 연동 (ojdbc8 라이브러리 사용)
@@ -36,34 +43,34 @@
 - HTML, CSS, JavaScript, JSP
 - jQuery, Ajax, Google Maps API, Google Translation API 
 
-### 협업 & 배포
+### 협업 & 배포 (Collaboration & Distribution) 
 - Git & GitHub (형상 관리)
 - Notion, Figma (기획 및 UI설계)
 - ERDcloud (DB 설계)
 - JIRA (일일 업무 현황 및 계획 정리) 
 
 ---
-## 💻  주요 기능
-- 👤 **사용자 기능**
-  • 화장실 검색 
-  • 내 위치 기반 화장실 검색
-  • 필터링을 통한 화장실 조회
-  • 리뷰 목록 조회
-  • 한국어/영어/일본어의 다국어 언어 변경 시스템 
-- 🧑‍💼 **관리자 기능**
-  • 사용자가 등록 요청한 화장실 정보 검토 및 관리   
+## 💻  주요 기능 (Main functions)
+- 👤 **사용자 기능** (User functions) 
+  • 화장실 검색 (Toilet search)
+  • 내 위치 기반 화장실 검색 (Toilet search based on current location of user)
+  • 필터링을 통한 화장실 조회 (Toilet filtering) 
+  • 리뷰 목록 조회 (Access to user reviews) 
+  • 한국어/영어/일본어의 다국어 언어 변경 시스템 (Korean/English/Japanese multilingual system) 
+- 🧑‍💼 **관리자 기능** (Administrator Functions) 
+  • 사용자가 등록 요청한 화장실 정보 검토 및 관리 (Maintaining user requests and reviews for toilet information) 
 ---
 
 
-## 📁 프로젝트 폴더 구조: Semi Project 
+## 📁 프로젝트 폴더 구조: Semi Project Folder Structure 
 ```bash
 shine_semi/
 ├── src/    
 │   └── main/
 │       ├── java/                          # 자바 코드 보관 폴더 
 │       │   └── com/emerlet/               # emerlet 클래스 폴더 
-│       │       ├── action/                # 주요 비즈니스 로직 액션 클래스
-│       │       ├── controller/            # Servlet 중심 컨트롤러
+│       │       ├── action/                # 주요 비즈니스 로직 액션 클래스 (Main Business Logic Action Class) 
+│       │       ├── controller/            # Servlet 중심 컨트롤러 (Servlet main controller) 
 │       │       ├── dao/                   # DAO 클래스 - ReviewDAO, ToiletDAO 등
 │       │       ├── db/                    # DB 연결 설정 및 CSV->DB 유틸
 │       │       ├── listener/              # Context 설정 Listener
@@ -85,7 +92,7 @@ shine_semi/
 
 ``` 
 ---
-## 프로젝트 이니셜 셋업 위한 SQL 쿼리문 
+## 프로젝트 이니셜 셋업 위한 SQL 쿼리문 (SQL Query for Initial Project Setup) 
 ```bash
 CREATE TABLE user_toilets (
     user_toilet_id NUMBER PRIMARY KEY,
@@ -147,16 +154,16 @@ NOCYCLE;
 ```
 ---
 
-## 🗂 DB 설계
+## 🗂 DB 설계 (DB Design) 
 
-📌 [ERDCloud로 작성]  
+📌 [ERDCloud로 작성]  (Written in ERDCloud) 
 
 <img width="1104" alt="ErdImage" src="https://github.com/user-attachments/assets/195fc57a-d260-4838-8e02-452fcd5afe77" />
 
 ---
-## 🖼️ 애플리케이션 화면
-> **사용자 화면**  
-: 사용자가 선택 가능한 화장실 검색, 위치 기반 검색, 필터링, 길찾기, 다국어 지원 등의 기능 
+## 🖼️ 애플리케이션 화면 (Application Page) 
+> **사용자 화면**  (User Screen) 
+: 사용자가 선택 가능한 화장실 검색, 위치 기반 검색, 필터링, 길찾기, 다국어 지원 등의 기능 (User-selectable toilet search, location-based search, filtering, directions, multilingual support
 >
 
 <img width="1161" alt="image1" src="https://github.com/user-attachments/assets/322d77aa-95d5-43d1-8c85-e68c42b78673" />
@@ -164,8 +171,8 @@ NOCYCLE;
 <img width="1139" alt="image3" src="https://github.com/user-attachments/assets/84f1c6ed-a5a4-4764-b361-ecc9a5281128" />
 <img width="1063" alt="image4" src="https://github.com/user-attachments/assets/21a6e256-c4b0-46e4-92d2-76cb09cc8c14" />
 
-> **관리자 화면**  
-: 사용자가 등록 요청한 화장실 정보 관리 화면 
+> **관리자 화면**  (Administrator Screen) 
+: 사용자가 등록 요청한 화장실 정보 관리 화면 (User request for toilet registration) 
 >
 > 
 <img width="1057" alt="Screenshot 2025-05-14 at 9 13 20 AM" src="https://github.com/user-attachments/assets/c1cb8b51-de73-4461-a278-e44dd1d11ad5" />
